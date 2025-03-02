@@ -1,0 +1,118 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2024-03-02",
+  "models": [
+    {
+      "model_id": "o3-mini",
+      "provider": "openai",
+      "model_family": "o3",
+      "supports_streaming": true,
+      "supports_tools": true,
+      "supports_vision": false,
+      "supports_json_mode": true,
+      "supports_system_prompt": true,
+      "token_costs": {
+        "input_cost": 0.2,
+        "output_cost": 0.4,
+        "context_window": 200000,
+        "training_cutoff": "2024-01"
+      }
+    },
+    {
+      "model_id": "o1-mini",
+      "provider": "openai",
+      "model_family": "o1",
+      "supports_streaming": true,
+      "supports_tools": true,
+      "supports_vision": false,
+      "supports_json_mode": true,
+      "supports_system_prompt": true,
+      "token_costs": {
+        "input_cost": 0.1,
+        "output_cost": 0.2,
+        "context_window": 128000,
+        "training_cutoff": "2023-10"
+      }
+    },
+    {
+      "model_id": "gpt-4o",
+      "provider": "openai",
+      "model_family": "gpt-4",
+      "supports_streaming": true,
+      "supports_tools": true,
+      "supports_vision": true,
+      "supports_json_mode": true,
+      "supports_system_prompt": true,
+      "token_costs": {
+        "input_cost": 0.8,
+        "output_cost": 1.6,
+        "context_window": 128000,
+        "training_cutoff": "2024-01"
+      }
+    },
+    {
+      "model_id": "gpt-4o-mini",
+      "provider": "openai",
+      "model_family": "gpt-4",
+      "supports_streaming": true,
+      "supports_tools": true,
+      "supports_vision": true,
+      "supports_json_mode": true,
+      "supports_system_prompt": true,
+      "token_costs": {
+        "input_cost": 0.3,
+        "output_cost": 0.6,
+        "context_window": 128000,
+        "training_cutoff": "2023-10"
+      }
+    },
+    {
+      "model_id": "claude-3-5-haiku-latest",
+      "provider": "anthropic",
+      "model_family": "claude-3",
+      "supports_streaming": true,
+      "supports_tools": true,
+      "supports_vision": true,
+      "supports_json_mode": true,
+      "supports_system_prompt": true,
+      "token_costs": {
+        "input_cost": 0.25,
+        "output_cost": 0.75,
+        "context_window": 200000,
+        "training_cutoff": "2024-02"
+      }
+    },
+    {
+      "model_id": "claude-3-5-sonnet-latest",
+      "provider": "anthropic",
+      "model_family": "claude-3",
+      "supports_streaming": true,
+      "supports_tools": true,
+      "supports_vision": true,
+      "supports_json_mode": true,
+      "supports_system_prompt": true,
+      "token_costs": {
+        "input_cost": 0.5,
+        "output_cost": 1.5,
+        "context_window": 200000,
+        "training_cutoff": "2024-02"
+      }
+    },
+    {
+      "model_id": "claude-3-7-sonnet-20250219",
+      "provider": "anthropic",
+      "model_family": "claude-3",
+      "supports_streaming": true,
+      "supports_tools": true,
+      "supports_vision": true,
+      "supports_json_mode": true,
+      "supports_system_prompt": true,
+      "token_costs": {
+        "input_cost": 0.8,
+        "output_cost": 2.4,
+        "context_window": 200000,
+        "training_cutoff": "2024-02"
+      }
+    }
+  ]
+}
