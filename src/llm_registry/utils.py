@@ -1,5 +1,5 @@
 """
-Utility functions for the LLM capability discovery package.
+Utility functions for the LLM registry package.
 """
 
 from typing import Optional, Union

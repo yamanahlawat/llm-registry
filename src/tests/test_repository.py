@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from llm_capability_discovery import CapabilityRepository, Provider
-from llm_capability_discovery.utils import create_model_capability
+from llm_registry import CapabilityRepository, Provider
+from llm_registry.utils import create_model_capability
 
 
 @pytest.fixture
@@ -35,7 +35,7 @@ def test_save_and_get_model(temp_repo, sample_model):
     # Save model
     file_path = temp_repo.save_model_capabilities(sample_model)
     assert file_path.exists()
-    
+
     # Get model back
     retrieved = temp_repo.get_model_capabilities(sample_model.provider, sample_model.model_id)
     assert retrieved is not None
@@ -48,12 +48,12 @@ def test_list_models(temp_repo, sample_model):
     """Test listing models."""
     # Save model
     temp_repo.save_model_capabilities(sample_model)
-    
+
     # List all models
     models = temp_repo.list_models()
     assert len(models) == 1
     assert models[0].model_id == sample_model.model_id
-    
+
     # List by provider
     models = temp_repo.list_models(provider=Provider.OPENAI)
     assert len(models) == 1
@@ -65,15 +65,15 @@ def test_delete_model(temp_repo, sample_model):
     """Test deleting a model."""
     # Save model
     temp_repo.save_model_capabilities(sample_model)
-    
+
     # Delete model
     success = temp_repo.delete_model(sample_model.provider, sample_model.model_id)
     assert success is True
-    
+
     # Verify deletion
     model = temp_repo.get_model_capabilities(sample_model.provider, sample_model.model_id)
     assert model is None
-    
+
     # Try deleting non-existent model
     success = temp_repo.delete_model(Provider.ANTHROPIC, "non-existent")
     assert success is False
@@ -83,7 +83,7 @@ def test_overwrite_model(temp_repo, sample_model):
     """Test overwriting an existing model."""
     # Save model
     temp_repo.save_model_capabilities(sample_model)
-    
+
     # Modify and save again
     modified_model = create_model_capability(
         model_id=sample_model.model_id,
@@ -92,7 +92,7 @@ def test_overwrite_model(temp_repo, sample_model):
         output_cost=0.4,
     )
     temp_repo.save_model_capabilities(modified_model)
-    
+
     # Verify changes
     retrieved = temp_repo.get_model_capabilities(modified_model.provider, modified_model.model_id)
     assert retrieved.token_costs.input_cost == 0.2

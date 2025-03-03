@@ -1,9 +1,9 @@
-# LLM Capability Discovery
+# LLM Registry
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)]()
 
-LLM Capability Discovery is a Python package that provides a unified interface for discovering and managing the capabilities of various Large Language Models (LLMs). It includes a robust API, a rich CLI, and supports synchronization between local and remote model registries.
+LLM Registry is a Python package that provides a unified interface for discovering and managing the capabilities of various Large Language Models (LLMs). It includes a robust API, a rich CLI, and supports synchronization between local and remote model registries.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -33,7 +33,7 @@ Manage and discover LLM model capabilities across multiple providers like OpenAI
 Install via pip:
 
 ```bash
-pip install llm-capability-discovery
+pip install llm-registry
 ```
 
 ## Library Usage
@@ -43,7 +43,7 @@ Integrate the package in your Python projects by following these steps:
 ### Listing Models
 
 ```python
-from llm_capability_discovery import CapabilityRegistry, Provider
+from llm_registry import CapabilityRegistry, Provider
 registry = CapabilityRegistry()
 models = registry.get_models()
 for model in models:
@@ -67,7 +67,7 @@ if model and model.supports_streaming:
 ### Add a New Model Capability
 
 ```python
-from llm_capability_discovery.utils import create_model_capability
+from llm_registry.utils import create_model_capability
 new_model = create_model_capability(
     model_id="gpt-4",
     provider=Provider.OPENAI,
@@ -82,7 +82,7 @@ new_model = create_model_capability(
     supports_system_prompt=True
 )
 
-from llm_capability_discovery import CapabilityRepository
+from llm_registry import CapabilityRepository
 repo = CapabilityRepository()
 repo.save_model_capabilities(new_model)
 ```
@@ -157,7 +157,7 @@ Each model entry tracks:
 
 ## Configuration
 
-Default model data is stored in `~/.llm-capability-discovery`. You can override the directory by:
+Default model data is stored in `~/.llm-registry`. You can override the directory by:
 - Passing a `data_dir` parameter to `CapabilityRepository` in code
 - Using the `--data-dir` option in CLI commands
 
@@ -175,7 +175,7 @@ uv venv
 uv sync --group dev
 
 # Run tests with coverage analysis
-pytest -v --cov=llm_capability_discovery
+pytest -v --cov=llm_registry
 ```
 
 ## License

@@ -4,10 +4,9 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
+from llm_registry.cli import app
+from llm_registry.models import ModelCapabilities, Provider, TokenCost
 from typer.testing import CliRunner
-
-from llm_capability_discovery.cli import app
-from llm_capability_discovery.models import ModelCapabilities, Provider, TokenCost
 
 
 @pytest.fixture
@@ -34,7 +33,7 @@ def sample_model():
 
 def test_list_models(runner, sample_model):
     """Test listing models command."""
-    with patch("llm_capability_discovery.cli.CapabilityRegistry") as mock_registry:
+    with patch("llm_registry.cli.CapabilityRegistry") as mock_registry:
         mock_registry.return_value.get_models.return_value = [sample_model]
         result = runner.invoke(app, ["list"])
         assert result.exit_code == 0
@@ -46,7 +45,7 @@ def test_list_models(runner, sample_model):
 
 def test_list_models_by_provider(runner, sample_model):
     """Test listing models filtered by provider."""
-    with patch("llm_capability_discovery.cli.CapabilityRegistry") as mock_registry:
+    with patch("llm_registry.cli.CapabilityRegistry") as mock_registry:
         mock_registry.return_value.get_models.return_value = [sample_model]
         result = runner.invoke(app, ["list", "--provider", "openai"])
         assert result.exit_code == 0
@@ -61,7 +60,7 @@ def test_list_models_by_provider(runner, sample_model):
 
 def test_add_model(runner, tmp_path):
     """Test adding a new model."""
-    with patch("llm_capability_discovery.cli.CapabilityRepository") as mock_repo:
+    with patch("llm_registry.cli.CapabilityRepository") as mock_repo:
         # Mock get_model_capabilities to return None (model doesn't exist)
         mock_repo.return_value.get_model_capabilities.return_value = None
         mock_repo.return_value.save_model_capabilities.return_value = Path("test.json")
@@ -94,7 +93,7 @@ def test_add_model(runner, tmp_path):
 
 def test_delete_model(runner):
     """Test deleting a model."""
-    with patch("llm_capability_discovery.cli.CapabilityRepository") as mock_repo:
+    with patch("llm_registry.cli.CapabilityRepository") as mock_repo:
         # Test successful deletion
         mock_repo.return_value.delete_model.return_value = True
         result = runner.invoke(app, ["delete", "test-model", "--provider", "openai", "-f"])
