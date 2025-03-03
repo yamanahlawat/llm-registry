@@ -29,10 +29,17 @@ def list(
         console.print("No models found")
         return
 
+    # Group models by provider
+    models_by_provider = {}
+    for model in models:
+        if model.provider not in models_by_provider:
+            models_by_provider[model.provider] = []
+        models_by_provider[model.provider].append(model)
+
     # Create table with minimal formatting
     table = Table(title="LLM Model Capabilities", show_lines=True, header_style="bold", show_header=True, expand=False)
-    table.add_column("Model ID", min_width=20, no_wrap=True)
     table.add_column("Provider", min_width=10, no_wrap=True)
+    table.add_column("Model ID", min_width=20, no_wrap=True)
     table.add_column("Family", min_width=10, no_wrap=True)
     table.add_column("Input Cost", min_width=12, no_wrap=True)
     table.add_column("Output Cost", min_width=12, no_wrap=True)
@@ -44,22 +51,43 @@ def list(
     table.add_column("JSON", min_width=7, justify="center", no_wrap=True)
     table.add_column("System", min_width=7, justify="center", no_wrap=True)
 
-    # Add rows without truncation
-    for model in models:
-        table.add_row(
-            model.provider.value,
-            model.model_id,
-            model.model_family or "",
-            f"${model.token_costs.input_cost}/1M" if model.token_costs else "N/A",
-            f"${model.token_costs.output_cost}/1M" if model.token_costs else "N/A",
-            str(model.token_costs.context_window) if model.token_costs and model.token_costs.context_window else "N/A",
-            model.token_costs.training_cutoff if model.token_costs and model.token_costs.training_cutoff else "N/A",
-            "✅" if model.supports_streaming else "❌",
-            "✅" if model.supports_tools else "❌",
-            "✅" if model.supports_vision else "❌",
-            "✅" if model.supports_json_mode else "❌",
-            "✅" if model.supports_system_prompt else "❌",
-        )
+    # Add rows without truncation, grouped by provider
+    for provider in sorted(models_by_provider.keys(), key=lambda x: x.value):
+        provider_models = sorted(models_by_provider[provider], key=lambda x: x.model_id)
+        first_model = True
+        
+        for model in provider_models:
+            if not first_model:
+                table.add_row(
+                    "", model.model_id, model.model_family or "",
+                    f"${model.token_costs.input_cost}/1M" if model.token_costs else "N/A",
+                    f"${model.token_costs.output_cost}/1M" if model.token_costs else "N/A",
+                    str(model.token_costs.context_window) if model.token_costs and model.token_costs.context_window else "N/A",
+                    model.token_costs.training_cutoff if model.token_costs and model.token_costs.training_cutoff else "N/A",
+                    "✅" if model.supports_streaming else "❌",
+                    "✅" if model.supports_tools else "❌",
+                    "✅" if model.supports_vision else "❌",
+                    "✅" if model.supports_json_mode else "❌",
+                    "✅" if model.supports_system_prompt else "❌",
+                )
+            else:
+                table.add_row(
+                    model.provider.value, model.model_id, model.model_family or "",
+                    f"${model.token_costs.input_cost}/1M" if model.token_costs else "N/A",
+                    f"${model.token_costs.output_cost}/1M" if model.token_costs else "N/A",
+                    str(model.token_costs.context_window) if model.token_costs and model.token_costs.context_window else "N/A",
+                    model.token_costs.training_cutoff if model.token_costs and model.token_costs.training_cutoff else "N/A",
+                    "✅" if model.supports_streaming else "❌",
+                    "✅" if model.supports_tools else "❌",
+                    "✅" if model.supports_vision else "❌",
+                    "✅" if model.supports_json_mode else "❌",
+                    "✅" if model.supports_system_prompt else "❌",
+                )
+                first_model = False
+        
+        # Add a separator row between providers
+        if provider != sorted(models_by_provider.keys(), key=lambda x: x.value)[-1]:
+            table.add_row(*["" for _ in range(12)])
 
     # Print table with full width
     console.print(table, width=200)
