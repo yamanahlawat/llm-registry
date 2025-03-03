@@ -5,13 +5,14 @@ Registry for managing model capabilities data from both remote and local sources
 import json
 import time
 from pathlib import Path
+from typing import Dict, List
 
 import httpx
 
 from .models import ModelCapabilities, Provider
 
 # Default remote URL
-REMOTE_JSON_URL = "https://gist.githubusercontent.com/yamanahlawat/707a6ea05b079669347745a4484f5c6d/raw/4344f5088aac80f3cc0db5ab5940e78528909ee1/models.json"
+REMOTE_JSON_URL = "https://gist.githubusercontent.com/yamanahlawat/707a6ea05b079669347745a4484f5c6d/raw/models.json"
 
 
 class CapabilityRegistry:
@@ -38,11 +39,11 @@ class CapabilityRegistry:
         self.cache_ttl = cache_ttl
         self.offline_mode = offline_mode
         self.timeout = timeout
-        self._cache: dict | None = None
+        self._cache: Dict[str, ModelCapabilities] | None = None
         self._last_fetch: float | None = None
         self._client = httpx.Client(timeout=timeout)
 
-    def get_models(self, provider: Provider | None = None) -> list[ModelCapabilities]:
+    def get_models(self, provider: Provider | None = None) -> List[ModelCapabilities]:
         """
         Get all model capabilities, optionally filtered by provider.
         Args:
@@ -53,10 +54,12 @@ class CapabilityRegistry:
         data = self._get_data()
         models = []
 
-        for model_data in data["models"]:
-            if provider and model_data["provider"] != provider.value:
+        for model_id, model_data in data["models"].items():
+            if provider and provider not in model_data["providers"]:
                 continue
-            models.append(ModelCapabilities.model_validate(model_data))
+            # Add model_id to data for validation
+            model_cap = ModelCapabilities.model_validate({**model_data, "model_id": model_id})
+            models.append(model_cap)
 
         return models
 
@@ -71,11 +74,15 @@ class CapabilityRegistry:
         """
         data = self._get_data()
 
-        for model_data in data["models"]:
-            if model_data["provider"] == provider.value and model_data["model_id"] == model_id:
-                return ModelCapabilities.model_validate(model_data)
+        if model_id not in data["models"]:
+            return None
 
-        return None
+        model_data = data["models"][model_id]
+        if provider.value not in model_data["providers"]:
+            return None
+
+        # Add model_id to data for validation
+        return ModelCapabilities.model_validate({**model_data, "model_id": model_id})
 
     def _get_data(self) -> dict:
         """

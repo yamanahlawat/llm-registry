@@ -15,24 +15,33 @@ def sample_models_json(tmp_path):
     models_data = {
         "version": "1.0.0",
         "last_updated": "2024-03-02",
-        "models": [
-            {
-                "model_id": "o3-mini",
-                "provider": "openai",
+        "models": {
+            "o3-mini": {
+                "providers": ["openai"],
                 "model_family": "o3",
-                "supports_streaming": True,
-                "supports_tools": True,
-                "supports_vision": False,
-                "supports_json_mode": True,
-                "supports_system_prompt": True,
+                "api_params": {
+                    "frequency_penalty": True,
+                    "max_tokens": True,
+                    "n": True,
+                    "presence_penalty": True,
+                    "temperature": True,
+                    "top_p": True
+                },
+                "features": {
+                    "streaming": True,
+                    "tools": True,
+                    "vision": False,
+                    "json_mode": True,
+                    "system_prompt": True
+                },
                 "token_costs": {
                     "input_cost": 0.2,
                     "output_cost": 0.4,
                     "context_window": 200000,
-                    "training_cutoff": "2024-01",
-                },
+                    "training_cutoff": "2024-01"
+                }
             }
-        ],
+        }
     }
 
     json_file = tmp_path / "models.json"
@@ -51,8 +60,8 @@ def test_get_models_offline(sample_models_json):
         assert len(models) == 1
         model = models[0]
         assert model.model_id == "o3-mini"
-        assert model.provider == Provider.OPENAI
-        assert model.supports_vision is False
+        assert Provider.OPENAI in model.providers
+        assert model.features.vision is False
         assert model.token_costs.input_cost == 0.2
 
 

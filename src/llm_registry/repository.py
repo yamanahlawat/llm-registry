@@ -55,16 +55,19 @@ class CapabilityRepository:
         Returns:
             Path where the capabilities were saved
         """
-        file_path = self._get_model_path(capabilities.provider, capabilities.model_id)
+        # Save a copy for each provider
+        paths = []
+        for provider in capabilities.providers:
+            file_path = self._get_model_path(provider, capabilities.model_id)
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(capabilities.model_dump_json(indent=2))
 
-        with open(file_path, "w", encoding="utf-8") as f:
-            f.write(capabilities.model_dump_json(indent=2))
+            # Update cache
+            cache_key = f"{provider.value}_{capabilities.model_id}"
+            self._capabilities_cache[cache_key] = capabilities
+            paths.append(file_path)
 
-        # Update cache
-        cache_key = f"{capabilities.provider.value}_{capabilities.model_id}"
-        self._capabilities_cache[cache_key] = capabilities
-
-        return file_path
+        return paths[0]  # Return the first path for backward compatibility
 
     def get_model_capabilities(self, provider: Provider, model_id: str) -> ModelCapabilities | None:
         """
@@ -80,7 +83,9 @@ class CapabilityRepository:
 
         # Check cache first
         if cache_key in self._capabilities_cache:
-            return self._capabilities_cache[cache_key]
+            cap = self._capabilities_cache[cache_key]
+            if provider in cap.providers:
+                return cap
 
         # Check file system
         file_path = self._get_model_path(provider, model_id)
@@ -91,6 +96,10 @@ class CapabilityRepository:
             with open(file_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 capabilities = ModelCapabilities.model_validate(data)
+
+                # Verify provider is in the model's providers
+                if provider not in capabilities.providers:
+                    return None
 
                 # Update cache
                 self._capabilities_cache[cache_key] = capabilities
@@ -108,6 +117,7 @@ class CapabilityRepository:
             List of ModelCapabilities objects
         """
         result = []
+        seen_models = set()  # Track unique model IDs
 
         # Filter pattern for filenames
         pattern = f"{provider.value}_*.json" if provider else "*.json"
@@ -117,11 +127,22 @@ class CapabilityRepository:
                 with open(file_path, "r", encoding="utf-8") as f:
                     data = json.load(f)
                     capabilities = ModelCapabilities.model_validate(data)
-                    result.append(capabilities)
 
-                    # Update cache
-                    cache_key = f"{capabilities.provider.value}_{capabilities.model_id}"
-                    self._capabilities_cache[cache_key] = capabilities
+                    # Skip if we've already seen this model
+                    if capabilities.model_id in seen_models:
+                        continue
+
+                    # If provider specified, check if it's in the model's providers
+                    if provider and provider not in capabilities.providers:
+                        continue
+
+                    result.append(capabilities)
+                    seen_models.add(capabilities.model_id)
+
+                    # Update cache for each provider
+                    for p in capabilities.providers:
+                        cache_key = f"{p.value}_{capabilities.model_id}"
+                        self._capabilities_cache[cache_key] = capabilities
             except Exception as e:
                 print(f"Error loading {file_path}: {e}")
 
