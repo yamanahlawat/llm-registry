@@ -1,5 +1,5 @@
 """
-CLI interface for LLM Capability Discovery.
+CLI interface for LLM Registry.
 """
 
 from pathlib import Path
@@ -8,10 +8,10 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
-from llm_capability_discovery import CapabilityRegistry, CapabilityRepository, Provider
-from llm_capability_discovery.utils import create_model_capability
+from llm_registry import CapabilityRegistry, CapabilityRepository, Provider
+from llm_registry.utils import create_model_capability
 
-app = typer.Typer(help="LLM Capability Discovery CLI")
+app = typer.Typer(help="LLM Registry CLI")
 console = Console()
 
 
@@ -31,8 +31,8 @@ def list(
 
     # Create table with minimal formatting
     table = Table(title="LLM Model Capabilities", show_lines=True, header_style="bold", show_header=True, expand=False)
-    table.add_column("Provider", min_width=10, no_wrap=True)
     table.add_column("Model ID", min_width=20, no_wrap=True)
+    table.add_column("Provider", min_width=10, no_wrap=True)
     table.add_column("Family", min_width=10, no_wrap=True)
     table.add_column("Input Cost", min_width=12, no_wrap=True)
     table.add_column("Output Cost", min_width=12, no_wrap=True)
@@ -79,7 +79,7 @@ def add(
     vision: bool = typer.Option(False, "--vision", help="Supports vision/image input"),
     json_mode: bool = typer.Option(False, "--json-mode", help="Supports JSON mode"),
     system_prompt: bool = typer.Option(False, "--system-prompt", help="Supports system prompt"),
-    data_dir: Path | None = typer.Option(None, help="Data directory (default: ~/.llm-capability-discovery)"),
+    data_dir: Path | None = typer.Option(None, help="Data directory (default: ~/.llm-registry)"),
 ):
     """
     Add a new model.
@@ -118,7 +118,7 @@ def delete(
     model_id: str = typer.Argument(help="Model identifier (e.g., 'gpt-4')"),
     provider: Provider = typer.Option(help="Model provider"),
     force: bool = typer.Option(False, "--force", "-f", help="Force deletion without confirmation"),
-    data_dir: Path | None = typer.Option(None, help="Data directory (default: ~/.llm-capability-discovery)"),
+    data_dir: Path | None = typer.Option(None, help="Data directory (default: ~/.llm-registry)"),
 ):
     """Delete a model."""
     repo = CapabilityRepository(data_dir=data_dir)

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "last_updated": "2024-03-02",
+  "last_updated": "2025-03-03",
   "models": [
     {
       "model_id": "o3-mini",
@@ -12,8 +12,26 @@
       "supports_json_mode": true,
       "supports_system_prompt": true,
       "token_costs": {
-        "input_cost": 0.2,
-        "output_cost": 0.4,
+        "input_cost": 1.1,
+        "cache_input_cost": 0.55,
+        "output_cost": 4.4,
+        "context_window": 200000,
+        "training_cutoff": "2024-01"
+      }
+    },
+    {
+      "model_id": "o1",
+      "provider": "openai",
+      "model_family": "o1",
+      "supports_streaming": true,
+      "supports_tools": true,
+      "supports_vision": false,
+      "supports_json_mode": true,
+      "supports_system_prompt": true,
+      "token_costs": {
+        "input_cost": 15,
+        "cache_input_cost": 7.5,
+        "output_cost": 60,
         "context_window": 200000,
         "training_cutoff": "2024-01"
       }
@@ -28,8 +46,8 @@
       "supports_json_mode": true,
       "supports_system_prompt": true,
       "token_costs": {
-        "input_cost": 0.1,
-        "output_cost": 0.2,
+        "input_cost": 1.1,
+        "output_cost": 4.4,
         "context_window": 128000,
         "training_cutoff": "2023-10"
       }
@@ -44,8 +62,26 @@
       "supports_json_mode": true,
       "supports_system_prompt": true,
       "token_costs": {
-        "input_cost": 0.8,
-        "output_cost": 1.6,
+        "input_cost": 2.5,
+        "cache_input_cost": 1.25,
+        "output_cost": 10,
+        "context_window": 128000,
+        "training_cutoff": "2024-01"
+      }
+    },
+    {
+      "model_id": "gpt-4o",
+      "provider": "openai",
+      "model_family": "gpt-4",
+      "supports_streaming": true,
+      "supports_tools": true,
+      "supports_vision": true,
+      "supports_json_mode": true,
+      "supports_system_prompt": true,
+      "token_costs": {
+        "input_cost": 2.5,
+        "cache_input_cost": 1.25,
+        "output_cost": 10,
         "context_window": 128000,
         "training_cutoff": "2024-01"
       }
@@ -60,7 +96,8 @@
       "supports_json_mode": true,
       "supports_system_prompt": true,
       "token_costs": {
-        "input_cost": 0.3,
+        "input_cost": 0.15,
+        "cache_input_cost": 0.075,
         "output_cost": 0.6,
         "context_window": 128000,
         "training_cutoff": "2023-10"

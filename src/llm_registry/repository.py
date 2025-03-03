@@ -9,8 +9,9 @@ from pathlib import Path
 from .models import ModelCapabilities, Provider
 
 # Default paths
-DEFAULT_DATA_DIR = Path.home() / ".llm-capability-discovery"
+DEFAULT_DATA_DIR = Path.home() / ".llm-registry"
 DEFAULT_MODELS_DIR = DEFAULT_DATA_DIR / "models"
+
 
 class CapabilityRepository:
     """
@@ -22,7 +23,7 @@ class CapabilityRepository:
         Initialize the repository with a data directory.
         Args:
             data_dir: Directory to store model capability data.
-                     If None, defaults to ~/.llm-capability-discovery
+                     If None, defaults to ~/.llm-registry
         """
         if data_dir is None:
             self.data_dir = DEFAULT_MODELS_DIR

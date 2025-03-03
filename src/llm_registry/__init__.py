@@ -1,5 +1,5 @@
 """
-LLM Capability Discovery - A tool for discovering, testing, and sharing LLM model capabilities.
+LLM Registry - A tool for discovering, testing, and sharing LLM model capabilities.
 """
 
 from .models import ModelCapabilities, Provider, TokenCost

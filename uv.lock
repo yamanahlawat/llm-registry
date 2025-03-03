@@ -138,7 +138,7 @@ wheels = [
 ]
 
 [[package]]
-name = "llm-capability-discovery"
+name = "llm-registry"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
