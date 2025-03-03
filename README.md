@@ -89,24 +89,24 @@ repo.save_model_capabilities(new_model)
 
 ## CLI Usage
 
-The CLI tool `lmd` allows you to interact with model capabilities directly from the terminal.
+The CLI tool `llmr` allows you to interact with model capabilities directly from the terminal.
 
 ### List Models
 
 View all available models:
 
 ```bash
-lmd list
+llmr list
 ```
 
 ![CLI Screenshot](./assets/images/cli.png)
 
-*The above screenshot demonstrates how the CLI tool (`lmd`) currently looks like when listing models.
+*The above screenshot demonstrates how the CLI tool (`llmr`) currently looks like when listing models.
 
 To filter models by provider:
 
 ```bash
-lmd list --provider openai
+llmr list --provider openai
 ```
 
 ### Add Model
@@ -114,7 +114,7 @@ lmd list --provider openai
 Add a new model:
 
 ```bash
-lmd add gpt-4 \
+llmr add gpt-4 \
     --provider openai \
     --model-family GPT-4 \
     --input-cost 0.01 \
@@ -132,7 +132,7 @@ lmd add gpt-4 \
 Remove an existing model:
 
 ```bash
-lmd delete gpt-4 --provider openai
+llmr delete gpt-4 --provider openai
 ```
 
 Use `-f` or `--force` to bypass confirmation.
