@@ -1,16 +1,24 @@
 {
-  "version": "1.0.0",
+  "version": "0.1.0",
   "last_updated": "2025-03-03",
-  "models": [
-    {
-      "model_id": "o3-mini",
-      "provider": "openai",
+  "models": {
+    "o3-mini": {
+      "providers": [
+        "openai"
+      ],
       "model_family": "o3",
-      "supports_streaming": true,
-      "supports_tools": true,
-      "supports_vision": false,
-      "supports_json_mode": true,
-      "supports_system_prompt": true,
+      "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
       "token_costs": {
         "input_cost": 1.1,
         "cache_input_cost": 0.55,
@@ -19,15 +27,23 @@
         "training_cutoff": "2024-01"
       }
     },
-    {
-      "model_id": "o1",
-      "provider": "openai",
+    "o1": {
+      "providers": [
+        "openai"
+      ],
       "model_family": "o1",
-      "supports_streaming": true,
-      "supports_tools": true,
-      "supports_vision": false,
-      "supports_json_mode": true,
-      "supports_system_prompt": true,
+      "api_params": {
+        "max_tokens": false,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": false,
+        "json_mode": true,
+        "system_prompt": false
+      },
       "token_costs": {
         "input_cost": 15,
         "cache_input_cost": 7.5,
@@ -36,15 +52,20 @@
         "training_cutoff": "2024-01"
       }
     },
-    {
-      "model_id": "o1-mini",
-      "provider": "openai",
+    "o1-mini": {
+      "providers": [
+        "openai"
+      ],
       "model_family": "o1",
-      "supports_streaming": true,
-      "supports_tools": true,
-      "supports_vision": false,
-      "supports_json_mode": true,
-      "supports_system_prompt": true,
+      "api_params": {
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
       "token_costs": {
         "input_cost": 1.1,
         "output_cost": 4.4,
@@ -52,15 +73,42 @@
         "training_cutoff": "2023-10"
       }
     },
-    {
-      "model_id": "gpt-4o",
-      "provider": "openai",
+    "gpt-4.5-preview": {
+      "providers": [
+        "openai"
+      ],
       "model_family": "gpt-4",
-      "supports_streaming": true,
-      "supports_tools": true,
-      "supports_vision": true,
-      "supports_json_mode": true,
-      "supports_system_prompt": true,
+      "api_params": {
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 75,
+        "cache_input_cost": 37.5,
+        "output_cost": 150,
+        "context_window": 128000,
+        "training_cutoff": "2024-01"
+      }
+    },
+    "gpt-4o": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-4",
+      "api_params": {
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
       "token_costs": {
         "input_cost": 2.5,
         "cache_input_cost": 1.25,
@@ -69,15 +117,20 @@
         "training_cutoff": "2024-01"
       }
     },
-    {
-      "model_id": "gpt-4o-mini",
-      "provider": "openai",
+    "gpt-4o-mini": {
+      "providers": [
+        "openai"
+      ],
       "model_family": "gpt-4",
-      "supports_streaming": true,
-      "supports_tools": true,
-      "supports_vision": true,
-      "supports_json_mode": true,
-      "supports_system_prompt": true,
+      "api_params": {
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
       "token_costs": {
         "input_cost": 0.15,
         "cache_input_cost": 0.075,
@@ -86,59 +139,97 @@
         "training_cutoff": "2023-10"
       }
     },
-    {
-      "model_id": "claude-3-7-sonnet-20250219",
-      "provider": "anthropic",
+    "claude-3-7-sonnet-latest": {
+      "providers": [
+        "anthropic"
+      ],
       "model_family": "claude-3",
-      "supports_streaming": true,
-      "supports_tools": true,
-      "supports_vision": true,
-      "supports_json_mode": true,
-      "supports_system_prompt": true,
+      "api_params": {
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
       "token_costs": {
         "input_cost": 3,
-        "cache_input_cost": 0.30,
+        "cache_input_cost": 0.3,
         "output_cost": 15,
         "cache_output_cost": 3.75,
         "context_window": 200000,
         "training_cutoff": "2024-02"
       }
     },
-    {
-      "model_id": "claude-3-5-sonnet-latest",
-      "provider": "anthropic",
+    "claude-3-5-sonnet-latest": {
+      "providers": [
+        "anthropic"
+      ],
       "model_family": "claude-3",
-      "supports_streaming": true,
-      "supports_tools": true,
-      "supports_vision": true,
-      "supports_json_mode": true,
-      "supports_system_prompt": true,
+      "api_params": {
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
       "token_costs": {
         "input_cost": 3,
-        "cache_input_cost": 0.30,
+        "cache_input_cost": 0.3,
         "output_cost": 15,
         "cache_output_cost": 3.75,
         "context_window": 200000,
         "training_cutoff": "2024-02"
       }
     },
-    {
-      "model_id": "claude-3-5-haiku-latest",
-      "provider": "anthropic",
+    "claude-3-5-haiku-latest": {
+      "providers": [
+        "anthropic"
+      ],
       "model_family": "claude-3",
-      "supports_streaming": true,
-      "supports_tools": true,
-      "supports_vision": true,
-      "supports_json_mode": true,
-      "supports_system_prompt": true,
+      "api_params": {
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
       "token_costs": {
-        "input_cost": 0.80,
+        "input_cost": 0.8,
         "cache_input_cost": 0.08,
         "output_cost": 4,
         "cache_output_cost": 1,
         "context_window": 200000,
         "training_cutoff": "2024-02"
       }
+    },
+    "claude-3-haiku-20240307": {
+      "providers": [
+        "anthropic"
+      ],
+      "model_family": "claude-3",
+      "api_params": {
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 15,
+        "cache_input_cost": 1.15,
+        "output_cost": 75,
+        "cache_output_cost": 18.75,
+        "context_window": 200000,
+        "training_cutoff": "2024-02"
+      }
     }
-  ]
+  }
 }

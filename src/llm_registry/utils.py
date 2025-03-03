@@ -2,28 +2,25 @@
 Utility functions for the LLM registry package.
 """
 
-from typing import Optional, Union
-
-from .models import ModelCapabilities, Provider, TokenCost
+from .models import ApiParams, Features, ModelCapabilities, Provider, TokenCost
 
 
 def create_model_capability(
     model_id: str,
-    provider: Union[Provider, str],
-    model_family: Optional[str] = None,
+    provider: Provider | str,
+    model_family: str | None = None,
     supports_streaming: bool = False,
     supports_tools: bool = False,
     supports_vision: bool = False,
     supports_json_mode: bool = False,
     supports_system_prompt: bool = False,
-    input_cost: Optional[float] = None,
-    output_cost: Optional[float] = None,
-    context_window: Optional[int] = None,
-    training_cutoff: Optional[str] = None,
+    input_cost: float | None = None,
+    output_cost: float | None = None,
+    context_window: int | None = None,
+    training_cutoff: str | None = None,
 ) -> ModelCapabilities:
     """
     Helper function to create a ModelCapabilities object with less verbose syntax.
-
     Args:
         model_id: Model identifier
         provider: Model provider
@@ -37,7 +34,6 @@ def create_model_capability(
         output_cost: Cost per 1M output tokens
         context_window: Context window size in tokens
         training_cutoff: Training data cutoff date
-
     Returns:
         ModelCapabilities object
     """
@@ -58,14 +54,20 @@ def create_model_capability(
             training_cutoff=training_cutoff,
         )
 
+    # Create API params and features
+    api_params = ApiParams(stream=supports_streaming)
+    features = Features(
+        vision=supports_vision,
+        tools=supports_tools,
+        json_mode=supports_json_mode,
+        system_prompt=supports_system_prompt,
+    )
+
     return ModelCapabilities(
         model_id=model_id,
-        provider=provider,
+        providers=[provider],
         model_family=model_family,
-        supports_streaming=supports_streaming,
-        supports_tools=supports_tools,
-        supports_vision=supports_vision,
-        supports_json_mode=supports_json_mode,
-        supports_system_prompt=supports_system_prompt,
+        api_params=api_params,
+        features=features,
         token_costs=token_costs,
     )
