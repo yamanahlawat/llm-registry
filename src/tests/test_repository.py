@@ -1,8 +1,5 @@
 """Tests for the CapabilityRepository class."""
 
-import json
-from pathlib import Path
-
 import pytest
 
 from llm_registry import CapabilityRepository, Provider
