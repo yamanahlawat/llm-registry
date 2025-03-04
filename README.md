@@ -10,7 +10,6 @@ LLM Registry is a Python package that provides a unified interface for discoveri
 - [Overview](#overview)
 - [Features](#features)
 - [Installation](#installation)
-- [What's New in v0.2.0](#whats-new-in-v020)
 - [Library Usage](#library-usage)
 - [CLI Usage](#cli-usage)
 - [Model Capabilities](#model-capabilities)
@@ -40,20 +39,6 @@ Install via pip:
 ```bash
 pip install llm-registry
 ```
-
-## What's New in v0.2.0
-
-### Added
-- **Token Cost Caching**: Track both standard and cached token costs
-- **Comprehensive API Parameter Support**: Track support for max_tokens, temperature, top_p, and more
-- **Model Grouping**: Organize models by family and provider
-- **Cache Mechanism**: Improved performance with caching for loading models file
-- **Development Dependencies**: Added ipython and ipdb for easier debugging
-
-### Changed
-- **Restructured CLI**: Centralized model data management
-- **Enhanced Model Listing**: Additional cost columns in display output
-- **Improved Model Creation**: Separated API parameters and features for clearer capabilities
 
 ## Library Usage
 
