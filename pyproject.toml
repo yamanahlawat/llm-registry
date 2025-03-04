@@ -26,6 +26,7 @@ dev = [
     "ruff>=0.9.9",
     "ipython>=9.0.0",
     "ipdb>=0.13.13",
+    "pre-commit>=4.1.0",
 ]
 
 [build-system]

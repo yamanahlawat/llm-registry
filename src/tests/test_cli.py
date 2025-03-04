@@ -30,8 +30,6 @@ def sample_model():
             top_p=True,
             frequency_penalty=False,
             presence_penalty=False,
-            stop=True,
-            n=True,
             stream=True,
         ),
         features=Features(
@@ -52,8 +50,38 @@ def sample_model():
 
 
 @pytest.fixture
-def mock_models_file(sample_model):
-    """Create a mock models.json file."""
+def mock_package_models(sample_model):
+    """Create mock package models."""
+    return {
+        "models": {
+            "package-model": {
+                "providers": ["openai"],
+                "model_family": "package",
+                "api_params": {
+                    "max_tokens": True,
+                    "temperature": True,
+                    "stream": True
+                },
+                "features": {
+                    "tools": True,
+                    "vision": False,
+                    "json_mode": True,
+                    "system_prompt": True
+                },
+                "token_costs": {
+                    "input_cost": 0.2,
+                    "output_cost": 0.4,
+                    "context_window": 200000,
+                    "training_cutoff": "2024-01"
+                }
+            }
+        }
+    }
+
+
+@pytest.fixture
+def mock_user_models(sample_model):
+    """Create mock user models."""
     return {
         "models": {
             "test-model": sample_model.model_dump(),
@@ -67,11 +95,9 @@ def test_list_models(runner, sample_model):
         mock_registry.return_value.get_models.return_value = [sample_model]
         result = runner.invoke(app, ["list"])
         assert result.exit_code == 0
-        # Check basic info
         assert "test-model" in result.stdout
         assert "openai" in result.stdout
         assert "test" in result.stdout  # model family
-        # Check costs (just basic presence)
         assert "$0.1" in result.stdout  # Input cost
         assert "$0.2" in result.stdout  # Output cost
 
@@ -91,11 +117,76 @@ def test_list_models_by_provider(runner, sample_model):
         assert "No models found" in result.stdout
 
 
-def test_add_model(runner, mock_models_file):
+def test_list_models_by_source(runner, sample_model):
+    """Test listing models filtered by source."""
+    with patch("llm_registry.cli.CapabilityRegistry") as mock_registry, \
+         patch("llm_registry.cli.load_user_models") as mock_user, \
+         patch("llm_registry.cli.load_package_models") as mock_package:
+        
+        # Setup mocks
+        mock_registry.return_value.get_models.return_value = [sample_model]
+        mock_user.return_value = {"models": {"test-model": {}}}
+        mock_package.return_value = {"models": {"package-model": {}}}
+
+        # Test user-only
+        result = runner.invoke(app, ["list", "--user-only"])
+        assert result.exit_code == 0
+        assert "test-model" in result.stdout
+        assert "package-model" not in result.stdout
+
+        # Test package-only
+        result = runner.invoke(app, ["list", "--package-only"])
+        assert result.exit_code == 0
+        assert "package-model" in result.stdout
+        assert "test-model" not in result.stdout
+
+        # Test both flags (should error)
+        result = runner.invoke(app, ["list", "--user-only", "--package-only"])
+        assert result.exit_code == 1
+        assert "Cannot specify both" in result.stdout
+
+
+def test_get_model(runner, sample_model):
+    """Test getting model details."""
+    with patch("llm_registry.cli.CapabilityRegistry") as mock_registry, \
+         patch("llm_registry.cli.load_user_models") as mock_user:
+        
+        mock_registry.return_value.get_model.return_value = sample_model
+        mock_user.return_value = {"models": {"test-model": {}}}
+
+        # Test normal output
+        result = runner.invoke(app, ["get", "test-model"])
+        assert result.exit_code == 0
+        assert "Model: test-model" in result.stdout
+        assert "Source: User" in result.stdout
+        assert "openai" in result.stdout
+        assert "$0.1" in result.stdout
+        assert "" in result.stdout  # For boolean features
+
+        # Test JSON output
+        result = runner.invoke(app, ["get", "test-model", "--json"])
+        assert result.exit_code == 0
+        data = json.loads(result.stdout)
+        assert data["model_id"] == "test-model"
+
+        # Test non-existent model
+        mock_registry.return_value.get_model.side_effect = KeyError("not found")
+        result = runner.invoke(app, ["get", "non-existent"])
+        assert result.exit_code == 1
+        assert "not found" in result.stdout
+
+
+def test_add_model(runner, mock_user_models, mock_package_models):
     """Test adding a new model."""
-    mock_file = mock_open(read_data=json.dumps(mock_models_file))
-    with patch("builtins.open", mock_file), patch("llm_registry.cli.get_models_file") as mock_path:
+    mock_file = mock_open(read_data=json.dumps(mock_user_models))
+    with patch("builtins.open", mock_file), \
+         patch("llm_registry.cli.get_models_file") as mock_path, \
+         patch("llm_registry.cli.is_package_model") as mock_is_package:
+        
         mock_path.return_value = Path("test.json")
+        mock_is_package.return_value = False
+
+        # Test adding new model
         result = runner.invoke(
             app,
             [
@@ -122,66 +213,54 @@ def test_add_model(runner, mock_models_file):
         assert result.exit_code == 0
         assert "Added new model 'new-model'" in result.stdout
 
-
-def test_add_existing_model_provider(runner, mock_models_file):
-    """Test adding a provider to an existing model."""
-    mock_file = mock_open(read_data=json.dumps(mock_models_file))
-    with patch("builtins.open", mock_file), patch("llm_registry.cli.get_models_file") as mock_path:
-        mock_path.return_value = Path("test.json")
+        # Test adding package model (should fail)
+        mock_is_package.return_value = True
         result = runner.invoke(
             app,
             [
                 "add",
-                "test-model",
+                "package-model",
                 "--provider",
-                "anthropic",
+                "openai",
             ],
         )
-        assert result.exit_code == 0
-        assert "Added provider 'anthropic' to existing model 'test-model'" in result.stdout
+        assert result.exit_code == 1
+        assert "Package models are read-only" in result.stdout
 
 
-def test_delete_model(runner, mock_models_file):
+def test_delete_model(runner, mock_user_models):
     """Test deleting a model."""
-    mock_file = mock_open(read_data=json.dumps(mock_models_file))
-    with patch("builtins.open", mock_file), patch("llm_registry.cli.get_models_file") as mock_path:
+    mock_file = mock_open(read_data=json.dumps(mock_user_models))
+    with patch("builtins.open", mock_file), \
+         patch("llm_registry.cli.get_models_file") as mock_path, \
+         patch("llm_registry.cli.is_package_model") as mock_is_package:
+        
         mock_path.return_value = Path("test.json")
+        mock_is_package.return_value = False
 
-        # Test deleting entire model with force flag
+        # Test deleting user model
         result = runner.invoke(app, ["delete", "test-model", "-f"])
         assert result.exit_code == 0
-        assert "Model 'test-model' deleted" in result.stdout
+        assert "Deleted model 'test-model'" in result.stdout
 
-        # Test deleting non-existent model
-        result = runner.invoke(app, ["delete", "non-existent", "-f"])
+        # Test deleting package model (should fail)
+        mock_is_package.return_value = True
+        result = runner.invoke(app, ["delete", "package-model", "-f"])
         assert result.exit_code == 1
-        assert "not found" in result.stdout
+        assert "Package models are read-only" in result.stdout
 
 
-def test_delete_provider(runner, mock_models_file):
-    """Test removing a provider from a model."""
-    mock_file = mock_open(read_data=json.dumps(mock_models_file))
-    with patch("builtins.open", mock_file), patch("llm_registry.cli.get_models_file") as mock_path:
+def test_update_model(runner, mock_user_models):
+    """Test updating a model."""
+    mock_file = mock_open(read_data=json.dumps(mock_user_models))
+    with patch("builtins.open", mock_file), \
+         patch("llm_registry.cli.get_models_file") as mock_path, \
+         patch("llm_registry.cli.is_package_model") as mock_is_package:
+        
         mock_path.return_value = Path("test.json")
+        mock_is_package.return_value = False
 
-        # Test removing existing provider
-        result = runner.invoke(app, ["delete", "test-model", "--provider", "openai", "-f"])
-        assert result.exit_code == 0
-        assert "deleted (no providers remaining)" in result.stdout
-
-        # Test removing non-existent provider
-        result = runner.invoke(app, ["delete", "test-model", "--provider", "anthropic", "-f"])
-        assert result.exit_code == 1
-        assert "not found" in result.stdout
-
-
-def test_update_model(runner, mock_models_file):
-    """Test updating a model's capabilities."""
-    mock_file = mock_open(read_data=json.dumps(mock_models_file))
-    with patch("builtins.open", mock_file), patch("llm_registry.cli.get_models_file") as mock_path:
-        mock_path.return_value = Path("test.json")
-
-        # Test updating various fields
+        # Test updating user model
         result = runner.invoke(
             app,
             [
@@ -201,29 +280,16 @@ def test_update_model(runner, mock_models_file):
         assert result.exit_code == 0
         assert "Updated model 'test-model'" in result.stdout
 
-        # Test updating non-existent model
-        result = runner.invoke(app, ["update", "non-existent"])
-        assert result.exit_code == 1
-        assert "not found" in result.stdout
-
-
-def test_update_provider_specific(runner, mock_models_file):
-    """Test updating provider-specific capabilities."""
-    mock_file = mock_open(read_data=json.dumps(mock_models_file))
-    with patch("builtins.open", mock_file), patch("llm_registry.cli.get_models_file") as mock_path:
-        mock_path.return_value = Path("test.json")
-
-        # Test updating with non-existent provider
+        # Test updating package model (should fail)
+        mock_is_package.return_value = True
         result = runner.invoke(
             app,
             [
                 "update",
-                "test-model",
-                "--provider",
-                "anthropic",
-                "--input-cost",
-                "0.15",
+                "package-model",
+                "--model-family",
+                "new-family",
             ],
         )
         assert result.exit_code == 1
-        assert "not found" in result.stdout
+        assert "Package models are read-only" in result.stdout

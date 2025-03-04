@@ -2,7 +2,11 @@
 Utility functions for the LLM registry package.
 """
 
-from .models import ApiParams, Features, ModelCapabilities, Provider, TokenCost
+import json
+from functools import lru_cache
+from pathlib import Path
+
+from llm_registry.models import ApiParams, Features, ModelCapabilities, Provider, TokenCost
 
 
 def create_model_capability(
@@ -71,3 +75,60 @@ def create_model_capability(
         features=features,
         token_costs=token_costs,
     )
+
+
+def get_user_models_dir() -> Path:
+    """
+    Get the path to user's models directory.
+    """
+    return Path.home() / ".llm-registry" / "models"
+
+
+def get_user_models_file() -> Path:
+    """
+    Get the path to user's models.json file.
+    """
+    models_dir = get_user_models_dir()
+    models_dir.mkdir(parents=True, exist_ok=True)
+    models_file = models_dir / "models.json"
+    if not models_file.exists():
+        # Create empty models file
+        with open(models_file, "w") as f:
+            json.dump({"models": {}}, f, indent=2)
+    return models_file
+
+
+@lru_cache()
+def load_package_models() -> dict:
+    """
+    Load models from package JSON file with caching.
+    """
+    packages_models_file = Path(__file__).parent / "data" / "models.json"
+    with open(packages_models_file) as f:
+        return json.load(f)
+
+
+@lru_cache()
+def load_user_models() -> dict:
+    """
+    Load models from user's JSON file.
+    """
+    with open(get_user_models_file()) as f:
+        return json.load(f)
+
+
+def save_user_models(data: dict) -> None:
+    """
+    Save models to user's JSON file.
+    """
+    models_file = get_user_models_file()
+    with open(models_file, "w") as f:
+        json.dump(data, f, indent=2)
+
+
+def is_package_model(model_id: str) -> bool:
+    """
+    Check if a model exists in package data.
+    """
+    package_data = load_package_models()
+    return model_id in package_data["models"]

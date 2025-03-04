@@ -33,10 +33,10 @@ class TokenCost(BaseModel):
 
     input_cost: float = Field(description="Cost per 1M input tokens")
     output_cost: float = Field(description="Cost per 1M output tokens")
-    cache_input_cost: float | None = Field(None, description="Cost per 1M cached input tokens")
-    cache_output_cost: float | None = Field(None, description="Cost per 1M cached output tokens")
+    cache_input_cost: float | None = Field(default=None, description="Cost per 1M cached input tokens")
+    cache_output_cost: float | None = Field(default=None, description="Cost per 1M cached output tokens")
     context_window: int | None = Field(default=None, description="Maximum context window in tokens")
-    training_cutoff: str | None = Field(None, description="Training data cutoff date (e.g., 'Apr 2023')")
+    training_cutoff: str | None = Field(default=None, description="Training data cutoff date (e.g., 'Apr 2023')")
 
 
 class ApiParams(BaseModel):
@@ -44,16 +44,16 @@ class ApiParams(BaseModel):
     API parameters supported by the model.
     """
 
-    max_tokens: bool = Field(False, description="Whether the model supports max_tokens parameter")
-    temperature: bool = Field(False, description="Whether the model supports temperature parameter")
-    top_p: bool = Field(False, description="Whether the model supports top_p parameter")
-    frequency_penalty: bool = Field(False, description="Whether the model supports frequency_penalty parameter")
-    presence_penalty: bool = Field(False, description="Whether the model supports presence_penalty parameter")
-    stop: bool = Field(False, description="Whether the model supports stop parameter")
+    max_tokens: bool = Field(default=False, description="Whether the model supports max_tokens parameter")
+    temperature: bool = Field(default=False, description="Whether the model supports temperature parameter")
+    top_p: bool = Field(default=False, description="Whether the model supports top_p parameter")
+    frequency_penalty: bool = Field(default=False, description="Whether the model supports frequency_penalty parameter")
+    presence_penalty: bool = Field(default=False, description="Whether the model supports presence_penalty parameter")
+    stop: bool = Field(default=False, description="Whether the model supports stop parameter")
     n: bool = Field(
-        False, description="Whether the model supports generating multiple completions via the 'n' parameter"
+        default=False, description="Whether the model supports generating multiple completions via the 'n' parameter"
     )
-    stream: bool = Field(False, description="Whether the model supports streaming responses")
+    stream: bool = Field(default=False, description="Whether the model supports streaming responses")
 
 
 class Features(BaseModel):
@@ -74,11 +74,11 @@ class ModelCapabilities(BaseModel):
 
     model_id: str = Field(description="Unique identifier for the model")
     providers: List[Provider] = Field(description="List of providers that support this model")
-    model_family: str | None = Field(None, description="Model family (e.g., 'gpt-4', 'claude-3')")
-    base_model: str | None = Field(None, description="For open source models, the original model name")
+    model_family: str | None = Field(default=None, description="Model family (e.g., 'gpt-4', 'claude-3')")
+    base_model: str | None = Field(default=None, description="For open source models, the original model name")
     api_params: ApiParams = Field(default_factory=ApiParams, description="API parameters supported by the model")
     features: Features = Field(default_factory=Features, description="High-level features supported by the model")
-    token_costs: TokenCost | None = Field(None, description="Token cost information for the model")
+    token_costs: TokenCost | None = Field(default=None, description="Token cost information for the model")
 
     def __str__(self) -> str:
         """

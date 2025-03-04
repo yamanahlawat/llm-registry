@@ -1,0 +1,36 @@
+{
+	// Ruff - Linter
+	"ruff.organizeImports": true,
+	// Python specific settings
+	"[python]": {
+		"editor.formatOnSave": true,
+		"editor.formatOnSaveMode": "file",
+		"editor.renderWhitespace": "all",
+		"editor.codeActionsOnSave": {
+			"source.organizeImports": "explicit"
+		},
+		"editor.defaultFormatter": "charliermarsh.ruff"
+	},
+	// JSON Formatter
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	// SQL settings
+	"sql-formatter.uppercase": true,
+	// Editor settings
+	"editor.bracketPairColorization.enabled": true,
+	"editor.comments.insertSpace": true,
+	"editor.inlineSuggest.enabled": true,
+	// Diff editor settings
+	"diffEditor.renderMarginRevertIcon": true,
+	"diffEditor.renderSideBySide": true,
+	// Git settings
+	"git.untrackedChanges": "separate",
+	// Workbench settings
+	"workbench.editor.enablePreview": false,
+	// File settings
+	"files.trimTrailingWhitespace": true,
+	"files.insertFinalNewline": true,
+	"python.analysis.typeCheckingMode": "basic",
+	"python.analysis.inlayHints.functionReturnTypes": true,
+}

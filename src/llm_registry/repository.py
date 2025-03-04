@@ -25,11 +25,7 @@ class CapabilityRepository:
             data_dir: Directory to store model capability data.
                      If None, defaults to ~/.llm-registry
         """
-        if data_dir is None:
-            self.data_dir = DEFAULT_MODELS_DIR
-        else:
-            self.data_dir = data_dir / "models"
-
+        self.data_dir = DEFAULT_MODELS_DIR if data_dir is None else data_dir / "models"
         self.data_dir.mkdir(parents=True, exist_ok=True)
 
         # Cache for loaded capabilities
