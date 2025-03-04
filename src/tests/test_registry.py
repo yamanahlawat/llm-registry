@@ -1,139 +1,140 @@
-"""Tests for the CapabilityRegistry class."""
+"""
+Tests for the CapabilityRegistry class.
+"""
 
-import json
-from pathlib import Path
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
-import httpx
 import pytest
-from llm_registry import CapabilityRegistry, Provider
+
+from llm_registry import CapabilityRegistry
+from llm_registry.models import Provider
 
 
 @pytest.fixture
-def sample_models_json(tmp_path):
-    """Create a sample models.json file."""
-    models_data = {
-        "version": "1.0.0",
-        "last_updated": "2024-03-02",
+def mock_package_models():
+    return {
         "models": {
-            "o3-mini": {
+            "gpt-4o": {
                 "providers": ["openai"],
-                "model_family": "o3",
-                "api_params": {
-                    "frequency_penalty": True,
-                    "max_tokens": True,
-                    "n": True,
-                    "presence_penalty": True,
-                    "temperature": True,
-                    "top_p": True
-                },
-                "features": {
-                    "streaming": True,
-                    "tools": True,
-                    "vision": False,
-                    "json_mode": True,
-                    "system_prompt": True
-                },
+                "model_family": "gpt-4",
+                "api_params": {"stream": True},
+                "features": {"vision": True, "tools": True, "json_mode": True, "system_prompt": True},
                 "token_costs": {
-                    "input_cost": 0.2,
-                    "output_cost": 0.4,
+                    "input_cost": 2.5,
+                    "output_cost": 10,
+                    "context_window": 128000,
+                    "training_cutoff": "2024-01",
+                },
+            },
+            "claude-3-haiku-latest": {
+                "providers": ["anthropic"],
+                "model_family": "claude-3",
+                "api_params": {"stream": True},
+                "features": {"vision": True, "tools": True, "json_mode": True, "system_prompt": True},
+                "token_costs": {
+                    "input_cost": 15,
+                    "output_cost": 75,
                     "context_window": 200000,
-                    "training_cutoff": "2024-01"
-                }
-            }
+                    "training_cutoff": "2024-02",
+                },
+            },
         }
     }
 
-    json_file = tmp_path / "models.json"
-    with open(json_file, "w") as f:
-        json.dump(models_data, f)
-    return json_file
+
+@pytest.fixture
+def mock_user_models():
+    return {
+        "models": {
+            "gpt-4o": {
+                "providers": ["openai", "azure"],  # Added Azure provider
+                "model_family": "gpt-4",
+                "api_params": {"stream": True},
+                "features": {"vision": True, "tools": True, "json_mode": True, "system_prompt": True},
+                "token_costs": {
+                    "input_cost": 2.0,  # Different cost from package model
+                    "output_cost": 8.0,
+                    "context_window": 128000,
+                    "training_cutoff": "2024-01",
+                },
+            },
+            "custom-model": {
+                "providers": ["openai"],
+                "model_family": "custom",
+                "api_params": {"stream": False},
+                "features": {"vision": False, "tools": False, "json_mode": False, "system_prompt": False},
+                "token_costs": {
+                    "input_cost": 1.0,
+                    "output_cost": 2.0,
+                    "context_window": 8000,
+                    "training_cutoff": "2023-12",
+                },
+            },
+        }
+    }
 
 
-def test_get_models_offline(sample_models_json):
-    """Test getting models in offline mode."""
-    with patch("llm_registry.registry.CapabilityRegistry._get_packaged_data") as mock_get_data:
-        mock_get_data.return_value = json.loads(sample_models_json.read_text())
-        registry = CapabilityRegistry(offline_mode=True)
-        models = registry.get_models()
-
-        assert len(models) == 1
-        model = models[0]
-        assert model.model_id == "o3-mini"
-        assert Provider.OPENAI in model.providers
-        assert model.features.vision is False
-        assert model.token_costs.input_cost == 0.2
+@pytest.fixture
+def registry(mock_package_models, mock_user_models):
+    with patch("llm_registry.registry.load_package_models", return_value=mock_package_models):
+        with patch("llm_registry.registry.load_user_models", return_value=mock_user_models):
+            yield CapabilityRegistry()
 
 
-def test_get_models_by_provider(sample_models_json):
-    """Test filtering models by provider."""
-    with patch("llm_registry.registry.CapabilityRegistry._get_packaged_data") as mock_get_data:
-        mock_get_data.return_value = json.loads(sample_models_json.read_text())
-        registry = CapabilityRegistry(offline_mode=True)
-
-        # Should find the OpenAI model
-        models = registry.get_models(provider=Provider.OPENAI)
-        assert len(models) == 1
-
-        # Should not find any Anthropic models
-        models = registry.get_models(provider=Provider.ANTHROPIC)
-        assert len(models) == 0
+def test_get_model_exists_in_user_models(registry):
+    """Test retrieving a model that exists in user models."""
+    model = registry.get_model("gpt-4o")
+    assert model.model_id == "gpt-4o"
+    assert model.token_costs.input_cost == 2.0  # User model value
+    assert Provider.AZURE in model.providers  # User model has AZURE provider
 
 
-def test_get_specific_model(sample_models_json):
-    """Test getting a specific model by ID."""
-    with patch("llm_registry.registry.CapabilityRegistry._get_packaged_data") as mock_get_data:
-        mock_get_data.return_value = json.loads(sample_models_json.read_text())
-        registry = CapabilityRegistry(offline_mode=True)
-
-        # Should find existing model
-        model = registry.get_model(Provider.OPENAI, "o3-mini")
-        assert model is not None
-        assert model.model_id == "o3-mini"
-
-        # Should return None for non-existent model
-        model = registry.get_model(Provider.OPENAI, "non-existent")
-        assert model is None
+def test_get_model_exists_in_package_models(registry):
+    """Test retrieving a model that exists only in package models."""
+    model = registry.get_model("claude-3-haiku-latest")
+    assert model.model_id == "claude-3-haiku-latest"
+    assert model.token_costs.input_cost == 15.0
+    assert Provider.ANTHROPIC in model.providers
 
 
-@pytest.mark.asyncio
-async def test_remote_fallback(sample_models_json):
-    """Test fallback to packaged data when remote fails."""
-    with patch("llm_registry.registry.CapabilityRegistry._get_packaged_data") as mock_get_data:
-        mock_get_data.return_value = json.loads(sample_models_json.read_text())
-
-        # Mock httpx to simulate remote failure
-        with patch("httpx.Client") as mock_client:
-            mock_response = Mock()
-            mock_response.raise_for_status.side_effect = httpx.HTTPError("Failed")
-            mock_client.return_value.get.return_value = mock_response
-
-            registry = CapabilityRegistry(offline_mode=False)
-            models = registry.get_models()
-
-            # Should fall back to packaged data
-            assert len(models) == 1
-            assert models[0].model_id == "o3-mini"
+def test_get_model_not_found(registry):
+    """Test retrieving a non-existent model."""
+    with pytest.raises(KeyError):
+        registry.get_model("nonexistent-model")
 
 
-def test_cache_behavior(sample_models_json):
-    """Test caching of remote data."""
-    with patch("llm_registry.registry.CapabilityRegistry._get_packaged_data") as mock_get_data:
-        mock_get_data.return_value = json.loads(sample_models_json.read_text())
+def test_get_models_no_filter(registry):
+    """Test retrieving all models with no provider filter."""
+    models = registry.get_models()
+    assert len(models) == 3
+    model_ids = [model.model_id for model in models]
+    assert "gpt-4o" in model_ids
+    assert "claude-3-haiku-latest" in model_ids
+    assert "custom-model" in model_ids
 
-        # Mock httpx to count calls
-        with patch("httpx.Client") as mock_client:
-            mock_response = Mock()
-            mock_response.raise_for_status.return_value = None
-            mock_response.json.return_value = json.loads(sample_models_json.read_text())
-            mock_client.return_value.get.return_value = mock_response
 
-            registry = CapabilityRegistry(offline_mode=False, cache_ttl=10)
+def test_get_models_with_provider_filter(registry):
+    """Test retrieving models filtered by provider."""
+    models = registry.get_models(provider=Provider.OPENAI)
+    assert len(models) == 2
+    model_ids = [model.model_id for model in models]
+    assert "gpt-4o" in model_ids
+    assert "custom-model" in model_ids
+    assert "claude-3-haiku-latest" not in model_ids
 
-            # First call should hit remote
-            registry.get_models()
-            assert mock_client.return_value.get.call_count == 1
+    models = registry.get_models(provider=Provider.ANTHROPIC)
+    assert len(models) == 1
+    assert models[0].model_id == "claude-3-haiku-latest"
 
-            # Second call should use cache
-            registry.get_models()
-            assert mock_client.return_value.get.call_count == 1
+    models = registry.get_models(provider=Provider.AZURE)
+    assert len(models) == 1
+    assert models[0].model_id == "gpt-4o"
+
+
+def test_user_models_override_package_models(registry):
+    """Test that user models override package models with the same ID."""
+    model = registry.get_model("gpt-4o")
+    assert model.token_costs.input_cost == 2.0  # User model value, not 2.5 from package
+    assert len(model.providers) == 2  # User model has both providers
+    assert Provider.OPENAI in model.providers
+    assert Provider.AZURE in model.providers

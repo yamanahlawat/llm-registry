@@ -1,6 +1,4 @@
 {
-  "version": "0.2.0",
-  "last_updated": "2025-03-03",
   "models": {
     "o3-mini": {
       "providers": [
@@ -40,7 +38,7 @@
       },
       "features": {
         "vision": true,
-        "tools": false,
+        "tools": true,
         "json_mode": true,
         "system_prompt": false
       },
@@ -49,7 +47,7 @@
         "cache_input_cost": 7.5,
         "output_cost": 60,
         "context_window": 200000,
-        "training_cutoff": "2024-01"
+        "training_cutoff": "2023-10"
       }
     },
     "o1-mini": {
@@ -68,6 +66,7 @@
       },
       "token_costs": {
         "input_cost": 1.1,
+        "cache_input_cost": 0.55,
         "output_cost": 4.4,
         "context_window": 128000,
         "training_cutoff": "2023-10"
@@ -208,7 +207,7 @@
         "training_cutoff": "2024-02"
       }
     },
-    "claude-3-haiku-20240307": {
+    "claude-3-haiku-latest": {
       "providers": [
         "anthropic"
       ],

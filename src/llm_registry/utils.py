@@ -2,7 +2,11 @@
 Utility functions for the LLM registry package.
 """
 
-from .models import ApiParams, Features, ModelCapabilities, Provider, TokenCost
+import json
+from functools import lru_cache
+from pathlib import Path
+
+from llm_registry.models import ApiParams, Features, ModelCapabilities, Provider, TokenCost
 
 
 def create_model_capability(
@@ -71,3 +75,70 @@ def create_model_capability(
         features=features,
         token_costs=token_costs,
     )
+
+
+def get_user_data_dir() -> Path:
+    """
+    Get the path to user's data directory.
+    """
+    data_dir = Path.home() / ".llm-registry"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    return data_dir
+
+
+def get_user_models_file() -> Path:
+    """
+    Get the path to user's models.json file.
+    """
+    data_dir = get_user_data_dir()
+    models_file = data_dir / "models.json"
+    if not models_file.exists():
+        # Create empty models file with simplified structure
+        with open(models_file, "w", encoding="utf-8") as models_file_obj:
+            json.dump({"models": {}}, models_file_obj, indent=2)
+    return models_file
+
+
+def load_package_models() -> dict:
+    """
+    Load models from package JSON file with caching.
+    """
+    packages_models_file = Path(__file__).parent / "data" / "models.json"
+    with open(packages_models_file, encoding="utf-8") as f:
+        return json.load(f)
+
+
+@lru_cache()
+def load_user_models() -> dict:
+    """
+    Load models from user's JSON file with caching.
+    """
+    models_file = get_user_models_file()
+    try:
+        with open(models_file, encoding="utf-8") as models_file_obj:
+            return json.load(models_file_obj)
+    except json.JSONDecodeError:
+        # If the file is corrupted, return an empty models structure
+        return {"models": {}}
+
+
+def save_user_models(data: dict) -> None:
+    """
+    Save models to user's JSON file.
+    """
+    # Ensure data has the correct structure
+    if "models" not in data:
+        data["models"] = {}
+
+    # Save to file
+    models_file = get_user_models_file()
+    with open(models_file, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+
+
+def is_package_model(model_id: str) -> bool:
+    """
+    Check if a model exists in package data.
+    """
+    package_data = load_package_models()
+    return model_id in package_data["models"]

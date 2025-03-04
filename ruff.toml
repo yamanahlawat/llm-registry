@@ -42,7 +42,7 @@ lint.unfixable = []
 [format]
 quote-style = "double"
 
-[per-file-ignores]
+[lint.per-file-ignores]
 # Tests can use assert
 "tests/*" = ["S101"]
 # Init files often import stuff without using it

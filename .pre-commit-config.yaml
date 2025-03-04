@@ -1,0 +1,26 @@
+
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  # Generic pre commit hooks
+  rev: 'v5.0.0'
+  hooks:
+    - id: check-merge-conflict
+    - id: detect-private-key
+    - id: detect-aws-credentials
+    - id: no-commit-to-branch
+      # Branch to prevent direct commits to
+      args: ["--branch", "main"]
+    - id: debug-statements
+    - id: end-of-file-fixer
+    - id: pretty-format-json
+      args: ["--autofix"]
+      exclude: "^.vscode/|^src/llm_registry/data/models.json$"
+
+- repo: https://github.com/charliermarsh/ruff-pre-commit
+  # Ruff version.
+  rev: v0.8.4
+  hooks:
+    - id: ruff
+      args: [ --fix ]
+    # Run the formatter.
+    - id: ruff-format

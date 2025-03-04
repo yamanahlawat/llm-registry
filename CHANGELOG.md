@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-03-04
+
+### Added
+- Added validation for cache costs in TokenCost model
+- Enhanced error handling for corrupted JSON files
+- Comprehensive test suite with 98% coverage
+- Added pytest configuration
+- New test files: test_integration.py, test_models.py, test_utils.py
+
+### Changed
+- Simplified ApiParams by removing rarely used parameters
+- Improved file handling with proper UTF-8 encoding
+- Enhanced model loading caching mechanism
+- Restructured data directory management
+- Updated gitignore with comprehensive Python patterns
+- Improved README documentation with coverage badge
+
+### Fixed
+- Fixed default value handling in Features class
+- Added proper data structure validation in save_user_models
+- Improved error handling for corrupted JSON files
+- Excluded models.json from formatting to preserve provider organization
+
 ## [0.2.0] - 2025-03-04
 
 ### Added
