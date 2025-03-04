@@ -1,6 +1,4 @@
 {
-  "version": "0.2.0",
-  "last_updated": "2025-03-03",
   "models": {
     "o3-mini": {
       "providers": [

@@ -2,8 +2,6 @@
 CLI interface for LLM Registry.
 """
 
-import json
-
 import typer
 from rich.console import Console
 from rich.table import Table
@@ -17,7 +15,9 @@ console = Console()
 
 
 def get_model_data(model_id: str, data: dict | None = None) -> tuple[dict, dict]:
-    """Get model data and validate it exists."""
+    """
+    Get model data and validate it exists.
+    """
     if data is None:
         data = load_user_models()
 
@@ -38,7 +38,9 @@ def validate_provider(model_data: dict, provider: Provider, model_id: str) -> No
 
 
 def validate_not_package_model(model_id: str, action: str = "modify") -> None:
-    """Validate that a model is not a package model."""
+    """
+    Validate that a model is not a package model.
+    """
     if is_package_model(model_id):
         console.print(
             f"[red]Error: Cannot {action} model '{model_id}'. Package models are read-only. "
@@ -49,11 +51,13 @@ def validate_not_package_model(model_id: str, action: str = "modify") -> None:
 
 @app.command()
 def list(
-    provider: Provider | None = typer.Option(None, help="Filter by provider"),
+    provider: Provider | None = typer.Option(default=None, help="Filter by provider"),
     user_only: bool = typer.Option(False, "--user-only", help="Only show user-defined models"),
     package_only: bool = typer.Option(False, "--package-only", help="Only show package models"),
-):
-    """List available models."""
+) -> None:
+    """
+    List available models.
+    """
     if user_only and package_only:
         console.print("[red]Error: Cannot specify both --user-only and --package-only[/red]")
         raise typer.Exit(code=1)
@@ -140,7 +144,7 @@ def list(
 def get(
     model_id: str = typer.Argument(..., help="Model identifier (e.g., 'gpt-4')"),
     json_output: bool = typer.Option(False, "--json", help="Output in JSON format"),
-):
+) -> None:
     """Get detailed information about a model."""
     registry = CapabilityRegistry()
     try:
@@ -150,7 +154,7 @@ def get(
         raise typer.Exit(code=1) from e
 
     if json_output:
-        console.print_json(json.loads(model.model_dump_json()))
+        console.print_json(model.model_dump_json())
         return
 
     # Create tables for different sections of model information
@@ -185,11 +189,9 @@ def get(
     api_table.add_column("Parameter", style="cyan")
     api_table.add_column("Value")
 
-    api_table.add_row("Max Tokens", str(model.api_params.max_tokens or "N/A"))
-    api_table.add_row("Temperature", str(model.api_params.temperature or "N/A"))
-    api_table.add_row("Top P", str(model.api_params.top_p or "N/A"))
-    api_table.add_row("Frequency Penalty", str(model.api_params.frequency_penalty or "N/A"))
-    api_table.add_row("Presence Penalty", str(model.api_params.presence_penalty or "N/A"))
+    api_table.add_row("Max Tokens", "✅" if model.api_params.max_tokens else "❌")
+    api_table.add_row("Temperature", "✅" if model.api_params.temperature else "❌")
+    api_table.add_row("Top P", "✅" if model.api_params.top_p else "❌")
     api_table.add_row("Streaming Support", "✅" if model.api_params.stream else "❌")
 
     # Features Table
@@ -228,17 +230,13 @@ def add(
     max_tokens: bool = typer.Option(False, "--max-tokens", help="Supports max_tokens parameter"),
     temperature: bool = typer.Option(False, "--temperature", help="Supports temperature parameter"),
     top_p: bool = typer.Option(False, "--top-p", help="Supports top_p parameter"),
-    frequency_penalty: bool = typer.Option(False, "--frequency-penalty", help="Supports frequency_penalty parameter"),
-    presence_penalty: bool = typer.Option(False, "--presence-penalty", help="Supports presence_penalty parameter"),
-    stop: bool = typer.Option(False, "--stop", help="Supports stop parameter"),
-    n: bool = typer.Option(False, "--n", help="Supports generating multiple completions"),
     stream: bool = typer.Option(False, "--stream", help="Supports streaming"),
     # Features
     tools: bool = typer.Option(False, "--tools", help="Supports tools/function calling"),
     vision: bool = typer.Option(False, "--vision", help="Supports vision/image input"),
     json_mode: bool = typer.Option(False, "--json-mode", help="Supports JSON mode"),
     system_prompt: bool = typer.Option(False, "--system-prompt", help="Supports system prompt"),
-):
+) -> None:
     """Add a new model to user's registry."""
     # Validate not modifying package model
     validate_not_package_model(model_id, "add")
@@ -248,10 +246,6 @@ def add(
         max_tokens=max_tokens,
         temperature=temperature,
         top_p=top_p,
-        frequency_penalty=frequency_penalty,
-        presence_penalty=presence_penalty,
-        stop=stop,
-        n=n,
         stream=stream,
     )
 
@@ -315,7 +309,7 @@ def delete(
     model_id: str = typer.Argument(..., help="Model identifier (e.g., 'gpt-4')"),
     provider: Provider | None = typer.Option(None, help="Provider to remove (if None, deletes entire model)"),
     force: bool = typer.Option(False, "--force", "-f", help="Force deletion without confirmation"),
-):
+) -> None:
     """Delete a model or remove a provider from user's registry."""
     # Validate not modifying package model
     validate_not_package_model(model_id, "delete")
@@ -366,14 +360,6 @@ def update(
     max_tokens: bool | None = typer.Option(None, "--max-tokens", help="Supports max_tokens parameter"),
     temperature: bool | None = typer.Option(None, "--temperature", help="Supports temperature parameter"),
     top_p: bool | None = typer.Option(None, "--top-p", help="Supports top_p parameter"),
-    frequency_penalty: bool | None = typer.Option(
-        None, "--frequency-penalty", help="Supports frequency_penalty parameter"
-    ),
-    presence_penalty: bool | None = typer.Option(
-        None, "--presence-penalty", help="Supports presence_penalty parameter"
-    ),
-    stop: bool | None = typer.Option(None, "--stop", help="Supports stop parameter"),
-    n: bool | None = typer.Option(None, "--n", help="Supports generating multiple completions"),
     stream: bool | None = typer.Option(None, "--stream", help="Supports streaming"),
     # Features
     tools: bool | None = typer.Option(None, "--tools", help="Supports tools/function calling"),
@@ -415,9 +401,7 @@ def update(
             model_data["token_costs"]["training_cutoff"] = training_cutoff
 
     # Update API parameters if any provided
-    if any(
-        x is not None for x in [max_tokens, temperature, top_p, frequency_penalty, presence_penalty, stop, n, stream]
-    ):
+    if any(x is not None for x in [max_tokens, temperature, top_p, stream]):
         if "api_params" not in model_data:
             model_data["api_params"] = {}
         if max_tokens is not None:
@@ -426,14 +410,6 @@ def update(
             model_data["api_params"]["temperature"] = temperature
         if top_p is not None:
             model_data["api_params"]["top_p"] = top_p
-        if frequency_penalty is not None:
-            model_data["api_params"]["frequency_penalty"] = frequency_penalty
-        if presence_penalty is not None:
-            model_data["api_params"]["presence_penalty"] = presence_penalty
-        if stop is not None:
-            model_data["api_params"]["stop"] = stop
-        if n is not None:
-            model_data["api_params"]["n"] = n
         if stream is not None:
             model_data["api_params"]["stream"] = stream
 
@@ -454,5 +430,5 @@ def update(
     console.print(f"[green]Updated model '{model_id}'.[/green]")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     app()

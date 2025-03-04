@@ -77,52 +77,62 @@ def create_model_capability(
     )
 
 
-def get_user_models_dir() -> Path:
+def get_user_data_dir() -> Path:
     """
-    Get the path to user's models directory.
+    Get the path to user's data directory.
     """
-    return Path.home() / ".llm-registry" / "models"
+    data_dir = Path.home() / ".llm-registry"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    return data_dir
 
 
 def get_user_models_file() -> Path:
     """
     Get the path to user's models.json file.
     """
-    models_dir = get_user_models_dir()
-    models_dir.mkdir(parents=True, exist_ok=True)
-    models_file = models_dir / "models.json"
+    data_dir = get_user_data_dir()
+    models_file = data_dir / "models.json"
     if not models_file.exists():
-        # Create empty models file
-        with open(models_file, "w") as f:
-            json.dump({"models": {}}, f, indent=2)
+        # Create empty models file with simplified structure
+        with open(models_file, "w", encoding="utf-8") as models_file_obj:
+            json.dump({"models": {}}, models_file_obj, indent=2)
     return models_file
 
 
-@lru_cache()
 def load_package_models() -> dict:
     """
     Load models from package JSON file with caching.
     """
     packages_models_file = Path(__file__).parent / "data" / "models.json"
-    with open(packages_models_file) as f:
+    with open(packages_models_file, encoding="utf-8") as f:
         return json.load(f)
 
 
 @lru_cache()
 def load_user_models() -> dict:
     """
-    Load models from user's JSON file.
+    Load models from user's JSON file with caching.
     """
-    with open(get_user_models_file()) as f:
-        return json.load(f)
+    models_file = get_user_models_file()
+    try:
+        with open(models_file, encoding="utf-8") as models_file_obj:
+            return json.load(models_file_obj)
+    except json.JSONDecodeError:
+        # If the file is corrupted, return an empty models structure
+        return {"models": {}}
 
 
 def save_user_models(data: dict) -> None:
     """
     Save models to user's JSON file.
     """
+    # Ensure data has the correct structure
+    if "models" not in data:
+        data["models"] = {}
+
+    # Save to file
     models_file = get_user_models_file()
-    with open(models_file, "w") as f:
+    with open(models_file, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
 

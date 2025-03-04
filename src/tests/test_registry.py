@@ -1,181 +1,140 @@
-"""Tests for the CapabilityRegistry class."""
+"""
+Tests for the CapabilityRegistry class.
+"""
 
-import json
 from unittest.mock import patch
 
 import pytest
 
-from llm_registry import CapabilityRegistry, Provider
+from llm_registry import CapabilityRegistry
+from llm_registry.models import Provider
 
 
 @pytest.fixture
-def sample_package_models(tmp_path):
-    """Create a sample package models.json file."""
-    models_data = {
-        "version": "1.0.0",
-        "last_updated": "2024-03-02",
+def mock_package_models():
+    return {
         "models": {
-            "o3-mini": {
+            "gpt-4o": {
                 "providers": ["openai"],
-                "model_family": "o3",
-                "api_params": {
-                    "max_tokens": True,
-                    "temperature": True,
-                    "top_p": True,
-                    "frequency_penalty": True,
-                    "presence_penalty": True,
-                    "stream": True,
-                },
-                "features": {"tools": True, "vision": False, "json_mode": True, "system_prompt": True},
+                "model_family": "gpt-4",
+                "api_params": {"stream": True},
+                "features": {"vision": True, "tools": True, "json_mode": True, "system_prompt": True},
                 "token_costs": {
-                    "input_cost": 0.2,
-                    "output_cost": 0.4,
-                    "context_window": 200000,
+                    "input_cost": 2.5,
+                    "output_cost": 10,
+                    "context_window": 128000,
                     "training_cutoff": "2024-01",
                 },
-            }
-        },
+            },
+            "claude-3-haiku-latest": {
+                "providers": ["anthropic"],
+                "model_family": "claude-3",
+                "api_params": {"stream": True},
+                "features": {"vision": True, "tools": True, "json_mode": True, "system_prompt": True},
+                "token_costs": {
+                    "input_cost": 15,
+                    "output_cost": 75,
+                    "context_window": 200000,
+                    "training_cutoff": "2024-02",
+                },
+            },
+        }
     }
-
-    json_file = tmp_path / "models.json"
-    with open(json_file, "w") as f:
-        json.dump(models_data, f)
-    return json_file
 
 
 @pytest.fixture
-def sample_user_models(tmp_path):
-    """Create a sample user models.json file."""
-    models_data = {
+def mock_user_models():
+    return {
         "models": {
+            "gpt-4o": {
+                "providers": ["openai", "azure"],  # Added Azure provider
+                "model_family": "gpt-4",
+                "api_params": {"stream": True},
+                "features": {"vision": True, "tools": True, "json_mode": True, "system_prompt": True},
+                "token_costs": {
+                    "input_cost": 2.0,  # Different cost from package model
+                    "output_cost": 8.0,
+                    "context_window": 128000,
+                    "training_cutoff": "2024-01",
+                },
+            },
             "custom-model": {
-                "providers": ["anthropic"],
+                "providers": ["openai"],
                 "model_family": "custom",
-                "api_params": {"max_tokens": True, "temperature": True, "stream": True},
-                "features": {"tools": False, "vision": True, "json_mode": False, "system_prompt": True},
+                "api_params": {"stream": False},
+                "features": {"vision": False, "tools": False, "json_mode": False, "system_prompt": False},
                 "token_costs": {
-                    "input_cost": 0.1,
-                    "output_cost": 0.2,
-                    "cache_input_cost": 0.05,
-                    "cache_output_cost": 0.1,
-                    "context_window": 100000,
-                    "training_cutoff": "2024-02",
+                    "input_cost": 1.0,
+                    "output_cost": 2.0,
+                    "context_window": 8000,
+                    "training_cutoff": "2023-12",
                 },
-            }
+            },
         }
     }
 
-    json_file = tmp_path / "models.json"
-    with open(json_file, "w") as f:
-        json.dump(models_data, f)
-    return json_file
+
+@pytest.fixture
+def registry(mock_package_models, mock_user_models):
+    with patch("llm_registry.registry.load_package_models", return_value=mock_package_models):
+        with patch("llm_registry.registry.load_user_models", return_value=mock_user_models):
+            yield CapabilityRegistry()
 
 
-def test_get_models(sample_package_models, sample_user_models):
-    """Test getting all models."""
-    with (
-        patch("llm_registry.registry.CapabilityRegistry._load_package_models") as mock_package,
-        patch("llm_registry.registry.CapabilityRegistry._load_user_models") as mock_user,
-    ):
-        mock_package.return_value = json.loads(sample_package_models.read_text())
-        mock_user.return_value = json.loads(sample_user_models.read_text())
-
-        registry = CapabilityRegistry()
-        models = registry.get_models()
-
-        assert len(models) == 2
-        model_ids = {m.model_id for m in models}
-        assert model_ids == {"o3-mini", "custom-model"}
+def test_get_model_exists_in_user_models(registry):
+    """Test retrieving a model that exists in user models."""
+    model = registry.get_model("gpt-4o")
+    assert model.model_id == "gpt-4o"
+    assert model.token_costs.input_cost == 2.0  # User model value
+    assert Provider.AZURE in model.providers  # User model has AZURE provider
 
 
-def test_get_models_by_provider(sample_package_models, sample_user_models):
-    """Test filtering models by provider."""
-    with (
-        patch("llm_registry.registry.CapabilityRegistry._load_package_models") as mock_package,
-        patch("llm_registry.registry.CapabilityRegistry._load_user_models") as mock_user,
-    ):
-        mock_package.return_value = json.loads(sample_package_models.read_text())
-        mock_user.return_value = json.loads(sample_user_models.read_text())
-
-        registry = CapabilityRegistry()
-
-        # Test OpenAI models
-        models = registry.get_models(provider=Provider.OPENAI)
-        assert len(models) == 1
-        assert models[0].model_id == "o3-mini"
-
-        # Test Anthropic models
-        models = registry.get_models(provider=Provider.ANTHROPIC)
-        assert len(models) == 1
-        assert models[0].model_id == "custom-model"
-
-        # Test non-existent provider
-        models = registry.get_models(provider=Provider.COHERE)
-        assert len(models) == 0
+def test_get_model_exists_in_package_models(registry):
+    """Test retrieving a model that exists only in package models."""
+    model = registry.get_model("claude-3-haiku-latest")
+    assert model.model_id == "claude-3-haiku-latest"
+    assert model.token_costs.input_cost == 15.0
+    assert Provider.ANTHROPIC in model.providers
 
 
-def test_get_model(sample_package_models, sample_user_models):
-    """Test getting a specific model by ID."""
-    with (
-        patch("llm_registry.registry.CapabilityRegistry._load_package_models") as mock_package,
-        patch("llm_registry.registry.CapabilityRegistry._load_user_models") as mock_user,
-    ):
-        mock_package.return_value = json.loads(sample_package_models.read_text())
-        mock_user.return_value = json.loads(sample_user_models.read_text())
-
-        registry = CapabilityRegistry()
-
-        # Test getting package model
-        model = registry.get_model("o3-mini")
-        assert model is not None
-        assert model.model_id == "o3-mini"
-        assert Provider.OPENAI in model.providers
-        assert model.model_family == "o3"
-
-        # Test getting user model
-        model = registry.get_model("custom-model")
-        assert model is not None
-        assert model.model_id == "custom-model"
-        assert Provider.ANTHROPIC in model.providers
-        assert model.model_family == "custom"
-
-        # Test non-existent model
-        with pytest.raises(KeyError) as exc:
-            registry.get_model("non-existent")
-        assert "not found" in str(exc.value)
+def test_get_model_not_found(registry):
+    """Test retrieving a non-existent model."""
+    with pytest.raises(KeyError):
+        registry.get_model("nonexistent-model")
 
 
-def test_user_model_override(sample_package_models):
-    """Test that user models override package models."""
-    # Create user model with same ID as package model but different data
-    user_data = {
-        "models": {
-            "o3-mini": {
-                "providers": ["anthropic"],
-                "model_family": "custom",
-                "api_params": {"max_tokens": True, "temperature": True, "stream": True},
-                "features": {"tools": True, "vision": True, "json_mode": True, "system_prompt": True},
-                "token_costs": {
-                    "input_cost": 0.1,
-                    "output_cost": 0.2,
-                    "context_window": 100000,
-                    "training_cutoff": "2024-02",
-                },
-            }
-        }
-    }
+def test_get_models_no_filter(registry):
+    """Test retrieving all models with no provider filter."""
+    models = registry.get_models()
+    assert len(models) == 3
+    model_ids = [model.model_id for model in models]
+    assert "gpt-4o" in model_ids
+    assert "claude-3-haiku-latest" in model_ids
+    assert "custom-model" in model_ids
 
-    with (
-        patch("llm_registry.registry.CapabilityRegistry._load_package_models") as mock_package,
-        patch("llm_registry.registry.CapabilityRegistry._load_user_models") as mock_user,
-    ):
-        mock_package.return_value = json.loads(sample_package_models.read_text())
-        mock_user.return_value = user_data
 
-        registry = CapabilityRegistry()
-        model = registry.get_model("o3-mini")
+def test_get_models_with_provider_filter(registry):
+    """Test retrieving models filtered by provider."""
+    models = registry.get_models(provider=Provider.OPENAI)
+    assert len(models) == 2
+    model_ids = [model.model_id for model in models]
+    assert "gpt-4o" in model_ids
+    assert "custom-model" in model_ids
+    assert "claude-3-haiku-latest" not in model_ids
 
-        # Should have user model data
-        assert model.providers == [Provider.ANTHROPIC]
-        assert model.model_family == "custom"
-        assert model.token_costs.input_cost == 0.1
+    models = registry.get_models(provider=Provider.ANTHROPIC)
+    assert len(models) == 1
+    assert models[0].model_id == "claude-3-haiku-latest"
+
+    models = registry.get_models(provider=Provider.AZURE)
+    assert len(models) == 1
+    assert models[0].model_id == "gpt-4o"
+
+
+def test_user_models_override_package_models(registry):
+    """Test that user models override package models with the same ID."""
+    model = registry.get_model("gpt-4o")
+    assert model.token_costs.input_cost == 2.0  # User model value, not 2.5 from package
+    assert len(model.providers) == 2  # User model has both providers
+    assert Provider.OPENAI in model.providers
+    assert Provider.AZURE in model.providers

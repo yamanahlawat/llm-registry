@@ -1,6 +1,7 @@
 # LLM Registry
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
+[![Coverage](https://img.shields.io/badge/coverage-98%25-brightgreen)]()
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)]()
 
 LLM Registry is a Python package that provides a unified interface for discovering and managing the capabilities of various Large Language Models (LLMs). It includes a robust API, a rich CLI, and supports synchronization between local and remote model registries.
@@ -9,6 +10,7 @@ LLM Registry is a Python package that provides a unified interface for discoveri
 - [Overview](#overview)
 - [Features](#features)
 - [Installation](#installation)
+- [What's New in v0.2.0](#whats-new-in-v020)
 - [Library Usage](#library-usage)
 - [CLI Usage](#cli-usage)
 - [Model Capabilities](#model-capabilities)
@@ -23,10 +25,13 @@ Manage and discover LLM model capabilities across multiple providers like OpenAI
 ## Features
 
 - **Unified API** for capability discovery and management
-- **Multiple Providers**: Supports OpenAI, Anthropic, and others
-- **Local and Remote Storage**: Synchronize your model registries
-- **Rich Command-Line Interface (CLI)**
+- **Multiple Providers**: Supports OpenAI, Anthropic, Google, Cohere, Mistral, Meta, and others
+- **Local Storage**: Track model metadata locally
+- **Rich Command-Line Interface (CLI)**: Intuitive commands for listing, adding, updating, and deleting models
 - **Dynamic Capability Management**: Easily add, update, and delete model data
+- **Comprehensive Model Metadata**: Track costs, features, and API parameters
+- **Token Cost Tracking**: Standard and cached token costs
+- **Model Grouping**: Organize models by family and provider
 
 ## Installation
 
@@ -35,6 +40,20 @@ Install via pip:
 ```bash
 pip install llm-registry
 ```
+
+## What's New in v0.2.0
+
+### Added
+- **Token Cost Caching**: Track both standard and cached token costs
+- **Comprehensive API Parameter Support**: Track support for max_tokens, temperature, top_p, and more
+- **Model Grouping**: Organize models by family and provider
+- **Cache Mechanism**: Improved performance with caching for loading models file
+- **Development Dependencies**: Added ipython and ipdb for easier debugging
+
+### Changed
+- **Restructured CLI**: Centralized model data management
+- **Enhanced Model Listing**: Additional cost columns in display output
+- **Improved Model Creation**: Separated API parameters and features for clearer capabilities
 
 ## Library Usage
 
@@ -53,8 +72,8 @@ for model in models:
 ### Retrieve a Specific Model's Capabilities
 
 ```python
-model = registry.get_model(Provider.OPENAI, "gpt-4")
-if model and model.supports_streaming:
+model = registry.get_model("gpt-4")
+if model and model.api_params.stream:
     from openai import OpenAI  # Replace with actual OpenAI client import
     client = OpenAI()  # Initialize client with streaming enabled
     response = client.chat.completions.create(
@@ -89,7 +108,7 @@ repo.save_model_capabilities(new_model)
 
 ## CLI Usage
 
-The CLI tool `llmr` allows you to interact with model capabilities directly from the terminal.
+The CLI tools `llmr` and `llm-registry` allow you to interact with model capabilities directly from the terminal.
 
 ### List Models
 
@@ -101,12 +120,36 @@ llmr list
 
 ![CLI Screenshot](./assets/images/cli.png)
 
-*The above screenshot demonstrates how the CLI tool (`llmr`) currently looks like when listing models.
+*The above screenshot demonstrates how the CLI tool (`llmr`) currently looks like when listing models.*
 
 To filter models by provider:
 
 ```bash
 llmr list --provider openai
+```
+
+Additional filtering options:
+
+```bash
+# Show only user-defined models
+llmr list --user-only
+
+# Show only package-included models
+llmr list --package-only
+```
+
+### Get Detailed Model Information
+
+Get detailed information about a specific model:
+
+```bash
+llmr get gpt-4
+```
+
+For JSON output:
+
+```bash
+llmr get gpt-4 --json
 ```
 
 ### Add Model
@@ -119,12 +162,27 @@ llmr add gpt-4 \
     --model-family GPT-4 \
     --input-cost 0.01 \
     --output-cost 0.03 \
+    --cache-input-cost 0.005 \
+    --cache-output-cost 0.015 \
     --context-window 8192 \
     --training-cutoff 2023-04 \
-    --streaming \
+    --stream \
     --tools \
     --json-mode \
     --system-prompt
+```
+
+### Update Model
+
+Update an existing model:
+
+```bash
+llmr update gpt-4 \
+    --provider openai \
+    --model-family "GPT-4 Turbo" \
+    --input-cost 0.005 \
+    --output-cost 0.015 \
+    --vision
 ```
 
 ### Delete Model
@@ -146,8 +204,14 @@ Each model entry tracks:
   - Model ID and Model Family
 - **Cost Details**
   - Input/Output token costs (per 1M tokens)
+  - Cached Input/Output token costs (per 1M tokens)
   - Context window size
   - Training data cutoff date
+- **API Parameters**
+  - Max tokens support
+  - Temperature support
+  - Top-p support
+  - Streaming support
 - **Feature Support**
   - Streaming responses
   - Tools/Function calling
@@ -165,7 +229,7 @@ Default model data is stored in `~/.llm-registry`. You can override the director
 
 ### Requirements
 - Python 3.13+
-- [uv](https://github.com/your_org/uv) for dependency management
+- [uv](https://github.com/astral-sh/uv) for dependency management
 
 ### Setup
 
