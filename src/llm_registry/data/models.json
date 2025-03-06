@@ -22,7 +22,7 @@
         "cache_input_cost": 0.55,
         "output_cost": 4.4,
         "context_window": 200000,
-        "training_cutoff": "2024-01"
+        "training_cutoff": "2023-10"
       }
     },
     "o1": {
@@ -31,7 +31,7 @@
       ],
       "model_family": "o1",
       "api_params": {
-        "max_tokens": false,
+        "max_tokens": true,
         "temperature": false,
         "top_p": false,
         "stream": true
@@ -56,13 +56,16 @@
       ],
       "model_family": "o1",
       "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
         "stream": true
       },
       "features": {
         "vision": false,
-        "tools": true,
+        "tools": false,
         "json_mode": true,
-        "system_prompt": true
+        "system_prompt": false
       },
       "token_costs": {
         "input_cost": 1.1,
@@ -78,6 +81,9 @@
       ],
       "model_family": "gpt-4",
       "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
         "stream": true
       },
       "features": {
@@ -91,15 +97,18 @@
         "cache_input_cost": 37.5,
         "output_cost": 150,
         "context_window": 128000,
-        "training_cutoff": "2024-01"
+        "training_cutoff": "2023-10"
       }
     },
     "gpt-4o": {
       "providers": [
-        "openai"
+        "openai", "github"
       ],
       "model_family": "gpt-4",
       "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
         "stream": true
       },
       "features": {
@@ -113,15 +122,18 @@
         "cache_input_cost": 1.25,
         "output_cost": 10,
         "context_window": 128000,
-        "training_cutoff": "2024-01"
+        "training_cutoff": "2023-10"
       }
     },
     "gpt-4o-mini": {
       "providers": [
-        "openai"
+        "openai", "github"
       ],
       "model_family": "gpt-4",
       "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
         "stream": true
       },
       "features": {
