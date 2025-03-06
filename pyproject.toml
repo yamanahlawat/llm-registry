@@ -1,6 +1,6 @@
 [project]
 name = "llm-registry"
-version = "0.3.0"
+version = "0.3.1"
 description = "A centralized registry for discovering and managing LLM model capabilities. Track model features, costs, and limitations across providers like OpenAI and Anthropic. Supports both verified model definitions and user-managed entries with local storage."
 readme = "README.md"
 authors = [
