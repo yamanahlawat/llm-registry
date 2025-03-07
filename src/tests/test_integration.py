@@ -7,6 +7,7 @@ from unittest.mock import patch
 import pytest
 
 from llm_registry import CapabilityRegistry, CapabilityRepository, create_model_capability
+from llm_registry.exceptions import ModelNotFoundError
 from llm_registry.models import Provider
 
 
@@ -199,6 +200,7 @@ class TestIntegration:
         final_registry._package_models = mock_package_models
         final_registry._user_models = post_deletion_models
 
-        # Verify model is gone
-        with pytest.raises(KeyError):
+        # Test that deleted model raises ModelNotFoundError
+        with pytest.raises(ModelNotFoundError) as exc_info:
             final_registry.get_model("test-model")
+        assert str(exc_info.value) == "Model 'test-model' not found in registry"

@@ -7,6 +7,7 @@ from rich.console import Console
 from rich.table import Table
 
 from llm_registry import CapabilityRegistry, Provider
+from llm_registry.exceptions import ModelNotFoundError
 from llm_registry.models import ApiParams, Features, ModelCapabilities, TokenCost
 from llm_registry.utils import is_package_model, load_package_models, load_user_models, save_user_models
 
@@ -149,8 +150,8 @@ def get(
     registry = CapabilityRegistry()
     try:
         model = registry.get_model(model_id)
-    except KeyError as e:
-        console.print(f"[red]Error: Model '{model_id}' not found[/red]")
+    except ModelNotFoundError as e:
+        console.print(f"[red]Error: {str(e)}[/red]")
         raise typer.Exit(code=1) from e
 
     if json_output:

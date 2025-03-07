@@ -10,6 +10,7 @@ import typer
 from typer.testing import CliRunner
 
 from llm_registry.cli import app, get_model_data, validate_not_package_model, validate_provider
+from llm_registry.exceptions import ModelNotFoundError
 from llm_registry.models import ModelCapabilities, Provider
 
 
@@ -185,7 +186,7 @@ def test_get_command_nonexistent_model(runner, mock_package_models, mock_user_mo
         with patch("llm_registry.cli.load_user_models", return_value=mock_user_models):
             result = runner.invoke(app, ["get", "nonexistent-model"])
             assert result.exit_code == 1
-            assert "Error: Model 'nonexistent-model' not found" in result.stdout
+            assert "Error: Model 'nonexistent-model' not found in registry" in result.stdout
 
 
 def test_add_command(runner, mock_user_models):
@@ -415,12 +416,12 @@ def test_get_command_model_not_found(runner):
         mock_registry = MagicMock()
         mock_registry_class.return_value = mock_registry
 
-        # Make get_model raise KeyError
-        mock_registry.get_model.side_effect = KeyError("model not found")
+        # Make get_model raise ModelNotFoundError
+        mock_registry.get_model.side_effect = ModelNotFoundError("Model 'non-existent-model' not found in registry")
 
         result = runner.invoke(app, ["get", "non-existent-model"])
         assert result.exit_code == 1
-        assert "Error: Model 'non-existent-model' not found" in result.stdout
+        assert "Error: Model 'non-existent-model' not found in registry" in result.stdout
 
 
 def test_add_command_existing_provider(runner):
