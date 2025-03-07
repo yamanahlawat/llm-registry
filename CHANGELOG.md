@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2025-03-07
+
+### Added
+- New models:
+  - Deepseek series: deepseek-r1 (via GitHub)
+  - Phi-4 series: phi-4 and phi-4-multimodal-instruct (via GitHub)
+    - phi-4: Base model with JSON mode and system prompt support
+    - phi-4-multimodal-instruct: Enhanced version with vision and tools support
+
+### Changed
+- Enhanced error handling in CLI
+  - Introduced ModelNotFoundError for better error reporting
+  - Updated get command to use new exception type
+- Model capabilities:
+  - Full API parameter support (max_tokens, temperature, top_p, stream)
+  - Advanced features in phi-4-multimodal-instruct (vision, tools, json_mode, system_prompt)
+
 ## [0.3.1] - 2025-03-06
 - Updated model api_params, features, and token_costs
 

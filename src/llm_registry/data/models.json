@@ -241,6 +241,81 @@
         "context_window": 200000,
         "training_cutoff": "2024-02"
       }
+    },
+    "deepseek-r1": {
+      "providers": [
+        "github"
+      ],
+      "model_family": "deepseek",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": false,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "cache_input_cost": 0.0,
+        "output_cost": 0,
+        "context_window": 128000,
+        "training_cutoff": "2023-10"
+      }
+    },
+    "phi-4": {
+      "providers": [
+        "github"
+      ],
+      "model_family": "phi-4",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": false,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "cache_input_cost": 0.0,
+        "output_cost": 0,
+        "context_window": 128000,
+        "training_cutoff": "2024-06"
+      }
+    },
+    "phi-4-multimodal-instruct": {
+      "providers": [
+        "github"
+      ],
+      "model_family": "phi-4",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "cache_input_cost": 0.0,
+        "output_cost": 0,
+        "context_window": 128000,
+        "training_cutoff": "2024-06"
+      }
     }
   }
 }

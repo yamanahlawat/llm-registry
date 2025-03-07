@@ -1,10 +1,19 @@
-# LLM Registry
+<div align="center">
+
+# 🤖 LLM Registry
+
+*Your Central Hub for LLM Model Management*
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
 [![Coverage](https://img.shields.io/badge/coverage-98%25-brightgreen)]()
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)]()
+[![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)]()
 
-LLM Registry is a Python package that provides a unified interface for discovering and managing the capabilities of various Large Language Models (LLMs). It includes a robust API, a rich CLI, and supports synchronization between local and remote model registries.
+</div>
+
+---
+
+LLM Registry is a Python package that provides a unified interface for discovering and managing the capabilities of various Large Language Models (LLMs). It includes a robust API, a rich CLI, and supports both package-included and user-managed model registries with local storage. The package supports multi-provider models, allowing a single model to be associated with multiple providers.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -17,22 +26,51 @@ LLM Registry is a Python package that provides a unified interface for discoveri
 - [Development](#development)
 - [License](#license)
 
-## Overview
+## 🎯 Overview
 
 Manage and discover LLM model capabilities across multiple providers like OpenAI, Anthropic, and more in a centralized registry. Use this package to check model capabilities before initializing provider clients and to manage model metadata efficiently.
 
-## Features
+> 💡 Perfect for teams managing multiple LLM providers and wanting to standardize their model interactions.
 
-- **Unified API** for capability discovery and management
-- **Multiple Providers**: Supports OpenAI, Anthropic, Google, Cohere, Mistral, Meta, and others
-- **Local Storage**: Track model metadata locally
-- **Rich Command-Line Interface (CLI)**: Intuitive commands for listing, adding, updating, and deleting models
-- **Dynamic Capability Management**: Easily add, update, and delete model data
-- **Comprehensive Model Metadata**: Track costs, features, and API parameters
-- **Token Cost Tracking**: Standard and cached token costs
-- **Model Grouping**: Organize models by family and provider
+## ✨ Features
 
-## Installation
+🔗 **Unified API**
+- Single interface for capability discovery and management
+- Consistent experience across all providers
+
+🏢 **Multiple Providers**
+- Support for OpenAI, Anthropic, Google, Cohere, Mistral, Meta, and more
+- Multi-provider model support - associate a single model with multiple providers
+
+💾 **Smart Storage**
+- Local storage for model metadata
+- Package-included and user-managed registries
+- Efficient caching mechanism
+
+🖥️ **Rich CLI Experience**
+- Intuitive commands for model management
+- Beautiful terminal output with rich formatting
+- Quick access to model information
+
+📊 **Comprehensive Tracking**
+- Token costs (standard and cached)
+- Model features and capabilities
+- API parameters and limitations
+- Training cutoff dates
+
+🗂️ **Organization**
+- Group models by family and provider
+- Easy filtering and search
+
+## 🚀 Installation
+
+Install via uv:
+
+```bash
+uv add llm-registry
+```
+
+---
 
 Install via pip:
 
@@ -40,11 +78,11 @@ Install via pip:
 pip install llm-registry
 ```
 
-## Library Usage
+## 📚 Library Usage
 
 Integrate the package in your Python projects by following these steps:
 
-### Listing Models
+### 📋 Listing Models
 
 ```python
 from llm_registry import CapabilityRegistry, Provider
@@ -54,7 +92,7 @@ for model in models:
     print(model)
 ```
 
-### Retrieve a Specific Model's Capabilities
+### 🔍 Retrieve a Specific Model's Capabilities
 
 ```python
 model = registry.get_model("gpt-4")
@@ -68,16 +106,21 @@ if model and model.api_params.stream:
     )
 ```
 
-### Add a New Model Capability
+### ➕ Add a New Model Capability
 
 ```python
 from llm_registry.utils import create_model_capability
+from llm_registry import Provider
+
+# Single provider model
 new_model = create_model_capability(
     model_id="gpt-4",
-    provider=Provider.OPENAI,
+    provider=Provider.OPENAI,  # Automatically converted to list internally
     model_family="GPT-4",
     input_cost=0.01,
     output_cost=0.03,
+    cache_input_cost=0.005,  # Optional cached token costs
+    cache_output_cost=0.015,
     context_window=8192,
     training_cutoff="2023-04",
     supports_streaming=True,
@@ -86,16 +129,27 @@ new_model = create_model_capability(
     supports_system_prompt=True
 )
 
+# Multi-provider model
+multi_provider_model = create_model_capability(
+    model_id="llama-2-70b",
+    provider=[Provider.META, Provider.GITHUB],
+    model_family="Llama 2",
+    input_cost=0.0007,
+    output_cost=0.0009,
+    context_window=4096
+)
+
 from llm_registry import CapabilityRepository
 repo = CapabilityRepository()
 repo.save_model_capabilities(new_model)
+repo.save_model_capabilities(multi_provider_model)
 ```
 
-## CLI Usage
+## 💻 CLI Usage
 
 The CLI tools `llmr` and `llm-registry` allow you to interact with model capabilities directly from the terminal.
 
-### List Models
+### 📋 List Models
 
 View all available models:
 
@@ -123,7 +177,7 @@ llmr list --user-only
 llmr list --package-only
 ```
 
-### Get Detailed Model Information
+### 🔍 Get Detailed Model Information
 
 Get detailed information about a specific model:
 
@@ -137,7 +191,40 @@ For JSON output:
 llmr get gpt-4 --json
 ```
 
-### Add Model
+Output
+```
+❯ llmr get o1 --json
+{
+  "model_id": "o1",
+  "providers": [
+    "openai"
+  ],
+  "model_family": "o1",
+  "base_model": null,
+  "api_params": {
+    "max_tokens": true,
+    "temperature": false,
+    "top_p": false,
+    "stream": true
+  },
+  "features": {
+    "vision": true,
+    "tools": true,
+    "json_mode": true,
+    "system_prompt": false
+  },
+  "token_costs": {
+    "input_cost": 15.0,
+    "output_cost": 60.0,
+    "cache_input_cost": 7.5,
+    "cache_output_cost": null,
+    "context_window": 200000,
+    "training_cutoff": "2023-10"
+  }
+}
+```
+
+### ➕ Add Model
 
 Add a new model:
 
@@ -157,7 +244,7 @@ llmr add gpt-4 \
     --system-prompt
 ```
 
-### Update Model
+### 🔄 Update Model
 
 Update an existing model:
 
@@ -170,7 +257,7 @@ llmr update gpt-4 \
     --vision
 ```
 
-### Delete Model
+### 🗑️ Delete Model
 
 Remove an existing model:
 
@@ -180,29 +267,43 @@ llmr delete gpt-4 --provider openai
 
 Use `-f` or `--force` to bypass confirmation.
 
-## Model Capabilities
+## 🎯 Model Capabilities
 
 Each model entry tracks:
 
-- **Basic Information**
-  - Provider (e.g., OpenAI, Anthropic)
+🏷️ **Basic Information**
+  - Providers (supports multiple providers per model)
   - Model ID and Model Family
-- **Cost Details**
+
+💰 **Cost Details**
   - Input/Output token costs (per 1M tokens)
   - Cached Input/Output token costs (per 1M tokens)
   - Context window size
   - Training data cutoff date
-- **API Parameters**
+
+⚙️ **API Parameters**
   - Max tokens support
   - Temperature support
   - Top-p support
   - Streaming support
-- **Feature Support**
+
+✨ **Feature Support**
   - Streaming responses
   - Tools/Function calling
   - Vision/Image input
   - JSON mode
   - System prompt support
+
+---
+
+## 👥 Contributing
+
+Contributions are welcome! Feel free to:
+- Report bugs
+- Suggest new features
+- Submit pull requests
+
+---
 
 ## Configuration
 

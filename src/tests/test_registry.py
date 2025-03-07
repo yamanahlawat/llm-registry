@@ -7,6 +7,7 @@ from unittest.mock import patch
 import pytest
 
 from llm_registry import CapabilityRegistry
+from llm_registry.exceptions import ModelNotFoundError
 from llm_registry.models import Provider
 
 
@@ -99,8 +100,9 @@ def test_get_model_exists_in_package_models(registry):
 
 def test_get_model_not_found(registry):
     """Test retrieving a non-existent model."""
-    with pytest.raises(KeyError):
+    with pytest.raises(ModelNotFoundError) as exc_info:
         registry.get_model("nonexistent-model")
+    assert str(exc_info.value) == "Model 'nonexistent-model' not found in registry"
 
 
 def test_get_models_no_filter(registry):
