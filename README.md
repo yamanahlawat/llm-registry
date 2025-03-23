@@ -26,13 +26,13 @@ LLM Registry is a Python package that provides a unified interface for discoveri
 - [Development](#development)
 - [License](#license)
 
-## 🎯 Overview
+## <a id="overview"></a>🎯 Overview
 
 Manage and discover LLM model capabilities across multiple providers like OpenAI, Anthropic, and more in a centralized registry. Use this package to check model capabilities before initializing provider clients and to manage model metadata efficiently.
 
 > 💡 Perfect for teams managing multiple LLM providers and wanting to standardize their model interactions.
 
-## ✨ Features
+## <a id="features"></a>✨ Features
 
 🔗 **Unified API**
 - Single interface for capability discovery and management
@@ -62,7 +62,7 @@ Manage and discover LLM model capabilities across multiple providers like OpenAI
 - Group models by family and provider
 - Easy filtering and search
 
-## 🚀 Installation
+## <a id="installation"></a>🚀 Installation
 
 Install via uv:
 
@@ -78,7 +78,7 @@ Install via pip:
 pip install llm-registry
 ```
 
-## 📚 Library Usage
+## <a id="library-usage"></a>📚 Library Usage
 
 Integrate the package in your Python projects by following these steps:
 
@@ -145,7 +145,7 @@ repo.save_model_capabilities(new_model)
 repo.save_model_capabilities(multi_provider_model)
 ```
 
-## 💻 CLI Usage
+## <a id="cli-usage"></a>💻 CLI Usage
 
 The CLI tools `llmr` and `llm-registry` allow you to interact with model capabilities directly from the terminal.
 
@@ -267,7 +267,7 @@ llmr delete gpt-4 --provider openai
 
 Use `-f` or `--force` to bypass confirmation.
 
-## 🎯 Model Capabilities
+## <a id="model-capabilities"></a>🎯 Model Capabilities
 
 Each model entry tracks:
 
@@ -305,13 +305,13 @@ Contributions are welcome! Feel free to:
 
 ---
 
-## Configuration
+## <a id="configuration"></a>Configuration
 
 Default model data is stored in `~/.llm-registry`. You can override the directory by:
 - Passing a `data_dir` parameter to `CapabilityRepository` in code
 - Using the `--data-dir` option in CLI commands
 
-## Development
+## <a id="development"></a>Development
 
 ### Requirements
 - Python 3.13+
@@ -328,6 +328,6 @@ uv sync --group dev
 pytest -v --cov=llm_registry
 ```
 
-## License
+## <a id="license"></a>License
 
 Distributed under the MIT License. See `LICENSE` for more information.
