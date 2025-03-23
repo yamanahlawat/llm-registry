@@ -21,15 +21,15 @@ class CapabilityRegistry:
 
     def get_model(self, model_id: str) -> ModelCapabilities:
         """
-        Get model capabilities by model ID.
+        Get model capabilities by model ID with fallback to model family variants.
         Args:
-            model_id: Model identifier.
+            model_id: Model identifier (exact ID or base family name)
         Returns:
-            Model capabilities.
+            Model capabilities
         Raises:
-            KeyError: If model not found.
+            ModelNotFoundError: If model not found
         """
-        # Check user models first (they take precedence)
+        # Try exact match first (most efficient)
         if model_id in self._user_models["models"]:
             model_data = self._user_models["models"][model_id]
             return ModelCapabilities.model_validate({**model_data, "model_id": model_id})
@@ -39,6 +39,21 @@ class CapabilityRegistry:
             model_data = self._package_models["models"][model_id]
             return ModelCapabilities.model_validate({**model_data, "model_id": model_id})
 
+        # If not found AND model_id DOES contain a colon, try looking for the base model
+        if ":" in model_id:
+            # Extract the base model name (part before the colon)
+            base_model = model_id.split(":")[0]
+
+            # Check if the base model exists
+            if base_model in self._user_models["models"]:
+                model_data = self._user_models["models"][base_model]
+                return ModelCapabilities.model_validate({**model_data, "model_id": base_model})
+
+            if base_model in self._package_models["models"]:
+                model_data = self._package_models["models"][base_model]
+                return ModelCapabilities.model_validate({**model_data, "model_id": base_model})
+
+        # No match found
         raise ModelNotFoundError(f"Model '{model_id}' not found in registry")
 
     def get_models(self, provider: Provider | None = None) -> list[ModelCapabilities]:
