@@ -102,7 +102,8 @@
     },
     "gpt-4o": {
       "providers": [
-        "openai", "github"
+        "openai",
+        "github"
       ],
       "model_family": "gpt-4",
       "api_params": {
@@ -127,7 +128,8 @@
     },
     "gpt-4o-mini": {
       "providers": [
-        "openai", "github"
+        "openai",
+        "github"
       ],
       "model_family": "gpt-4",
       "api_params": {
@@ -315,6 +317,130 @@
         "output_cost": 0,
         "context_window": 128000,
         "training_cutoff": "2024-06"
+      }
+    },
+    "mistral-nemo": {
+      "providers": [
+        "ollama"
+      ],
+      "model_family": "mistral",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.15,
+        "cache_input_cost": 0.075,
+        "output_cost": 0.15,
+        "context_window": 131000,
+        "training_cutoff": "2024-07"
+      }
+    },
+    "mistral-small-2503": {
+      "providers": [
+        "mistral"
+      ],
+      "model_family": "mistral",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.2,
+        "cache_input_cost": 0.1,
+        "output_cost": 0.6,
+        "context_window": 131000,
+        "training_cutoff": "2023-10"
+      }
+    },
+    "mistral-large-2407": {
+      "providers": [
+        "mistral"
+      ],
+      "model_family": "mistral",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 2.0,
+        "cache_input_cost": 1.0,
+        "output_cost": 6.0,
+        "context_window": 131000,
+        "training_cutoff": "2023-10"
+      }
+    },
+    "llama-3.3": {
+      "providers": [
+        "github",
+        "ollama"
+      ],
+      "model_family": "llama-3",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 128000,
+        "training_cutoff": "2024-03"
+      }
+    },
+    "qwen2.5-coder": {
+      "providers": [
+        "ollama"
+      ],
+      "model_family": "qwen2.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 128000,
+        "training_cutoff": "2024-03"
       }
     }
   }
