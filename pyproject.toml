@@ -4,32 +4,34 @@ version = "0.3.4"
 description = "A centralized registry for discovering and managing LLM model capabilities. Track model features, costs, and limitations across providers like OpenAI and Anthropic. Supports both verified model definitions and user-managed entries with local storage."
 readme = "README.md"
 authors = [
-    { name = "Yaman Ahlawat", email = "yaman@outlook.com" }
+    { name = "Yaman Ahlawat", email = "yaman@outlook.com" },
 ]
 requires-python = ">=3.13"
 dependencies = [
     "httpx>=0.28.1",
-    "pydantic>=2.10.6",
-    "rich>=13.9.4",
-    "typer>=0.15.2",
+    "pydantic>=2.11.4",
+    "rich>=14.0.0",
+    "typer>=0.15.4",
 ]
 
 [project.scripts]
 llm-registry = "llm_registry.cli:app"
-llmr = "llm_registry.cli:app"  # Shorter alias
+llmr = "llm_registry.cli:app"
 
 [dependency-groups]
 dev = [
     "pytest>=8.3.5",
-    "pytest-asyncio>=0.25.3",
-    "pytest-cov>=6.0.0",
-    "ruff>=0.9.9",
-    "ipython>=9.0.0",
+    "pytest-asyncio>=0.26.0",
+    "pytest-cov>=6.1.1",
+    "ruff>=0.11.10",
+    "ipython>=9.2.0",
     "ipdb>=0.13.13",
-    "pre-commit>=4.1.0",
+    "pre-commit>=4.2.0",
     "tomli-w>=1.2.0",
 ]
 
 [build-system]
-requires = ["hatchling"]
+requires = [
+    "hatchling",
+]
 build-backend = "hatchling.build"
