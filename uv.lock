@@ -261,7 +261,7 @@ wheels = [
 
 [[package]]
 name = "llm-registry"
-version = "0.3.4"
+version = "0.3.5"
 source = { editable = "." }
 dependencies = [
     { name = "httpx" },
@@ -285,20 +285,20 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "httpx", specifier = ">=0.28.1" },
-    { name = "pydantic", specifier = ">=2.10.6" },
-    { name = "rich", specifier = ">=13.9.4" },
-    { name = "typer", specifier = ">=0.15.2" },
+    { name = "pydantic", specifier = ">=2.11.4" },
+    { name = "rich", specifier = ">=14.0.0" },
+    { name = "typer", specifier = ">=0.15.4" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "ipdb", specifier = ">=0.13.13" },
-    { name = "ipython", specifier = ">=9.0.0" },
-    { name = "pre-commit", specifier = ">=4.1.0" },
+    { name = "ipython", specifier = ">=9.2.0" },
+    { name = "pre-commit", specifier = ">=4.2.0" },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "pytest-asyncio", specifier = ">=0.25.3" },
-    { name = "pytest-cov", specifier = ">=6.0.0" },
-    { name = "ruff", specifier = ">=0.9.9" },
+    { name = "pytest-asyncio", specifier = ">=0.26.0" },
+    { name = "pytest-cov", specifier = ">=6.1.1" },
+    { name = "ruff", specifier = ">=0.11.10" },
     { name = "tomli-w", specifier = ">=1.2.0" },
 ]
 
