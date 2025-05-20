@@ -24,6 +24,7 @@ class Provider(str, Enum):
     GITHUB = "github"
     AZURE = "azure"
     OTHER = "other"
+    ALIBABA = "alibaba"
 
 
 class TokenCost(BaseModel):

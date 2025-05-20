@@ -140,3 +140,126 @@ def test_user_models_override_package_models(registry):
     assert len(model.providers) == 2  # User model has both providers
     assert Provider.OPENAI in model.providers
     assert Provider.AZURE in model.providers
+
+
+def test_get_model_base_model_fallback(registry):
+    """Test fallback to base model when model_id contains a colon."""
+    # Add a base model to user models
+    base_model_id = "custom-model"
+    variant_model_id = f"{base_model_id}:variant"
+    # Should return the base model if variant does not exist
+    model = registry.get_model(variant_model_id)
+    assert model.model_id == base_model_id
+    assert model.token_costs.input_cost == 1.0
+
+
+def test_get_model_base_model_fallback_not_found(registry):
+    """Test that ModelNotFoundError is raised if neither the full nor base model exists."""
+    with pytest.raises(ModelNotFoundError):
+        registry.get_model("nonexistent:variant")
+
+
+def test_get_model_not_found_user_and_package_and_base(registry, mock_package_models, mock_user_models):
+    """Test ModelNotFoundError is raised when model is missing from user, package, and base fallback."""
+    # Remove all models to ensure no match
+    mock_package_models["models"].clear()
+    mock_user_models["models"].clear()
+    with (
+        patch("llm_registry.registry.load_package_models", return_value=mock_package_models),
+        patch("llm_registry.registry.load_user_models", return_value=mock_user_models),
+    ):
+        reg = CapabilityRegistry()
+        with pytest.raises(ModelNotFoundError) as exc_info:
+            reg.get_model("totally-missing:variant")
+        assert "totally-missing:variant" in str(exc_info.value)
+
+
+def test_get_models_provider_no_match(registry):
+    """Test that filtering by a provider not present in any model returns an empty list."""
+
+    class FakeProvider(str):
+        value = "notarealprovider"
+
+    models = registry.get_models(provider=FakeProvider)
+    assert models == []
+
+
+def test_model_with_empty_providers(registry, mock_user_models):
+    """Test that a model with an empty providers list is not returned for any provider filter."""
+    mock_user_models["models"]["empty-provider-model"] = {
+        "providers": [],
+        "model_family": "empty",
+        "api_params": {"stream": True},
+        "features": {"vision": False, "tools": False, "json_mode": False, "system_prompt": False},
+        "token_costs": {
+            "input_cost": 0.0,
+            "output_cost": 0.0,
+            "context_window": 1000,
+            "training_cutoff": "2025-01",
+        },
+    }
+    with patch("llm_registry.registry.load_user_models", return_value=mock_user_models):
+        reg = CapabilityRegistry()
+        models = reg.get_models(provider=Provider.OPENAI)
+        assert all(m.model_id != "empty-provider-model" for m in models)
+
+
+def test_user_model_overrides_package_providers(registry, mock_package_models, mock_user_models):
+    """Test that user model providers override package model providers for the same ID."""
+    # Add a package model with a different provider
+    mock_package_models["models"]["override-model"] = {
+        "providers": ["anthropic"],
+        "model_family": "override",
+        "api_params": {"stream": True},
+        "features": {"vision": True, "tools": True, "json_mode": True, "system_prompt": True},
+        "token_costs": {
+            "input_cost": 1.0,
+            "output_cost": 2.0,
+            "context_window": 1000,
+            "training_cutoff": "2025-01",
+        },
+    }
+    # Add a user model with the same ID but different providers
+    mock_user_models["models"]["override-model"] = {
+        "providers": ["openai"],
+        "model_family": "override",
+        "api_params": {"stream": True},
+        "features": {"vision": True, "tools": True, "json_mode": True, "system_prompt": True},
+        "token_costs": {
+            "input_cost": 1.0,
+            "output_cost": 2.0,
+            "context_window": 1000,
+            "training_cutoff": "2025-01",
+        },
+    }
+    with (
+        patch("llm_registry.registry.load_package_models", return_value=mock_package_models),
+        patch("llm_registry.registry.load_user_models", return_value=mock_user_models),
+    ):
+        reg = CapabilityRegistry()
+        model = reg.get_model("override-model")
+        assert Provider.OPENAI in model.providers
+        assert Provider.ANTHROPIC not in model.providers
+
+
+def test_model_with_missing_context_window_and_training_cutoff(registry, mock_user_models):
+    """Test that models with missing context_window or training_cutoff are still loaded."""
+    mock_user_models["models"]["partial-fields-model"] = {
+        "providers": ["openai"],
+        "model_family": "partial",
+        "api_params": {"stream": True},
+        "features": {"vision": True, "tools": True, "json_mode": True, "system_prompt": True},
+        "token_costs": {
+            "input_cost": 1.0,
+            "output_cost": 2.0,
+            # context_window and training_cutoff omitted
+        },
+    }
+    with patch("llm_registry.registry.load_user_models", return_value=mock_user_models):
+        reg = CapabilityRegistry()
+        model = next(m for m in reg.get_models() if m.model_id == "partial-fields-model")
+        assert model.token_costs is not None
+        assert getattr(model.token_costs, "input_cost", None) == 1.0
+        assert getattr(model.token_costs, "output_cost", None) == 2.0
+        assert getattr(model.token_costs, "context_window", None) is None
+        assert getattr(model.token_costs, "training_cutoff", None) is None
