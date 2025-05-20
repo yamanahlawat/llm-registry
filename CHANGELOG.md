@@ -5,7 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.4] - 2025-05-20
+
+### Added
+
+- Added new llms models config.
+
+### Update
+
+- models.json deduplicated and validated for correctness.
+
+### Enhancement
+
+- Ensured all model entries are unique and up-to-date.
+
+### Maintenance
+
+- JSON structure checked and confirmed valid.
+
+- Version bump to 0.3.4 for new release.
+- Rebuilt wheels and sdist for PyPI publishing.
+
 ## [0.3.3] - 2025-03-23
+
 - Refactor: Readme Table content navigation.
 - Added support for partial match for ex. check deepseek-r1  for deepseek-r1:8b, deepseek-r1:14b.
 - Added Mistral, llama3.3, qwen2.5-coder models.
