@@ -27,6 +27,7 @@ dev = [
     "ipython>=9.0.0",
     "ipdb>=0.13.13",
     "pre-commit>=4.1.0",
+    "tomli-w>=1.2.0",
 ]
 
 [build-system]
