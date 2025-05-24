@@ -176,6 +176,78 @@
         "training_cutoff": "2024-07"
       }
     },
+    "gpt-4.1": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-4.1",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 2.0,
+        "output_cost": 8.0,
+        "context_window": 1000000,
+        "training_cutoff": "2024-06"
+      }
+    },
+    "gpt-4.1-mini": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-4.1",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.4,
+        "output_cost": 1.6,
+        "context_window": 1000000,
+        "training_cutoff": "2024-06"
+      }
+    },
+    "gpt-4.1-nano": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-4.1",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.1,
+        "output_cost": 0.4,
+        "context_window": 1000000,
+        "training_cutoff": "2024-06"
+      }
+    },
     "claude-3-7-sonnet-latest": {
       "providers": [
         "anthropic"
@@ -239,6 +311,48 @@
         "output_cost": 50,
         "context_window": 200000,
         "training_cutoff": "2024-03"
+      }
+    },
+    "claude-opus-4": {
+      "providers": [
+        "anthropic"
+      ],
+      "model_family": "claude-4",
+      "api_params": {
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 15.0,
+        "output_cost": 75.0,
+        "context_window": 200000,
+        "training_cutoff": "2025-03"
+      }
+    },
+    "claude-sonnet-4": {
+      "providers": [
+        "anthropic"
+      ],
+      "model_family": "claude-4",
+      "api_params": {
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 3.0,
+        "output_cost": 15.0,
+        "context_window": 200000,
+        "training_cutoff": "2025-03"
       }
     },
     "deepseek-r1": {
@@ -819,6 +933,128 @@
         "output_cost": 0.0,
         "context_window": 8000,
         "training_cutoff": "2025-03"
+      }
+    },
+    "llama-4": {
+      "providers": [
+        "meta",
+        "ollama"
+      ],
+      "model_family": "llama-4",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 128000,
+        "training_cutoff": null
+      }
+    },
+    "gemma3": {
+      "providers": [
+        "google",
+        "ollama"
+      ],
+      "model_family": "gemma3",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 128000,
+        "training_cutoff": null
+      }
+    },
+    "qwen3": {
+      "providers": [
+        "ollama"
+      ],
+      "model_family": "qwen3",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 128000,
+        "training_cutoff": null
+      }
+    },
+    "devstral": {
+      "providers": [
+        "ollama"
+      ],
+      "model_family": "devstral",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 128000,
+        "training_cutoff": null
+      }
+    },
+    "qwen2.5vl": {
+      "providers": [
+        "ollama"
+      ],
+      "model_family": "qwen2.5vl",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 128000,
+        "training_cutoff": null
       }
     }
   }

@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.6] - 2025-05-24
+
+### 0.3.6 Highlights
+
+**Added:**
+
+- Added latest OpenAI models: gpt-4.1, gpt-4.1-mini, gpt-4.1-nano with accurate pricing, features, and context window.
+- Added new Anthropic Claude 4 models: claude-opus-4, claude-sonnet-4 with up-to-date pricing and features.
+- Added trending open-source models from Ollama: llama-4, gemma3, qwen3, devstral, qwen2.5vl.
+
+**Changed:**
+
+- Grouped OpenAI and Claude models together in models.json for better organization.
+- Updated all model entries for gpt-4.1 and Claude 4 series with 100% accurate cost, features, and context window based on latest sources.
+- Updated Ollama model entries to reflect correct API parameters and features (set json_mode and system_prompt to false where not supported).
+
+**Maintenance:**
+
+- Validated and deduplicated models.json for correctness and completeness.
+
 ## [0.3.5] - 2025-05-20
 
 ### Added
