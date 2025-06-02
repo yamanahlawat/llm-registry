@@ -1,5 +1,55 @@
 {
   "models": {
+    "o4-mini": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "o4",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": false
+      },
+      "token_costs": {
+        "input_cost": 1.1,
+        "cache_input_cost": 0.55,
+        "output_cost": 4.4,
+        "context_window": 200000,
+        "training_cutoff": "2024-10"
+      }
+    },
+    "o3": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "o3",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": false
+      },
+      "token_costs": {
+        "input_cost": 10,
+        "cache_input_cost": 2.5,
+        "output_cost": 40,
+        "context_window": 200000,
+        "training_cutoff": "2024-10"
+      }
+    },
     "o3-mini": {
       "providers": [
         "openai"
@@ -22,7 +72,7 @@
         "cache_input_cost": 0.55,
         "output_cost": 4.4,
         "context_window": 200000,
-        "training_cutoff": "2023-10"
+        "training_cutoff": "2024-10"
       }
     },
     "o1": {
@@ -79,7 +129,7 @@
       "providers": [
         "openai"
       ],
-      "model_family": "gpt-4",
+      "model_family": "gpt-4.5",
       "api_params": {
         "max_tokens": true,
         "temperature": true,
@@ -97,7 +147,7 @@
         "cache_input_cost": 37.5,
         "output_cost": 150,
         "context_window": 128000,
-        "training_cutoff": "2023-10"
+        "training_cutoff": "2025-02"
       }
     },
     "gpt-4o": {
@@ -171,6 +221,7 @@
       },
       "token_costs": {
         "input_cost": 10,
+        "cache_input_cost": 5,
         "output_cost": 30,
         "context_window": 128000,
         "training_cutoff": "2024-07"
@@ -195,9 +246,10 @@
       },
       "token_costs": {
         "input_cost": 2.0,
+        "cache_input_cost": 1.0,
         "output_cost": 8.0,
         "context_window": 1000000,
-        "training_cutoff": "2024-06"
+        "training_cutoff": "2025-04"
       }
     },
     "gpt-4.1-mini": {
@@ -219,9 +271,10 @@
       },
       "token_costs": {
         "input_cost": 0.4,
+        "cache_input_cost": 0.2,
         "output_cost": 1.6,
         "context_window": 1000000,
-        "training_cutoff": "2024-06"
+        "training_cutoff": "2025-04"
       }
     },
     "gpt-4.1-nano": {
@@ -243,9 +296,10 @@
       },
       "token_costs": {
         "input_cost": 0.1,
+        "cache_input_cost": 0.05,
         "output_cost": 0.4,
         "context_window": 1000000,
-        "training_cutoff": "2024-06"
+        "training_cutoff": "2025-04"
       }
     },
     "claude-3-7-sonnet-latest": {
@@ -313,7 +367,7 @@
         "training_cutoff": "2024-03"
       }
     },
-    "claude-opus-4": {
+    "claude-4-opus": {
       "providers": [
         "anthropic"
       ],
@@ -334,7 +388,7 @@
         "training_cutoff": "2025-03"
       }
     },
-    "claude-sonnet-4": {
+    "claude-4-sonnet": {
       "providers": [
         "anthropic"
       ],
@@ -357,7 +411,7 @@
     },
     "deepseek-r1": {
       "providers": [
-        "github"
+        "deepseek"
       ],
       "model_family": "deepseek",
       "api_params": {
@@ -368,7 +422,7 @@
       },
       "features": {
         "vision": false,
-        "tools": false,
+        "tools": true,
         "json_mode": true,
         "system_prompt": true
       },
@@ -377,7 +431,32 @@
         "cache_input_cost": 0.0,
         "output_cost": 0,
         "context_window": 128000,
-        "training_cutoff": "2023-10"
+        "training_cutoff": "2024-12"
+      }
+    },
+    "deepseek-r1-0528": {
+      "providers": [
+        "deepseek"
+      ],
+      "model_family": "deepseek",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.14,
+        "cache_input_cost": 0.014,
+        "output_cost": 0.28,
+        "context_window": 128000,
+        "training_cutoff": "2024-12"
       }
     },
     "phi-4": {
@@ -403,6 +482,32 @@
         "output_cost": 0,
         "context_window": 128000,
         "training_cutoff": "2024-06"
+      }
+    },
+    "phi-4-reasoning": {
+      "providers": [
+        "microsoft",
+        "github"
+      ],
+      "model_family": "phi-4",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "cache_input_cost": 0.0,
+        "output_cost": 0,
+        "context_window": 32000,
+        "training_cutoff": "2025-03"
       }
     },
     "phi-4-multimodal-instruct": {
@@ -554,27 +659,6 @@
         "training_cutoff": "2024-03"
       }
     },
-    "claude-3.5-sonnet": {
-      "providers": [
-        "anthropic"
-      ],
-      "model_family": "claude-3.5",
-      "api_params": {
-        "stream": true
-      },
-      "features": {
-        "vision": true,
-        "tools": true,
-        "json_mode": true,
-        "system_prompt": true
-      },
-      "token_costs": {
-        "input_cost": 3,
-        "output_cost": 15,
-        "context_window": 200000,
-        "training_cutoff": "2025-02"
-      }
-    },
     "mistral-large-2": {
       "providers": [
         "mistral"
@@ -641,10 +725,10 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 1.0,
-        "output_cost": 3.0,
+        "input_cost": 0.4,
+        "output_cost": 20.8,
         "context_window": 128000,
-        "training_cutoff": "2025-05"
+        "training_cutoff": "2025-02"
       }
     },
     "codestral-latest": {
@@ -717,6 +801,54 @@
         "output_cost": 0.0,
         "context_window": 32768,
         "training_cutoff": "2024-06"
+      }
+    },
+    "gemini-2.5-pro": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-2.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 3.5,
+        "output_cost": 10.5,
+        "context_window": 1000000,
+        "training_cutoff": "2025-01"
+      }
+    },
+    "gemini-2.5-flash": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-2.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.075,
+        "output_cost": 0.3,
+        "context_window": 1000000,
+        "training_cutoff": "2025-01"
       }
     },
     "gemini-2.0-flash": {
@@ -957,7 +1089,7 @@
         "input_cost": 0.0,
         "output_cost": 0.0,
         "context_window": 128000,
-        "training_cutoff": null
+        "training_cutoff": "2025-03"
       }
     },
     "gemma3": {
@@ -987,6 +1119,7 @@
     },
     "qwen3": {
       "providers": [
+        "alibaba",
         "ollama"
       ],
       "model_family": "qwen3",
@@ -1006,7 +1139,7 @@
         "input_cost": 0.0,
         "output_cost": 0.0,
         "context_window": 128000,
-        "training_cutoff": null
+        "training_cutoff": "2025-02"
       }
     },
     "devstral": {

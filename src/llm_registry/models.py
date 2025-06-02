@@ -23,6 +23,8 @@ class Provider(str, Enum):
     OLLAMA = "ollama"
     GITHUB = "github"
     AZURE = "azure"
+    MICROSOFT = "microsoft"
+    DEEPSEEK = "deepseek"
     OTHER = "other"
     ALIBABA = "alibaba"
 

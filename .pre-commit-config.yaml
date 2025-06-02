@@ -7,6 +7,7 @@ repos:
     - id: check-merge-conflict
     - id: detect-private-key
     - id: detect-aws-credentials
+      args: ["--allow-missing-credentials"]
     - id: no-commit-to-branch
       # Branch to prevent direct commits to
       args: ["--branch", "main"]

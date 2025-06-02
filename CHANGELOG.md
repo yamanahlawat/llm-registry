@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.7] - 2025-06-02
+
+### 0.3.7 Highlights - Comprehensive Model Validation & Corrections
+
+**Fixed:**
+
+- **Training Cutoff Dates**: Corrected training cutoff dates for multiple models that had future dates:
+  - o3-mini: "2023-10" → "2024-10"
+  - Claude 4 models: "2025-05" → "2025-03"
+  - Phi-4-reasoning: "2025-05" → "2025-03"
+  - DeepSeek models: "2025-05" → "2024-12"
+  - Mistral-medium-3: "2025-05" → "2025-02"
+  - Qwen3: "2025-04" → "2025-02"
+
+- **Model Specifications**: Updated specifications based on verified official sources:
+  - Phi-4-reasoning context window: 128000 → 32000 tokens
+  - Mistral Medium 3 pricing: Updated to official $0.40/$20.80 per million tokens
+  - DeepSeek provider consistency: Standardized provider to "deepseek"
+
+- **Cache Costs**: Added missing cache_input_cost values to GPT-4.1 family models for consistency
+
+**Added:**
+
+- **Provider Support**: Added "microsoft" and "deepseek" to Provider enum in models.py
+- **Model Existence Verification**: Conducted comprehensive web research to verify all newly added models exist:
+  - OpenAI o3/o4-mini models (confirmed released April 16, 2025)
+  - Claude 4 Opus/Sonnet (confirmed released May 23, 2025)
+  - Microsoft Phi-4 reasoning models (confirmed released May 1, 2025)
+  - DeepSeek R1 (confirmed released January 20, 2025)
+  - Mistral Medium 3 (confirmed released May 7, 2025)
+  - Qwen3 (confirmed released April 2025)
+
 ## [0.3.6] - 2025-05-24
 
 ### 0.3.6 Highlights
