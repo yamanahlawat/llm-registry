@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.8] - 2025-06-06
+
+### Changed
+
+- **Project Configuration**: Updated project.urls in pyproject.toml
+  - Homepage: Set to "https://github.com/yamanahlawat/llm-registry"
+  - Issues: Set to "https://github.com/yamanahlawat/llm-registry/issues"
+- **Maintenance:**
+  - Updated dependencies to latest minor versions.
+
 ## [0.3.7] - 2025-06-02
 
 ### 0.3.7 Highlights - Comprehensive Model Validation & Corrections
