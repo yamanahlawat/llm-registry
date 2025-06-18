@@ -1189,6 +1189,102 @@
         "context_window": 128000,
         "training_cutoff": null
       }
+    },
+    "grok-3": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 3.0,
+        "output_cost": 15.0,
+        "context_window": 131072,
+        "training_cutoff": "2024-07"
+      }
+    },
+    "grok-3-mini": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.3,
+        "output_cost": 0.5,
+        "context_window": 131072,
+        "training_cutoff": "2024-07"
+      }
+    },
+    "grok-2": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 2.0,
+        "output_cost": 10.0,
+        "context_window": 131072,
+        "training_cutoff": "2024-07"
+      }
+    },
+    "grok-1": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": false,
+        "json_mode": false,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 1.0,
+        "output_cost": 3.0,
+        "context_window": 8192,
+        "training_cutoff": "2023-12"
+      }
     }
   }
 }
