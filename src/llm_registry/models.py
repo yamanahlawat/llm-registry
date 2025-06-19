@@ -25,6 +25,8 @@ class Provider(str, Enum):
     AZURE = "azure"
     MICROSOFT = "microsoft"
     DEEPSEEK = "deepseek"
+    XAI = "xai"
+    AMAZON = "amazon"
     OTHER = "other"
     ALIBABA = "alibaba"
 

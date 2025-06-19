@@ -5,6 +5,59 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.9] - 2025-06-19
+
+### Changed
+
+- **Major Pricing Updates**: Comprehensive review and update of model pricing based on latest provider information
+  **OpenAI Models:**
+  - **o3**: Updated from $10/$40 to $2.0/$8.0 per million tokens (80% price reduction effective June 10, 2025)
+  - **o3 cache pricing**: Added new cached input pricing at $0.50 per million tokens for repeated content
+  - **o1**: Corrected from $15/$60 to $10/$40 per million tokens with cache pricing at $5.0
+  - **GPT-4.1 series**: Updated cache pricing with 75% discount:
+    - GPT-4.1: Cache from $1.0 to $0.5 per million tokens
+    - GPT-4.1 Mini: Cache from $0.2 to $0.1 per million tokens
+    - GPT-4.1 Nano: Cache from $0.05 to $0.025 per million tokens
+
+  **Grok Models:**
+  - Added grok-3, grok-3-mini, grok-2 with accurate pricing and features
+
+  **Amazon Nova Models:**
+  - Added nova-pro, nova-lite, nova-micro with accurate pricing and features
+
+  **Google Models:**
+  - **Gemini 2.5 Flash**: Updated from $0.075/$0.3 to $0.15/$0.6 per million tokens
+  - **Gemini 2.5 Pro**: Updated from $3.5/$10.5 to $1.25/$10.0 per million tokens (more competitive pricing)
+
+  **Anthropic Models:**
+  - **Claude 4 Opus**: Confirmed accurate at $15.0/$75.0 per million tokens
+  - **Claude 4 Sonnet**: Confirmed accurate at $3.0/$15.0 per million tokens
+
+  **DeepSeek Models:**
+  - **DeepSeek R1-0528**: Updated from $0.14/$0.28 to $0.55/$2.19 per million tokens (official API pricing)
+  - **DeepSeek R1-0528 cache**: Updated cache pricing to $0.14 per million tokens for cache hits
+
+  **Mistral AI Models:**
+  - **Pixtral-12B**: Updated from $1.0/$3.0 to $0.15/$0.15 per million tokens (major price reduction)
+  - **Codestral-latest**: Updated from $0.5/$1.5 to $0.2/$0.6 per million tokens (80% price reduction)
+  - **Mistral Medium 3**: Corrected output pricing from $20.8 to $2.0 per million tokens
+  - **Other Mistral models**: Confirmed accurate pricing for Large 2, Pixtral Large, Small v3.1, Ministral series
+
+  **xAI Grok Models:**
+  - **All Grok models**: Confirmed accurate pricing (Grok-3: $3.0/$15.0, Grok-3 Mini: $0.3/$0.5, Grok-2: $2.0/$10.0)
+
+  **Amazon Nova Models:**
+  - **All Nova models**: Confirmed accurate pricing (Pro: $0.08/$0.32, Lite: $0.06/$0.24, Micro: $0.035/$0.14)
+
+  **Free/Open Source Models:**
+  - **Verified free pricing** for Llama, Gemma, Qwen, and Ollama-hosted models
+
+### Notes
+
+- All pricing updates based on official provider documentation and announcements as of June 2025
+- Context windows and training cutoffs verified and updated where necessary
+- Multimodal capabilities and feature sets confirmed across all model families
+
 ## [0.3.8] - 2025-06-06
 
 ### Changed
