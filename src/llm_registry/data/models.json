@@ -43,9 +43,9 @@
         "system_prompt": false
       },
       "token_costs": {
-        "input_cost": 10,
-        "cache_input_cost": 2.5,
-        "output_cost": 40,
+        "input_cost": 2.0,
+        "cache_input_cost": 0.5,
+        "output_cost": 8.0,
         "context_window": 200000,
         "training_cutoff": "2024-10"
       }
@@ -93,9 +93,9 @@
         "system_prompt": false
       },
       "token_costs": {
-        "input_cost": 15,
-        "cache_input_cost": 7.5,
-        "output_cost": 60,
+        "input_cost": 10,
+        "cache_input_cost": 5.0,
+        "output_cost": 40,
         "context_window": 200000,
         "training_cutoff": "2023-10"
       }
@@ -246,7 +246,7 @@
       },
       "token_costs": {
         "input_cost": 2.0,
-        "cache_input_cost": 1.0,
+        "cache_input_cost": 0.5,
         "output_cost": 8.0,
         "context_window": 1000000,
         "training_cutoff": "2025-04"
@@ -271,7 +271,7 @@
       },
       "token_costs": {
         "input_cost": 0.4,
-        "cache_input_cost": 0.2,
+        "cache_input_cost": 0.1,
         "output_cost": 1.6,
         "context_window": 1000000,
         "training_cutoff": "2025-04"
@@ -296,7 +296,7 @@
       },
       "token_costs": {
         "input_cost": 0.1,
-        "cache_input_cost": 0.05,
+        "cache_input_cost": 0.025,
         "output_cost": 0.4,
         "context_window": 1000000,
         "training_cutoff": "2025-04"
@@ -452,9 +452,9 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 0.14,
-        "cache_input_cost": 0.014,
-        "output_cost": 0.28,
+        "input_cost": 0.55,
+        "cache_input_cost": 0.14,
+        "output_cost": 2.19,
         "context_window": 128000,
         "training_cutoff": "2024-12"
       }
@@ -726,7 +726,7 @@
       },
       "token_costs": {
         "input_cost": 0.4,
-        "output_cost": 20.8,
+        "output_cost": 2.0,
         "context_window": 128000,
         "training_cutoff": "2025-02"
       }
@@ -749,8 +749,8 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 0.5,
-        "output_cost": 1.5,
+        "input_cost": 0.2,
+        "output_cost": 0.6,
         "context_window": 256000,
         "training_cutoff": "2025-01"
       }
@@ -821,8 +821,8 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 3.5,
-        "output_cost": 10.5,
+        "input_cost": 1.25,
+        "output_cost": 10.0,
         "context_window": 1000000,
         "training_cutoff": "2025-01"
       }
@@ -845,8 +845,8 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 0.075,
-        "output_cost": 0.3,
+        "input_cost": 0.15,
+        "output_cost": 0.6,
         "context_window": 1000000,
         "training_cutoff": "2025-01"
       }
@@ -941,8 +941,8 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 1.0,
-        "output_cost": 3.0,
+        "input_cost": 0.15,
+        "output_cost": 0.15,
         "context_window": 128000,
         "training_cutoff": "2024-09"
       }
@@ -1188,6 +1188,174 @@
         "output_cost": 0.0,
         "context_window": 128000,
         "training_cutoff": null
+      }
+    },
+    "grok-3": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 3.0,
+        "output_cost": 15.0,
+        "context_window": 131072,
+        "training_cutoff": "2024-07"
+      }
+    },
+    "grok-3-mini": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.3,
+        "output_cost": 0.5,
+        "context_window": 131072,
+        "training_cutoff": "2024-07"
+      }
+    },
+    "grok-2": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 2.0,
+        "output_cost": 10.0,
+        "context_window": 131072,
+        "training_cutoff": "2024-07"
+      }
+    },
+    "grok-1": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": false,
+        "json_mode": false,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 1.0,
+        "output_cost": 3.0,
+        "context_window": 8192,
+        "training_cutoff": "2023-12"
+      }
+    },
+    "nova-pro": {
+      "providers": [
+        "amazon"
+      ],
+      "model_family": "nova",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.08,
+        "output_cost": 0.32,
+        "context_window": 300000,
+        "training_cutoff": "2024-10"
+      }
+    },
+    "nova-lite": {
+      "providers": [
+        "amazon"
+      ],
+      "model_family": "nova",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.06,
+        "output_cost": 0.24,
+        "context_window": 300000,
+        "training_cutoff": "2024-10"
+      }
+    },
+    "nova-micro": {
+      "providers": [
+        "amazon"
+      ],
+      "model_family": "nova",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.035,
+        "output_cost": 0.14,
+        "context_window": 128000,
+        "training_cutoff": "2024-10"
       }
     }
   }
