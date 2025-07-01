@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2025-07-01
+
+### Added
+
+- **New Open Source Models**: Added three new open source models available via Ollama with verified specifications:
+  - **QwQ-32B**: Alibaba's latest reasoning model with 32B parameters
+    - Specialized for mathematical reasoning and complex problem-solving
+    - 131,072 token context window (131K tokens)
+    - Apache 2.0 license for commercial use
+    - Strong performance on AIME24 (79.5 vs 63.6 for o1-mini) and other reasoning benchmarks
+
+  - **Gemma3n-2B**: Google's mobile-optimized multimodal model
+    - 2B parameters optimized for everyday devices (phones, tablets, laptops)
+    - Multimodal capabilities (text, images, audio support)
+    - 32,768 token context window
+    - MatFormer architecture with Per-Layer Embeddings (PLE) caching
+    - Support for 140+ languages with offline operation
+
+  - **Magistral-24B**: Efficient reasoning model for business applications
+    - 24B parameters focused on multi-step reasoning and analysis
+    - 128,000 token context window (recommended max 40K for optimal performance)
+    - Apache 2.0 license with multilingual support
+    - Specialized for legal, financial, and strategic planning use cases
+    - Traceable reasoning chains for compliance and auditability
+
 ## [0.3.9] - 2025-06-19
 
 ### Changed
