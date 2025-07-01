@@ -1357,6 +1357,78 @@
         "context_window": 128000,
         "training_cutoff": "2024-10"
       }
+    },
+    "qwq": {
+      "providers": [
+        "ollama"
+      ],
+      "model_family": "qwen",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 131072,
+        "training_cutoff": "2024-12"
+      }
+    },
+    "gemma3n": {
+      "providers": [
+        "ollama"
+      ],
+      "model_family": "gemma3",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 32768,
+        "training_cutoff": "2024-12"
+      }
+    },
+    "magistral": {
+      "providers": [
+        "ollama"
+      ],
+      "model_family": "magistral",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 128000,
+        "training_cutoff": "2024-12"
+      }
     }
   }
 }
