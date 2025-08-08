@@ -302,6 +302,81 @@
         "training_cutoff": "2025-04"
       }
     },
+    "gpt-5": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 1.25,
+        "cache_input_cost": 0.125,
+        "output_cost": 10.0,
+        "context_window": 400000,
+        "training_cutoff": "2024-09"
+      }
+    },
+    "gpt-5-mini": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.25,
+        "cache_input_cost": 0.025,
+        "output_cost": 2.0,
+        "context_window": 400000,
+        "training_cutoff": "2024-05"
+      }
+    },
+    "gpt-5-nano": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.05,
+        "cache_input_cost": 0.005,
+        "output_cost": 0.40,
+        "context_window": 400000,
+        "training_cutoff": "2024-05"
+      }
+    },
     "claude-3-7-sonnet-latest": {
       "providers": [
         "anthropic"
@@ -317,9 +392,9 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 3,
+        "input_cost": 3.0,
         "cache_input_cost": 0.3,
-        "output_cost": 15,
+        "output_cost": 15.0,
         "cache_output_cost": 3.75,
         "context_window": 200000,
         "training_cutoff": "2024-02"
@@ -340,8 +415,10 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 3,
-        "output_cost": 15,
+        "input_cost": 3.0,
+        "cache_input_cost": 0.3,
+        "output_cost": 15.0,
+        "cache_output_cost": 3.75,
         "context_window": 200000,
         "training_cutoff": "2025-02"
       }
@@ -361,8 +438,10 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 10,
-        "output_cost": 50,
+        "input_cost": 10.0,
+        "cache_input_cost": 1.0,
+        "output_cost": 50.0,
+        "cache_output_cost": 12.5,
         "context_window": 200000,
         "training_cutoff": "2024-03"
       }
@@ -383,7 +462,9 @@
       },
       "token_costs": {
         "input_cost": 15.0,
+        "cache_input_cost": 1.5,
         "output_cost": 75.0,
+        "cache_output_cost": 18.75,
         "context_window": 200000,
         "training_cutoff": "2025-03"
       }
@@ -404,9 +485,37 @@
       },
       "token_costs": {
         "input_cost": 3.0,
+        "cache_input_cost": 0.3,
         "output_cost": 15.0,
+        "cache_output_cost": 3.75,
         "context_window": 200000,
         "training_cutoff": "2025-03"
+      }
+    },
+    "claude-opus-4.1": {
+      "providers": [
+        "anthropic"
+      ],
+      "model_family": "claude-4",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 15.0,
+        "cache_input_cost": 1.5,
+        "output_cost": 75.0,
+        "cache_output_cost": 18.75,
+        "context_window": 200000,
+        "training_cutoff": "2024-08"
       }
     },
     "deepseek-r1": {

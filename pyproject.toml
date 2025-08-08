@@ -1,6 +1,6 @@
 [project]
 name = "llm-registry"
-version = "0.4.0"
+version = "0.4.1"
 description = "A centralized registry for discovering and managing LLM model capabilities. Track model features, costs, and limitations across providers like OpenAI and Anthropic. Supports both verified model definitions and user-managed entries with local storage."
 readme = "README.md"
 authors = [
@@ -10,7 +10,7 @@ requires-python = ">=3.13"
 dependencies = [
     "httpx>=0.28.1",
     "pydantic>=2.11.7",
-    "rich>=14.0.0",
+    "rich>=14.1.0",
     "typer>=0.16.0",
 ]
 
@@ -25,10 +25,10 @@ llmr = "llm_registry.cli:app"
 [dependency-groups]
 dev = [
     "pytest>=8.4.1",
-    "pytest-asyncio>=1.0.0",
+    "pytest-asyncio>=1.1.0",
     "pytest-cov>=6.2.1",
-    "ruff>=0.12.1",
-    "ipython>=9.3.0",
+    "ruff>=0.12.8",
+    "ipython>=9.4.0",
     "ipdb>=0.13.13",
     "pre-commit>=4.2.0",
     "tomli-w>=1.2.0",
