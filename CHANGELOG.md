@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.1] - 2025-08-08
+
+### Added
+- gpt-5, gpt-5-mini, gpt-5-nano
+- claude-opus-4.1
+
+### Updated
+- claude-3-5-sonnet-latest: added cache_input_cost and cache_output_cost
+- claude-3-opus: added cache_input_cost and cache_output_cost
+- claude-4-opus: added cache_input_cost and cache_output_cost
+- claude-4-sonnet: added cache_input_cost and cache_output_cost
+- claude-opus-4.1: added cache_input_cost and cache_output_cost
+
 ## [0.4.0] - 2025-07-01
 
 ### Added
