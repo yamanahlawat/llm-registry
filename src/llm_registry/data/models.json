@@ -518,6 +518,29 @@
         "training_cutoff": "2024-08"
       }
     },
+    "claude-3-5-haiku-latest": {
+      "providers": [
+        "anthropic"
+      ],
+      "model_family": "claude-3.5",
+      "api_params": {
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.80,
+        "cache_input_cost": 0.08,
+        "output_cost": 4.0,
+        "cache_output_cost": 1.0,
+        "context_window": 200000,
+        "training_cutoff": "2025-02"
+      }
+    },
     "deepseek-r1": {
       "providers": [
         "deepseek"
@@ -931,6 +954,7 @@
       },
       "token_costs": {
         "input_cost": 1.25,
+        "cache_input_cost": 0.31,
         "output_cost": 10.0,
         "context_window": 1000000,
         "training_cutoff": "2025-01"
@@ -954,8 +978,9 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 0.15,
-        "output_cost": 0.6,
+        "input_cost": 0.30,
+        "cache_input_cost": 0.075,
+        "output_cost": 2.5,
         "context_window": 1000000,
         "training_cutoff": "2025-01"
       }
@@ -979,6 +1004,7 @@
       },
       "token_costs": {
         "input_cost": 1.0,
+        "cache_input_cost": 0.075,
         "output_cost": 3.0,
         "context_window": 128000,
         "training_cutoff": "2025-01"
@@ -1299,6 +1325,31 @@
         "training_cutoff": null
       }
     },
+    "grok-4": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 3.0,
+        "cache_input_cost": 0.75,
+        "output_cost": 15.0,
+        "context_window": 256000,
+        "training_cutoff": "2025-07"
+      }
+    },
     "grok-3": {
       "providers": [
         "xai"
@@ -1537,6 +1588,31 @@
         "output_cost": 0.0,
         "context_window": 128000,
         "training_cutoff": "2024-12"
+      }
+    },
+    "gemini-2.5-flash-lite": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-2.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.10,
+        "cache_input_cost": 0.025,
+        "output_cost": 0.40,
+        "context_window": 1000000,
+        "training_cutoff": "2025-05"
       }
     }
   }
