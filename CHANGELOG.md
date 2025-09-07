@@ -5,13 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.2] - 2025-09-07
+
+### Added
+
+• claude-3-5-haiku-latest - New Anthropic Claude 3.5 Haiku model with vision and tools support
+• grok-4 - New xAI Grok 4 model with enhanced features and 256K context window
+• gemini-2.5-flash-lite - New Google Gemini 2.5 Flash Lite variant with 1M context window
+
+### Updated
+
+• gemini-2.5-pro - Added cache input cost pricing ($0.31/1M tokens)
+• gemini-2.5-flash - Updated pricing: input cost $0.15→$0.30, output cost $0.6→$2.5, added cache input cost ($0.075/1M tokens)
+• gemini-2.0-flash - Added cache input cost pricing ($0.075/1M tokens)
+
 ## [0.4.1] - 2025-08-08
 
 ### Added
+
 - gpt-5, gpt-5-mini, gpt-5-nano
 - claude-opus-4.1
 
 ### Updated
+
 - claude-3-5-sonnet-latest: added cache_input_cost and cache_output_cost
 - claude-3-opus: added cache_input_cost and cache_output_cost
 - claude-4-opus: added cache_input_cost and cache_output_cost
@@ -196,12 +212,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.3] - 2025-03-23
 
 - Refactor: Readme Table content navigation.
-- Added support for partial match for ex. check deepseek-r1  for deepseek-r1:8b, deepseek-r1:14b.
+- Added support for partial match for ex. check deepseek-r1 for deepseek-r1:8b, deepseek-r1:14b.
 - Added Mistral, llama3.3, qwen2.5-coder models.
 
 ## [0.3.2] - 2025-03-07
 
 ### Added
+
 - New models:
   - Deepseek series: deepseek-r1 (via GitHub)
   - Phi-4 series: phi-4 and phi-4-multimodal-instruct (via GitHub)
@@ -209,6 +226,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - phi-4-multimodal-instruct: Enhanced version with vision and tools support
 
 ### Changed
+
 - Enhanced error handling in CLI
   - Introduced ModelNotFoundError for better error reporting
   - Updated get command to use new exception type
@@ -217,11 +235,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Advanced features in phi-4-multimodal-instruct (vision, tools, json_mode, system_prompt)
 
 ## [0.3.1] - 2025-03-06
+
 - Updated model api_params, features, and token_costs
 
 ## [0.3.0] - 2025-03-04
 
 ### Added
+
 - Added validation for cache costs in TokenCost model
 - Enhanced error handling for corrupted JSON files
 - Comprehensive test suite with 98% coverage
@@ -229,6 +249,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New test files: test_integration.py, test_models.py, test_utils.py
 
 ### Changed
+
 - Simplified ApiParams by removing rarely used parameters
 - Improved file handling with proper UTF-8 encoding
 - Enhanced model loading caching mechanism
@@ -237,6 +258,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved README documentation with coverage badge
 
 ### Fixed
+
 - Fixed default value handling in Features class
 - Added proper data structure validation in save_user_models
 - Improved error handling for corrupted JSON files
@@ -245,6 +267,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] - 2025-03-04
 
 ### Added
+
 - Support for caching input and output token costs
 - Comprehensive API parameter support (max_tokens, temperature, top_p, etc.)
 - Model grouping functionality
@@ -252,6 +275,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added development dependencies: ipython and ipdb
 
 ### Changed
+
 - Restructured CLI to use centralized model data management
 - Enhanced model listing with additional cost columns
 - Improved model capabilities creation with separate API params and features
@@ -259,6 +283,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2025-03-03
 
 ### Added
+
 - Initial release
 - Core functionality for managing LLM model capabilities
 - Support for OpenAI and Anthropic models
