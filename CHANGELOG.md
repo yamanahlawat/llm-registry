@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.3] - 2025-09-25
+
+### Added
+• **gpt-5-chat** - New OpenAI GPT-5 Chat model with advanced conversational capabilities and multimodal support.
+• **gpt-oss-120b** and **gpt-oss-20b** - New open source models from OpenAI with 120B and 20B parameters respectively, optimized for reasoning and code generation tasks.
+• **gemini-2.0-pro** and **gemini-2.0-flash-lite** - New variants of Google Gemini 2.0 models with enhanced features and pricing.
+
 ## [0.4.2] - 2025-09-07
 
 ### Added
