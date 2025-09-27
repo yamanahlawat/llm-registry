@@ -377,6 +377,79 @@
         "training_cutoff": "2024-05"
       }
     },
+    "gpt-5-chat": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 1.25,
+        "cache_input_cost": 0.125,
+        "output_cost": 10.0,
+        "context_window": 400000,
+        "training_cutoff": "2024-09"
+      }
+    },
+    "gpt-oss-120b": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-oss",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 128000,
+        "training_cutoff": "2024-07"
+      }
+    },
+    "gpt-oss-20b": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-oss",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 32000,
+        "training_cutoff": "2024-07"
+      }
+    },
     "claude-3-7-sonnet-latest": {
       "providers": [
         "anthropic"
@@ -1008,6 +1081,54 @@
         "output_cost": 3.0,
         "context_window": 128000,
         "training_cutoff": "2025-01"
+      }
+    },
+    "gemini-2.0-pro": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-2.0",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 1.25,
+        "output_cost": 5.0,
+        "context_window": 2000000,
+        "training_cutoff": "2024-08"
+      }
+    },
+    "gemini-2.0-flash-lite": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-2.0",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.10,
+        "output_cost": 0.40,
+        "context_window": 128000,
+        "training_cutoff": "2024-08"
       }
     },
     "gemma-2-27b": {
