@@ -565,6 +565,32 @@
         "training_cutoff": "2025-03"
       }
     },
+    "claude-sonnet-4-5": {
+      "providers": [
+        "anthropic"
+      ],
+      "model_family": "claude-4.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 3.0,
+        "cache_input_cost": 0.3,
+        "output_cost": 15.0,
+        "cache_output_cost": 3.75,
+        "context_window": 200000,
+        "training_cutoff": "2025-07"
+      }
+    },
     "claude-opus-4.1": {
       "providers": [
         "anthropic"
