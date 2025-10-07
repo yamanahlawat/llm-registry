@@ -11,7 +11,7 @@ from llm_registry.models import ApiParams, Features, ModelCapabilities, Provider
 
 def create_model_capability(
     model_id: str,
-    provider: Provider | str,
+    provider: Provider | str | list[Provider] | list[str],
     model_family: str | None = None,
     supports_streaming: bool = False,
     supports_tools: bool = False,
@@ -27,7 +27,7 @@ def create_model_capability(
     Helper function to create a ModelCapabilities object with less verbose syntax.
     Args:
         model_id: Model identifier
-        provider: Model provider
+        provider: Model provider(s) - single Provider/str or list of Provider/str
         model_family: Optional model family
         supports_streaming: Whether the model supports streaming
         supports_tools: Whether the model supports tools/function calling
@@ -41,12 +41,18 @@ def create_model_capability(
     Returns:
         ModelCapabilities object
     """
-    # Convert string provider to enum if needed
-    if isinstance(provider, str):
-        try:
-            provider = Provider(provider)
-        except ValueError:
-            provider = Provider.OTHER
+    # Convert provider(s) to list of Provider enums
+    providers = []
+    provider_list = [provider] if not isinstance(provider, list) else provider
+
+    for p in provider_list:
+        if isinstance(p, str):
+            try:
+                providers.append(Provider(p))
+            except ValueError:
+                providers.append(Provider.OTHER)
+        else:
+            providers.append(p)
 
     # Create token costs if applicable
     token_costs = None
@@ -69,7 +75,7 @@ def create_model_capability(
 
     return ModelCapabilities(
         model_id=model_id,
-        providers=[provider],
+        providers=providers,
         model_family=model_family,
         api_params=api_params,
         features=features,
@@ -134,6 +140,22 @@ def save_user_models(data: dict) -> None:
     models_file = get_user_models_file()
     with open(models_file, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
+
+    # Clear cache so next load reads fresh data
+    load_user_models.cache_clear()
+
+
+def normalize_provider_value(provider: Provider | str) -> str:
+    """
+    Convert Provider enum to string value if needed.
+
+    Args:
+        provider: Provider enum or string value
+
+    Returns:
+        String value of the provider
+    """
+    return provider.value if isinstance(provider, Provider) else provider
 
 
 def is_package_model(model_id: str) -> bool:
