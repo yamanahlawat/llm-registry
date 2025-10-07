@@ -14,6 +14,7 @@ from llm_registry.utils import (
     is_package_model,
     load_package_models,
     load_user_models,
+    normalize_provider_value,
     save_user_models,
 )
 
@@ -181,3 +182,35 @@ def test_is_package_model():
         assert is_package_model("gpt-4o") is True
         assert is_package_model("claude-3") is True
         assert is_package_model("custom-model") is False
+
+
+def test_normalize_provider_value():
+    """Test normalizing provider values to strings."""
+    assert normalize_provider_value(Provider.OPENAI) == "openai"
+    assert normalize_provider_value(Provider.ANTHROPIC) == "anthropic"
+    assert normalize_provider_value("openai") == "openai"
+    assert normalize_provider_value("custom-provider") == "custom-provider"
+
+
+def test_create_model_capability_with_provider_list():
+    """Test creating a model capability with a list of providers."""
+    model = create_model_capability(model_id="test-model", provider=[Provider.OPENAI, Provider.ANTHROPIC])
+    assert model.providers == [Provider.OPENAI, Provider.ANTHROPIC]
+
+    model = create_model_capability(model_id="test-model", provider=["openai", "anthropic"])
+    assert model.providers == [Provider.OPENAI, Provider.ANTHROPIC]
+
+    model = create_model_capability(model_id="test-model", provider=["openai", "unknown-provider"])
+    assert model.providers == [Provider.OPENAI, Provider.OTHER]
+
+
+def test_save_user_models_clears_cache():
+    """Test that save_user_models clears the load_user_models cache."""
+    mock_data = {"models": {"test-model": {}}}
+
+    with patch("llm_registry.utils.get_user_models_file", return_value=Path("/mock/data/dir/models.json")):
+        with patch("builtins.open", mock_open()):
+            with patch("pathlib.Path.mkdir"):
+                with patch("llm_registry.utils.load_user_models.cache_clear") as mock_cache_clear:
+                    save_user_models(mock_data)
+                    mock_cache_clear.assert_called_once()

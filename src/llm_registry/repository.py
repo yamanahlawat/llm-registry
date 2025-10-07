@@ -5,7 +5,7 @@ Repository for storing and retrieving model capabilities.
 from pathlib import Path
 
 from .models import ModelCapabilities, Provider
-from .utils import get_user_data_dir, get_user_models_file, load_user_models, save_user_models
+from .utils import get_user_data_dir, get_user_models_file, load_user_models, normalize_provider_value, save_user_models
 
 
 class CapabilityRepository:
@@ -56,9 +56,6 @@ class CapabilityRepository:
         Returns:
             ModelCapabilities if found, None otherwise
         """
-        # Reload user models to ensure we have the latest data
-        self._user_models = load_user_models()
-
         # Check if the model exists
         if model_id not in self._user_models["models"]:
             return None
@@ -67,7 +64,7 @@ class CapabilityRepository:
         model_data = self._user_models["models"][model_id]
 
         # Verify provider is in the model's providers
-        provider_value = provider.value if isinstance(provider, Provider) else provider
+        provider_value = normalize_provider_value(provider)
         if provider_value not in model_data["providers"]:
             return None
 
@@ -82,16 +79,13 @@ class CapabilityRepository:
         Returns:
             List of ModelCapabilities objects
         """
-        # Reload user models to ensure we have the latest data
-        self._user_models = load_user_models()
-
         result = []
 
         # Filter models by provider if specified
         for model_id, model_data in self._user_models["models"].items():
             # If provider is specified, check if it's in the model's providers
             if provider:
-                provider_value = provider.value if isinstance(provider, Provider) else provider
+                provider_value = normalize_provider_value(provider)
                 if provider_value not in model_data["providers"]:
                     continue
 
@@ -110,9 +104,6 @@ class CapabilityRepository:
         Returns:
             True if deleted, False if not found
         """
-        # Reload user models to ensure we have the latest data
-        self._user_models = load_user_models()
-
         # Check if the model exists
         if model_id not in self._user_models["models"]:
             return False
@@ -121,7 +112,7 @@ class CapabilityRepository:
         model_data = self._user_models["models"][model_id]
 
         # Verify provider is in the model's providers
-        provider_value = provider.value if isinstance(provider, Provider) else provider
+        provider_value = normalize_provider_value(provider)
         if provider_value not in model_data["providers"]:
             return False
 

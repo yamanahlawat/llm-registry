@@ -153,6 +153,20 @@ def test_get_model_base_model_fallback(registry):
     assert model.token_costs.input_cost == 1.0
 
 
+def test_get_model_base_model_fallback_package_models(mock_package_models, mock_user_models):
+    """Test fallback to base model in package models when variant not found in user models."""
+    mock_user_models["models"].clear()
+
+    with (
+        patch("llm_registry.registry.load_package_models", return_value=mock_package_models),
+        patch("llm_registry.registry.load_user_models", return_value=mock_user_models),
+    ):
+        registry = CapabilityRegistry()
+        model = registry.get_model("gpt-4o:latest")
+        assert model.model_id == "gpt-4o"
+        assert model.token_costs.input_cost == 2.5
+
+
 def test_get_model_base_model_fallback_not_found(registry):
     """Test that ModelNotFoundError is raised if neither the full nor base model exists."""
     with pytest.raises(ModelNotFoundError):
