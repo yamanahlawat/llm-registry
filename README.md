@@ -3,7 +3,7 @@
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
 [![Coverage](https://img.shields.io/badge/coverage-98%25-brightgreen)]()
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)]()
-[![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)]()
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)]()
 
 A Python package for managing LLM model capabilities across multiple providers. Track pricing, features, and limitations in one place.
 
