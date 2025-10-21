@@ -1761,6 +1761,300 @@
         "context_window": 1000000,
         "training_cutoff": "2025-05"
       }
+    },
+    "claude-haiku-4.5": {
+      "providers": [
+        "anthropic"
+      ],
+      "model_family": "claude-4.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 1.0,
+        "cache_input_cost": 0.1,
+        "output_cost": 5.0,
+        "cache_output_cost": 1.25,
+        "context_window": 200000,
+        "training_cutoff": "2025-10"
+      }
+    },
+    "llama-4-scout": {
+      "providers": [
+        "meta",
+        "ollama"
+      ],
+      "model_family": "llama-4",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 10000000,
+        "training_cutoff": "2025-03"
+      }
+    },
+    "llama-4-maverick": {
+      "providers": [
+        "meta",
+        "ollama"
+      ],
+      "model_family": "llama-4",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 1000000,
+        "training_cutoff": "2025-03"
+      }
+    },
+    "grok-4-fast": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.20,
+        "output_cost": 0.50,
+        "context_window": 128000,
+        "training_cutoff": "2025-07"
+      }
+    },
+    "grok-4-heavy": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 5.0,
+        "output_cost": 20.0,
+        "context_window": 256000,
+        "training_cutoff": "2025-07"
+      }
+    },
+    "command-r-08-2024": {
+      "providers": [
+        "cohere"
+      ],
+      "model_family": "command-r",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.15,
+        "output_cost": 0.60,
+        "context_window": 128000,
+        "training_cutoff": "2024-08"
+      }
+    },
+    "command-r-plus-08-2024": {
+      "providers": [
+        "cohere"
+      ],
+      "model_family": "command-r",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 2.50,
+        "output_cost": 10.00,
+        "context_window": 128000,
+        "training_cutoff": "2024-08"
+      }
+    },
+    "deepseek-v3.1": {
+      "providers": [
+        "deepseek"
+      ],
+      "model_family": "deepseek",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.27,
+        "cache_input_cost": 0.07,
+        "output_cost": 1.10,
+        "context_window": 128000,
+        "training_cutoff": "2025-08"
+      }
+    },
+    "deepseek-v3.2-exp": {
+      "providers": [
+        "deepseek"
+      ],
+      "model_family": "deepseek",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.27,
+        "cache_input_cost": 0.07,
+        "output_cost": 1.10,
+        "context_window": 128000,
+        "training_cutoff": "2025-09"
+      }
+    },
+    "gemini-2.5-flash-image": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-2.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": false,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 30.0,
+        "context_window": 128000,
+        "training_cutoff": "2025-08"
+      }
+    },
+    "magistral-small": {
+      "providers": [
+        "mistral"
+      ],
+      "model_family": "magistral",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.0,
+        "context_window": 128000,
+        "training_cutoff": "2025-06"
+      }
+    },
+    "magistral-medium": {
+      "providers": [
+        "mistral"
+      ],
+      "model_family": "magistral",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.4,
+        "output_cost": 2.0,
+        "context_window": 128000,
+        "training_cutoff": "2025-06"
+      }
     }
   }
 }
