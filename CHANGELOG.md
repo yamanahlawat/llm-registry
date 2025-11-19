@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.7] - 2025-11-19
+
+### Added
+
+- **xAI Models**: Added new Grok model variants with updated specifications
+  - `grok-4-fast-reasoning` - Reasoning mode with thinking tokens ($0.20/$0.50, 2M context)
+  - `grok-4-fast-non-reasoning` - Non-reasoning mode for faster responses ($0.20/$0.50, 2M context)
+  - `grok-code-fast-1` - Optimized for agentic coding ($0.20/$1.50, 256K context)
+  - `grok-2-image-1212` - Image generation model ($0.00/$0.07 per image)
+
+### Changed
+
+- **xAI Models**: Updated existing Grok models to match official API specifications
+  - `grok-4` - Updated training cutoff to November 2024, removed cache pricing
+  - `grok-3` - Context window: 131K→132K tokens, training cutoff: July→November 2024
+  - `grok-3-mini` - Context window: 131K→132K tokens, training cutoff: July→November 2024
+
+- **Google/Gemini Models**: Added missing cache output costs and fixed specifications
+  - `gemini-2.0-flash` - Fixed context window: 128K→1M tokens, added cache_output_cost ($0.75)
+  - `gemini-2.5-flash` - Added cache_output_cost ($0.625)
+  - `gemini-2.5-flash-lite` - Added cache_output_cost ($0.10)
+  - `gemini-2.5-pro` - Added cache_output_cost ($2.50)
+  - `gemini-3-pro` - Added cache_output_cost ($3.00)
+
 ## [0.4.6] - 2025-10-09
 
 ### Added
