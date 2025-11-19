@@ -372,7 +372,7 @@
       "token_costs": {
         "input_cost": 0.05,
         "cache_input_cost": 0.005,
-        "output_cost": 0.40,
+        "output_cost": 0.4,
         "context_window": 400000,
         "training_cutoff": "2024-05"
       }
@@ -565,7 +565,33 @@
         "training_cutoff": "2025-03"
       }
     },
-    "claude-sonnet-4-5": {
+    "claude-haiku-4.5": {
+      "providers": [
+        "anthropic"
+      ],
+      "model_family": "claude-4.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 1.0,
+        "cache_input_cost": 0.1,
+        "output_cost": 5.0,
+        "cache_output_cost": 1.25,
+        "context_window": 200000,
+        "training_cutoff": "2025-07"
+      }
+    },
+    "claude-sonnet-4.5": {
       "providers": [
         "anthropic"
       ],
@@ -632,7 +658,7 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 0.80,
+        "input_cost": 0.8,
         "cache_input_cost": 0.08,
         "output_cost": 4.0,
         "cache_output_cost": 1.0,
@@ -1034,6 +1060,32 @@
         "training_cutoff": "2024-06"
       }
     },
+    "gemini-3-pro": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-3",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 2.0,
+        "cache_input_cost": 0.5,
+        "output_cost": 12.0,
+        "cache_output_cost": 3.0,
+        "context_window": 1000000,
+        "training_cutoff": "2025-11"
+      }
+    },
     "gemini-2.5-pro": {
       "providers": [
         "google"
@@ -1055,6 +1107,7 @@
         "input_cost": 1.25,
         "cache_input_cost": 0.31,
         "output_cost": 10.0,
+        "cache_output_cost": 2.5,
         "context_window": 1000000,
         "training_cutoff": "2025-01"
       }
@@ -1077,9 +1130,10 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 0.30,
+        "input_cost": 0.3,
         "cache_input_cost": 0.075,
         "output_cost": 2.5,
+        "cache_output_cost": 0.625,
         "context_window": 1000000,
         "training_cutoff": "2025-01"
       }
@@ -1105,32 +1159,9 @@
         "input_cost": 1.0,
         "cache_input_cost": 0.075,
         "output_cost": 3.0,
-        "context_window": 128000,
+        "cache_output_cost": 0.75,
+        "context_window": 1000000,
         "training_cutoff": "2025-01"
-      }
-    },
-    "gemini-2.0-pro": {
-      "providers": [
-        "google"
-      ],
-      "model_family": "gemini-2.0",
-      "api_params": {
-        "max_tokens": true,
-        "temperature": true,
-        "top_p": true,
-        "stream": true
-      },
-      "features": {
-        "vision": true,
-        "tools": true,
-        "json_mode": true,
-        "system_prompt": true
-      },
-      "token_costs": {
-        "input_cost": 1.25,
-        "output_cost": 5.0,
-        "context_window": 2000000,
-        "training_cutoff": "2024-08"
       }
     },
     "gemini-2.0-flash-lite": {
@@ -1151,8 +1182,8 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 0.10,
-        "output_cost": 0.40,
+        "input_cost": 0.1,
+        "output_cost": 0.4,
         "context_window": 128000,
         "training_cutoff": "2024-08"
       }
@@ -1472,6 +1503,78 @@
         "training_cutoff": null
       }
     },
+    "grok-4-fast-reasoning": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok-4-fast",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.2,
+        "output_cost": 0.5,
+        "context_window": 2000000,
+        "training_cutoff": "2024-11"
+      }
+    },
+    "grok-4-fast-non-reasoning": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok-4-fast",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.2,
+        "output_cost": 0.5,
+        "context_window": 2000000,
+        "training_cutoff": "2024-11"
+      }
+    },
+    "grok-code-fast-1": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok-code-fast",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.2,
+        "output_cost": 1.5,
+        "context_window": 256000,
+        "training_cutoff": "2024-11"
+      }
+    },
     "grok-4": {
       "providers": [
         "xai"
@@ -1491,10 +1594,9 @@
       },
       "token_costs": {
         "input_cost": 3.0,
-        "cache_input_cost": 0.75,
         "output_cost": 15.0,
         "context_window": 256000,
-        "training_cutoff": "2025-07"
+        "training_cutoff": "2024-11"
       }
     },
     "grok-3": {
@@ -1517,8 +1619,8 @@
       "token_costs": {
         "input_cost": 3.0,
         "output_cost": 15.0,
-        "context_window": 131072,
-        "training_cutoff": "2024-07"
+        "context_window": 132000,
+        "training_cutoff": "2024-11"
       }
     },
     "grok-3-mini": {
@@ -1541,8 +1643,32 @@
       "token_costs": {
         "input_cost": 0.3,
         "output_cost": 0.5,
+        "context_window": 132000,
+        "training_cutoff": "2024-11"
+      }
+    },
+    "grok-2-image-1212": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok-2-image",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": false,
+        "json_mode": false,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 0.07,
         "context_window": 131072,
-        "training_cutoff": "2024-07"
+        "training_cutoff": "2024-11"
       }
     },
     "grok-2": {
@@ -1737,6 +1863,54 @@
         "training_cutoff": "2024-12"
       }
     },
+    "magistral-small": {
+      "providers": [
+        "mistral"
+      ],
+      "model_family": "magistral",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.5,
+        "output_cost": 1.5,
+        "context_window": 128000,
+        "training_cutoff": "2025-06"
+      }
+    },
+    "magistral-medium": {
+      "providers": [
+        "mistral"
+      ],
+      "model_family": "magistral",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 2.0,
+        "output_cost": 5.0,
+        "context_window": 128000,
+        "training_cutoff": "2025-06"
+      }
+    },
     "gemini-2.5-flash-lite": {
       "providers": [
         "google"
@@ -1755,11 +1929,36 @@
         "system_prompt": true
       },
       "token_costs": {
-        "input_cost": 0.10,
+        "input_cost": 0.1,
         "cache_input_cost": 0.025,
-        "output_cost": 0.40,
+        "output_cost": 0.4,
+        "cache_output_cost": 0.1,
         "context_window": 1000000,
         "training_cutoff": "2025-05"
+      }
+    },
+    "gemini-2.5-flash-image": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-2.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": false,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.0,
+        "output_cost": 30.0,
+        "context_window": 128000,
+        "training_cutoff": "2025-08"
       }
     }
   }
