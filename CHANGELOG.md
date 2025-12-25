@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.8] - 2025-12-25
+
+### Added
+
+- **OpenAI Models**: Added latest GPT-5 series models with verified pricing
+  - `gpt-5.1` - Flagship model for coding and agentic tasks ($1.25/$10.00, 272K context)
+  - `gpt-5.2` - Most capable general-purpose model ($1.75/$14.00, 400K context)
+  - `gpt-5.2-pro` - Premium variant for enterprise and research ($21.00/$168.00, 400K context)
+
+- **Anthropic Models**: Added Claude 4.5 Opus
+  - `claude-opus-4-5` - Leading model for reasoning, coding, and STEM ($5.00/$25.00, 200K context)
+
+- **Google/Gemini Models**: Added Gemini 3 family
+  - `gemini-3-pro-preview` - Enhanced reasoning with Deep Think mode ($2.50/$15.00, 1M context)
+  - `gemini-3-flash-preview` - Pro-grade reasoning at high speed ($0.50/$3.00, 1M context)
+
+- **Mistral Models**: Added Mistral Large 3
+  - `mistral-large-3` - 41B active parameters with 675B total MoE ($0.50/$1.50, 262K context)
+
+- **DeepSeek Models**: Added V3.2 series
+  - `deepseek-v3.2` - GPT-5-level performance at low cost ($0.28/$0.42, 128K context)
+  - `deepseek-v3.2-speciale` - IMO/IOI gold-medal level reasoning ($0.28/$0.42, 131K context)
+
+- **xAI Models**: Added Grok 4.1 variants
+  - `grok-4-1-fast-reasoning` - Deep reasoning with thinking tokens ($3.00/$15.00, 256K context)
+  - `grok-4-1-fast-non-reasoning` - Agentic workflows with 2M context window ($0.20/$0.50, 2M context)
+
 ## [0.4.7] - 2025-11-19
 
 ### Added
