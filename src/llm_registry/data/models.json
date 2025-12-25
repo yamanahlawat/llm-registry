@@ -1960,6 +1960,280 @@
         "context_window": 128000,
         "training_cutoff": "2025-08"
       }
+    },
+    "gpt-5.1": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-5.1",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 1.25,
+        "cache_input_cost": 0.125,
+        "output_cost": 10.0,
+        "context_window": 272000,
+        "training_cutoff": "2025-09"
+      }
+    },
+    "gpt-5.2": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-5.2",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 1.75,
+        "cache_input_cost": 0.175,
+        "output_cost": 14.0,
+        "context_window": 400000,
+        "training_cutoff": "2025-08"
+      }
+    },
+    "gpt-5.2-pro": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-5.2",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 21.0,
+        "output_cost": 168.0,
+        "context_window": 400000,
+        "training_cutoff": "2025-08"
+      }
+    },
+    "claude-opus-4-5": {
+      "providers": [
+        "anthropic"
+      ],
+      "model_family": "claude-4.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 5.0,
+        "cache_input_cost": 0.5,
+        "output_cost": 25.0,
+        "cache_output_cost": 6.25,
+        "context_window": 200000,
+        "training_cutoff": "2025-09"
+      }
+    },
+    "gemini-3-pro-preview": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-3",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 2.5,
+        "cache_input_cost": 0.625,
+        "output_cost": 15.0,
+        "cache_output_cost": 3.75,
+        "context_window": 1000000,
+        "training_cutoff": "2025-11"
+      }
+    },
+    "gemini-3-flash-preview": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-3",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.5,
+        "cache_input_cost": 0.125,
+        "output_cost": 3.0,
+        "cache_output_cost": 0.75,
+        "context_window": 1000000,
+        "training_cutoff": "2025-11"
+      }
+    },
+    "mistral-large-3": {
+      "providers": [
+        "mistral"
+      ],
+      "model_family": "mistral",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.5,
+        "output_cost": 1.5,
+        "context_window": 262000,
+        "training_cutoff": "2025-10"
+      }
+    },
+    "deepseek-v3.2": {
+      "providers": [
+        "deepseek"
+      ],
+      "model_family": "deepseek",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.28,
+        "cache_input_cost": 0.028,
+        "output_cost": 0.42,
+        "context_window": 128000,
+        "training_cutoff": "2025-10"
+      }
+    },
+    "deepseek-v3.2-speciale": {
+      "providers": [
+        "deepseek"
+      ],
+      "model_family": "deepseek",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.28,
+        "cache_input_cost": 0.07,
+        "output_cost": 0.42,
+        "context_window": 131000,
+        "training_cutoff": "2025-10"
+      }
+    },
+    "grok-4-1-fast-reasoning": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok-4-1",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 3.0,
+        "output_cost": 15.0,
+        "context_window": 256000,
+        "training_cutoff": "2025-09"
+      }
+    },
+    "grok-4-1-fast-non-reasoning": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok-4-1",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true
+      },
+      "token_costs": {
+        "input_cost": 0.2,
+        "output_cost": 0.5,
+        "context_window": 2000000,
+        "training_cutoff": "2025-09"
+      }
     }
   }
 }
