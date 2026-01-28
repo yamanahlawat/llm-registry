@@ -54,13 +54,13 @@ def repository(mock_user_models):
 
 
 def test_init_creates_data_dir():
-    """Test that initialization creates the data directory if it doesn't exist."""
-    mock_path = MagicMock(spec=Path)
-    with patch("llm_registry.repository.get_user_data_dir", return_value=mock_path):
+    """Test that initialization calls get_user_data_dir with the provided data_dir."""
+    custom_path = Path("/custom/data/dir")
+    with patch("llm_registry.repository.get_user_data_dir", return_value=custom_path) as mock_get_dir:
         with patch("llm_registry.repository.load_user_models"):
-            with patch("pathlib.Path.mkdir"):  # Prevent any actual directory creation
-                CapabilityRepository()
-                mock_path.mkdir.assert_called_once_with(parents=True, exist_ok=True)
+            repo = CapabilityRepository(data_dir=custom_path)
+            mock_get_dir.assert_called_once_with(user_dir=custom_path)
+            assert repo.data_dir == custom_path
 
 
 def test_save_model_capabilities(repository, sample_model_capabilities):
@@ -73,8 +73,8 @@ def test_save_model_capabilities(repository, sample_model_capabilities):
         with patch("llm_registry.repository.save_user_models") as mock_save:
             result = repository.save_model_capabilities(sample_model_capabilities)
 
-            # Check that save_user_models was called with updated data
-            called_data = mock_save.call_args[0][0]
+            # Check that save_user_models was called with updated data (using kwargs)
+            called_data = mock_save.call_args.kwargs["data"]
             assert "test-model" in called_data["models"]
             assert called_data["models"]["test-model"]["model_family"] == "test-family"
             assert called_data["models"]["test-model"]["providers"] == ["openai"]
@@ -126,8 +126,8 @@ def test_delete_model_existing(repository):
     with patch("llm_registry.repository.save_user_models") as mock_save:
         result = repository.delete_model(Provider.OPENAI, "existing-model")
         assert result is True
-        # Verify that model was removed from user models
-        called_data = mock_save.call_args[0][0]
+        # Verify that model was removed from user models (using kwargs)
+        called_data = mock_save.call_args.kwargs["data"]
         assert "existing-model" not in called_data["models"]
 
 
@@ -156,7 +156,7 @@ def test_delete_model_multi_provider(repository):
         result = repository.delete_model(Provider.OPENAI, "existing-model")
         assert result is True
 
-        # Verify that only the provider was removed, not the entire model
-        called_data = mock_save.call_args[0][0]
+        # Verify that only the provider was removed, not the entire model (using kwargs)
+        called_data = mock_save.call_args.kwargs["data"]
         assert "existing-model" in called_data["models"]
         assert called_data["models"]["existing-model"]["providers"] == ["azure"]
