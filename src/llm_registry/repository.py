@@ -20,11 +20,10 @@ class CapabilityRepository:
             data_dir: Directory to store model capability data.
                      If None, defaults to ~/.llm-registry
         """
-        self.data_dir = get_user_data_dir() if data_dir is None else data_dir
-        self.data_dir.mkdir(parents=True, exist_ok=True)
+        self.data_dir = get_user_data_dir(user_dir=data_dir)
 
-        # Load user models
-        self._user_models = load_user_models()
+        # Load user models from this repository's directory
+        self._user_models = load_user_models(user_dir=self.data_dir)
 
     def save_model_capabilities(self, capabilities: ModelCapabilities) -> Path:
         """
@@ -42,10 +41,10 @@ class CapabilityRepository:
         self._user_models["models"][model_id] = model_data
 
         # Save to file
-        save_user_models(self._user_models)
+        save_user_models(data=self._user_models, user_dir=self.data_dir)
 
         # Return the path to the models file
-        return get_user_models_file()
+        return get_user_models_file(user_dir=self.data_dir)
 
     def get_model_capabilities(self, provider: Provider, model_id: str) -> ModelCapabilities | None:
         """
@@ -124,6 +123,6 @@ class CapabilityRepository:
             model_data["providers"].remove(provider_value)
 
         # Save the updated models
-        save_user_models(self._user_models)
+        save_user_models(data=self._user_models, user_dir=self.data_dir)
 
         return True

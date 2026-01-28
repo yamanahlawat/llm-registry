@@ -24,15 +24,3 @@ def mock_filesystem_operations():
                 mock_json_content = json.dumps({"models": {}})
                 with patch("builtins.open", mock_open(read_data=mock_json_content)):
                     yield
-
-
-@pytest.fixture(autouse=True)
-def disable_lru_cache():
-    """
-    Clear LRU caches between tests to prevent test interference.
-    """
-    from llm_registry.utils import load_user_models
-
-    load_user_models.cache_clear()
-    yield
-    load_user_models.cache_clear()

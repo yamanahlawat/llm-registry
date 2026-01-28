@@ -189,7 +189,7 @@ class TestIntegration:
                 mock_save.assert_called_once()
 
                 # Check that save_user_models was called with data that doesn't include the deleted model
-                saved_data = mock_save.call_args[0][0]
+                saved_data = mock_save.call_args.kwargs["data"]
                 assert "test-model" not in saved_data["models"]
 
         # Create a new dictionary that simulates the deletion

@@ -3,7 +3,6 @@ Utility functions for the LLM registry package.
 """
 
 import json
-from functools import lru_cache
 from pathlib import Path
 
 from llm_registry.models import ApiParams, Features, ModelCapabilities, Provider, TokenCost
@@ -83,20 +82,29 @@ def create_model_capability(
     )
 
 
-def get_user_data_dir() -> Path:
+def get_user_data_dir(user_dir: Path | None = None) -> Path:
     """
-    Get the path to user's data directory.
+    Get the path to data directory.
+
+    Args:
+        user_dir: Optional custom directory. If None, defaults to ~/.llm-registry
+
+    Returns:
+        Path to the data directory (created if it doesn't exist)
     """
-    data_dir = Path.home() / ".llm-registry"
+    data_dir = user_dir if user_dir is not None else Path.home() / ".llm-registry"
     data_dir.mkdir(parents=True, exist_ok=True)
     return data_dir
 
 
-def get_user_models_file() -> Path:
+def get_user_models_file(user_dir: Path | None = None) -> Path:
     """
     Get the path to user's models.json file.
+
+    Args:
+        user_dir: Optional custom directory. If None, uses default.
     """
-    data_dir = get_user_data_dir()
+    data_dir = get_user_data_dir(user_dir)
     models_file = data_dir / "models.json"
     if not models_file.exists():
         # Create empty models file with simplified structure
@@ -114,12 +122,14 @@ def load_package_models() -> dict:
         return json.load(f)
 
 
-@lru_cache()
-def load_user_models() -> dict:
+def load_user_models(user_dir: Path | None = None) -> dict:
     """
-    Load models from user's JSON file with caching.
+    Load models from user's JSON file.
+
+    Args:
+        user_dir: Optional custom directory. If None, uses default.
     """
-    models_file = get_user_models_file()
+    models_file = get_user_models_file(user_dir)
     try:
         with open(models_file, encoding="utf-8") as models_file_obj:
             return json.load(models_file_obj)
@@ -128,21 +138,22 @@ def load_user_models() -> dict:
         return {"models": {}}
 
 
-def save_user_models(data: dict) -> None:
+def save_user_models(data: dict, user_dir: Path | None = None) -> None:
     """
     Save models to user's JSON file.
+
+    Args:
+        data: Model data to save.
+        user_dir: Optional custom directory. If None, uses default.
     """
     # Ensure data has the correct structure
     if "models" not in data:
         data["models"] = {}
 
     # Save to file
-    models_file = get_user_models_file()
+    models_file = get_user_models_file(user_dir)
     with open(models_file, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
-
-    # Clear cache so next load reads fresh data
-    load_user_models.cache_clear()
 
 
 def normalize_provider_value(provider: Provider | str) -> str:

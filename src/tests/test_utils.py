@@ -122,13 +122,6 @@ def test_load_user_models():
             data = load_user_models()
             assert data == mock_data
 
-    # Test caching behavior (lru_cache)
-    with patch("llm_registry.utils.get_user_models_file", return_value=Path("/mock/data/dir/models.json")):
-        with patch("builtins.open", mock_open()) as mock_file:
-            data = load_user_models()  # This should use cached result
-            assert data == mock_data
-            mock_file.assert_not_called()  # File should not be opened again
-
 
 def test_load_user_models_json_error():
     """Test loading user models with JSON error."""
@@ -202,15 +195,3 @@ def test_create_model_capability_with_provider_list():
 
     model = create_model_capability(model_id="test-model", provider=["openai", "unknown-provider"])
     assert model.providers == [Provider.OPENAI, Provider.OTHER]
-
-
-def test_save_user_models_clears_cache():
-    """Test that save_user_models clears the load_user_models cache."""
-    mock_data = {"models": {"test-model": {}}}
-
-    with patch("llm_registry.utils.get_user_models_file", return_value=Path("/mock/data/dir/models.json")):
-        with patch("builtins.open", mock_open()):
-            with patch("pathlib.Path.mkdir"):
-                with patch("llm_registry.utils.load_user_models.cache_clear") as mock_cache_clear:
-                    save_user_models(mock_data)
-                    mock_cache_clear.assert_called_once()
