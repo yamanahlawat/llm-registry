@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.9] - 2025-01-28
+
+### Fixed
+
+- **CapabilityRepository**: Fixed bug where custom `data_dir` parameter was ignored (#55)
+  - Repository now correctly saves/loads models from the specified directory
+  - All file I/O functions (`get_user_data_dir`, `get_user_models_file`, `load_user_models`, `save_user_models`) now accept optional `user_dir` parameter
+
+### Changed
+
+- Removed `@lru_cache` from `load_user_models()` as caching is incompatible with per-directory storage
+- Repository now uses named parameters for all utility function calls
+
 ## [0.4.8] - 2025-12-25
 
 ### Added

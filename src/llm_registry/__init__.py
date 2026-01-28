@@ -8,7 +8,7 @@ from .registry import CapabilityRegistry
 from .repository import CapabilityRepository
 from .utils import create_model_capability
 
-__version__ = "0.4.8"
+__version__ = "0.4.9"
 
 __all__ = [
     "ModelCapabilities",
