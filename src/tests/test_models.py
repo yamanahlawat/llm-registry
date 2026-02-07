@@ -5,7 +5,16 @@ Tests for model validation and behavior.
 import pytest
 from pydantic import ValidationError
 
-from llm_registry.models import ApiParams, Features, ModelCapabilities, Provider, TokenCost
+from llm_registry.models import (
+    ApiParams,
+    Features,
+    Modality,
+    ModelCapabilities,
+    ModelModalities,
+    PricingDimension,
+    Provider,
+    TokenCost,
+)
 
 
 def test_provider_enum():
@@ -13,7 +22,49 @@ def test_provider_enum():
     assert Provider.OPENAI.value == "openai"
     assert Provider.ANTHROPIC.value == "anthropic"
     assert Provider.GOOGLE.value == "google"
+    assert Provider.KIMI.value == "kimi"
     assert Provider.OTHER.value == "other"
+
+
+def test_modality_enum():
+    """Test Modality enum values."""
+    assert Modality.TEXT.value == "text"
+    assert Modality.IMAGE.value == "image"
+    assert Modality.AUDIO.value == "audio"
+    assert Modality.VIDEO.value == "video"
+    assert Modality.OTHER.value == "other"
+
+
+def test_model_modalities_defaults():
+    """Test ModelModalities defaults to text input and output."""
+    modalities = ModelModalities()
+    assert modalities.input == [Modality.TEXT]
+    assert modalities.output == [Modality.TEXT]
+
+
+def test_pricing_dimension_validation():
+    """Test PricingDimension validation."""
+    dimension = PricingDimension(
+        name="image_standard_1024",
+        modality=Modality.IMAGE,
+        direction="output",
+        unit="per_image",
+        price_usd=0.04,
+        notes="Standard quality",
+    )
+    assert dimension.modality == Modality.IMAGE
+    assert dimension.direction == "output"
+    assert dimension.unit == "per_image"
+    assert dimension.price_usd == 0.04
+
+    with pytest.raises(ValidationError):
+        PricingDimension(
+            name="invalid_negative",
+            modality=Modality.IMAGE,
+            direction="output",
+            unit="per_image",
+            price_usd=-1.0,
+        )
 
 
 def test_token_cost_validation_valid():
@@ -82,6 +133,9 @@ def test_model_capabilities_validation():
     assert model.base_model is None
     assert model.api_params.stream is False
     assert model.features.tools is False
+    assert model.modalities.input == [Modality.TEXT]
+    assert model.modalities.output == [Modality.TEXT]
+    assert model.pricing_dimensions is None
     assert model.token_costs is None
 
     # Full model with all fields
@@ -92,6 +146,16 @@ def test_model_capabilities_validation():
         base_model="base-model",
         api_params=ApiParams(max_tokens=True, temperature=True, top_p=True, stream=True),
         features=Features(vision=True, tools=True, json_mode=True, system_prompt=True),
+        modalities=ModelModalities(input=[Modality.TEXT, Modality.IMAGE], output=[Modality.TEXT]),
+        pricing_dimensions=[
+            PricingDimension(
+                name="image_input_tokens",
+                modality=Modality.IMAGE,
+                direction="input",
+                unit="per_1m_tokens",
+                price_usd=10.0,
+            )
+        ],
         token_costs=TokenCost(
             input_cost=1.0,
             output_cost=2.0,
@@ -115,6 +179,10 @@ def test_model_capabilities_validation():
     assert model.features.tools is True
     assert model.features.json_mode is True
     assert model.features.system_prompt is True
+    assert model.modalities.input == [Modality.TEXT, Modality.IMAGE]
+    assert model.modalities.output == [Modality.TEXT]
+    assert model.pricing_dimensions is not None
+    assert model.pricing_dimensions[0].name == "image_input_tokens"
     assert model.token_costs.input_cost == 1.0
     assert model.token_costs.output_cost == 2.0
     assert model.token_costs.cache_input_cost == 0.5
@@ -148,6 +216,16 @@ def test_model_capabilities_from_dict():
         "model_family": "test-family",
         "api_params": {"max_tokens": True, "stream": True},
         "features": {"vision": True, "tools": True},
+        "modalities": {"input": ["text", "image"], "output": ["text"]},
+        "pricing_dimensions": [
+            {
+                "name": "image_input_tokens",
+                "modality": "image",
+                "direction": "input",
+                "unit": "per_1m_tokens",
+                "price_usd": 10.0,
+            }
+        ],
         "token_costs": {"input_cost": 1.0, "output_cost": 2.0},
     }
     model = ModelCapabilities.model_validate(model_dict)
@@ -159,5 +237,9 @@ def test_model_capabilities_from_dict():
     assert model.api_params.stream is True
     assert model.features.vision is True
     assert model.features.tools is True
+    assert model.modalities.input == [Modality.TEXT, Modality.IMAGE]
+    assert model.modalities.output == [Modality.TEXT]
+    assert model.pricing_dimensions is not None
+    assert model.pricing_dimensions[0].unit == "per_1m_tokens"
     assert model.token_costs.input_cost == 1.0
     assert model.token_costs.output_cost == 2.0

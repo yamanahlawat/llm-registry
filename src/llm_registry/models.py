@@ -3,7 +3,7 @@ Data models for LLM capabilities.
 """
 
 from enum import Enum
-from typing import List, Self
+from typing import Literal, Self
 
 from pydantic import BaseModel, Field, model_validator
 
@@ -29,6 +29,7 @@ class Provider(str, Enum):
     AMAZON = "amazon"
     OTHER = "other"
     ALIBABA = "alibaba"
+    KIMI = "kimi"
 
 
 class TokenCost(BaseModel):
@@ -50,6 +51,42 @@ class TokenCost(BaseModel):
         if self.cache_output_cost and self.cache_output_cost > self.output_cost:
             raise ValueError("Cache output cost must be lower than output cost")
         return self
+
+
+class Modality(str, Enum):
+    """
+    Enumeration of model modalities.
+    """
+
+    TEXT = "text"
+    IMAGE = "image"
+    AUDIO = "audio"
+    VIDEO = "video"
+    OTHER = "other"
+
+
+class ModelModalities(BaseModel):
+    """
+    Input and output modalities supported by a model.
+    """
+
+    input: list[Modality] = Field(default_factory=lambda: [Modality.TEXT])
+    output: list[Modality] = Field(default_factory=lambda: [Modality.TEXT])
+
+
+class PricingDimension(BaseModel):
+    """
+    Structured pricing information for non-token and mixed-unit models.
+    """
+
+    name: str = Field(description="Pricing dimension name")
+    modality: Modality = Field(description="Pricing modality")
+    direction: Literal["input", "output", "cache_input", "cache_output"] = Field(
+        description="Direction for the priced usage"
+    )
+    unit: Literal["per_1m_tokens", "per_image", "per_minute", "per_request"] = Field(description="Pricing unit")
+    price_usd: float = Field(ge=0, description="Price in USD for the given unit")
+    notes: str | None = Field(default=None, description="Optional notes for this pricing dimension")
 
 
 class ApiParams(BaseModel):
@@ -80,12 +117,16 @@ class ModelCapabilities(BaseModel):
     """
 
     model_id: str = Field(description="Unique identifier for the model")
-    providers: List[Provider] = Field(description="List of providers that support this model")
+    providers: list[Provider] = Field(description="List of providers that support this model")
     model_family: str | None = Field(default=None, description="Model family (e.g., 'gpt-4', 'claude-3')")
     base_model: str | None = Field(default=None, description="For open source models, the original model name")
     api_params: ApiParams = Field(default_factory=ApiParams, description="API parameters supported by the model")
     features: Features = Field(
         default_factory=lambda: Features(), description="High-level features supported by the model"
+    )
+    modalities: ModelModalities = Field(default_factory=ModelModalities, description="Input/output modalities")
+    pricing_dimensions: list[PricingDimension] | None = Field(
+        default=None, description="Structured pricing dimensions for mixed/non-token pricing"
     )
     token_costs: TokenCost | None = Field(default=None, description="Token cost information for the model")
 

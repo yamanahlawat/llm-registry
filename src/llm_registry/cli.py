@@ -104,6 +104,9 @@ def list(
     table.add_column("Vision", min_width=7, justify="center", no_wrap=True)
     table.add_column("JSON", min_width=7, justify="center", no_wrap=True)
     table.add_column("System", min_width=7, justify="center", no_wrap=True)
+    table.add_column("In Mods", min_width=10, no_wrap=True)
+    table.add_column("Out Mods", min_width=10, no_wrap=True)
+    table.add_column("Alt Pricing", min_width=10, justify="center", no_wrap=True)
 
     # Sort models by ID
     models.sort(key=lambda x: x.model_id)
@@ -115,6 +118,13 @@ def list(
         # Check if model is from user or package
         source = "User" if model.model_id in user_models else "Package"
         providers_str = ", ".join(p.value for p in model.providers)
+        input_modalities = ", ".join(modality.value for modality in model.modalities.input)
+        output_modalities = ", ".join(modality.value for modality in model.modalities.output)
+        non_token_pricing_count = (
+            len([dim for dim in model.pricing_dimensions if dim.unit != "per_1m_tokens"])
+            if model.pricing_dimensions
+            else 0
+        )
         table.add_row(
             source,
             model.model_id,
@@ -135,10 +145,13 @@ def list(
             "✅" if model.features.vision else "❌",
             "✅" if model.features.json_mode else "❌",
             "✅" if model.features.system_prompt else "❌",
+            input_modalities,
+            output_modalities,
+            str(non_token_pricing_count) if non_token_pricing_count else "N/A",
         )
 
     # Print table with full width
-    console.print(table, width=200)
+    console.print(table, width=320)
 
 
 @app.command()
@@ -205,6 +218,34 @@ def get(
     features_table.add_row("JSON Mode", "✅" if model.features.json_mode else "❌")
     features_table.add_row("System Prompt", "✅" if model.features.system_prompt else "❌")
 
+    # Modalities Table
+    modalities_table = Table(title="Modalities", show_header=True, header_style="bold")
+    modalities_table.add_column("Direction", style="cyan")
+    modalities_table.add_column("Modalities")
+    modalities_table.add_row("Input", ", ".join(modality.value for modality in model.modalities.input))
+    modalities_table.add_row("Output", ", ".join(modality.value for modality in model.modalities.output))
+
+    # Additional Pricing Table
+    additional_pricing_table = None
+    if model.pricing_dimensions:
+        additional_pricing_table = Table(title="Additional Pricing", show_header=True, header_style="bold")
+        additional_pricing_table.add_column("Name", style="cyan", overflow="fold")
+        additional_pricing_table.add_column("Modality")
+        additional_pricing_table.add_column("Direction")
+        additional_pricing_table.add_column("Unit")
+        additional_pricing_table.add_column("USD")
+        additional_pricing_table.add_column("Notes")
+
+        for dimension in model.pricing_dimensions:
+            additional_pricing_table.add_row(
+                dimension.name,
+                dimension.modality.value,
+                dimension.direction,
+                dimension.unit,
+                f"${dimension.price_usd}",
+                dimension.notes or "",
+            )
+
     # Print all tables with some spacing
     console.print(main_table)
     console.print()
@@ -214,6 +255,11 @@ def get(
     console.print(api_table)
     console.print()
     console.print(features_table)
+    console.print()
+    console.print(modalities_table)
+    if additional_pricing_table is not None:
+        console.print()
+        console.print(additional_pricing_table)
 
 
 @app.command()
