@@ -229,3 +229,28 @@ def test_create_model_capability_unknown_modality_maps_to_other():
         input_modalities=["nonstandard_modality"],
     )
     assert model.modalities.input == [Modality.OTHER]
+
+
+def test_create_model_capability_with_explicit_pricing_dimension_objects():
+    """Test creating model capability with explicitly instantiated PricingDimension objects."""
+    from llm_registry.models import PricingDimension
+
+    pricing_obj = PricingDimension(
+        name="explicit_obj_test",
+        modality=Modality.IMAGE,
+        direction="output",
+        unit="per_image",
+        price_usd=0.05,
+    )
+
+    model = create_model_capability(
+        model_id="explicit-obj-model",
+        provider=Provider.OPENAI,
+        pricing_dimensions=[pricing_obj],
+    )
+
+    assert model.pricing_dimensions is not None
+    assert len(model.pricing_dimensions) == 1
+    assert model.pricing_dimensions[0].name == "explicit_obj_test"
+    # Ensure it wasn't somehow broken during processing
+    assert model.pricing_dimensions[0].price_usd == 0.05

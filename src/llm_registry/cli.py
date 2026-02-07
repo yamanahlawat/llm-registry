@@ -120,11 +120,7 @@ def list(
         providers_str = ", ".join(p.value for p in model.providers)
         input_modalities = ", ".join(modality.value for modality in model.modalities.input)
         output_modalities = ", ".join(modality.value for modality in model.modalities.output)
-        non_token_pricing_count = (
-            len([dim for dim in model.pricing_dimensions if dim.unit != "per_1m_tokens"])
-            if model.pricing_dimensions
-            else 0
-        )
+        alt_pricing_count = len(model.pricing_dimensions) if model.pricing_dimensions else 0
         table.add_row(
             source,
             model.model_id,
@@ -147,7 +143,7 @@ def list(
             "✅" if model.features.system_prompt else "❌",
             input_modalities,
             output_modalities,
-            str(non_token_pricing_count) if non_token_pricing_count else "N/A",
+            str(alt_pricing_count) if alt_pricing_count else "N/A",
         )
 
     # Print table with full width
