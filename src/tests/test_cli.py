@@ -817,3 +817,76 @@ def test_update_command_create_features_structure(runner):
                 called_data = mock_save.call_args[0][0]
                 assert "features" in called_data["models"]["minimal-model"]
                 assert called_data["models"]["minimal-model"]["features"]["vision"] is True
+
+
+def test_list_command_shows_modality_and_alt_pricing_columns(runner, mock_package_models, mock_user_models):
+    """Test that list output includes modality and additional pricing columns."""
+    with patch("llm_registry.cli.load_package_models", return_value=mock_package_models):
+        with patch("llm_registry.cli.load_user_models", return_value=mock_user_models):
+            with patch("llm_registry.cli.CapabilityRegistry") as mock_registry_class:
+                mock_registry = MagicMock()
+                mock_registry_class.return_value = mock_registry
+
+                model = ModelCapabilities.model_validate(
+                    {
+                        "model_id": "image-model",
+                        "providers": ["openai"],
+                        "model_family": "image-family",
+                        "modalities": {"input": ["text"], "output": ["image"]},
+                        "pricing_dimensions": [
+                            {
+                                "name": "image_output_standard",
+                                "modality": "image",
+                                "direction": "output",
+                                "unit": "per_image",
+                                "price_usd": 0.04,
+                            }
+                        ],
+                    }
+                )
+
+                mock_registry.get_models.return_value = [model]
+
+                with patch("llm_registry.cli.console.print") as mock_print:
+                    result = runner.invoke(app, ["list"])
+
+                assert result.exit_code == 0
+                table_arg = mock_print.call_args.args[0]
+                headers = [column.header for column in table_arg.columns]
+                assert "In Mods" in headers
+                assert "Out Mods" in headers
+                assert "Alt Pricing" in headers
+
+
+def test_get_command_shows_modalities_and_additional_pricing(runner):
+    """Test get output includes modalities and additional pricing sections when present."""
+    model = ModelCapabilities.model_validate(
+        {
+            "model_id": "audio-model",
+            "providers": ["openai"],
+            "model_family": "audio",
+            "modalities": {"input": ["text"], "output": ["audio"]},
+            "pricing_dimensions": [
+                {
+                    "name": "audio_output_tokens",
+                    "modality": "audio",
+                    "direction": "output",
+                    "unit": "per_1m_tokens",
+                    "price_usd": 12.0,
+                    "notes": "Generated audio tokens",
+                }
+            ],
+        }
+    )
+
+    with patch("llm_registry.cli.CapabilityRegistry") as mock_registry_class:
+        mock_registry = mock_registry_class.return_value
+        mock_registry.get_model.return_value = model
+
+        with patch("llm_registry.cli.load_user_models", return_value={"models": {"audio-model": {}}}):
+            result = runner.invoke(app, ["get", "audio-model"])
+
+    assert result.exit_code == 0
+    assert "Modalities" in result.stdout
+    assert "Additional Pricing" in result.stdout
+    assert "audio_output" in result.stdout
