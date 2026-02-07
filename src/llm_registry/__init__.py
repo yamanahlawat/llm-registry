@@ -3,15 +3,18 @@ LLM Registry - A tool for discovering, testing, and sharing LLM model capabiliti
 """
 
 from .exceptions import ModelNotFoundError
-from .models import ModelCapabilities, Provider, TokenCost
+from .models import Modality, ModelCapabilities, ModelModalities, PricingDimension, Provider, TokenCost
 from .registry import CapabilityRegistry
 from .repository import CapabilityRepository
 from .utils import create_model_capability
 
-__version__ = "0.4.9"
+__version__ = "0.5.0"
 
 __all__ = [
     "ModelCapabilities",
+    "ModelModalities",
+    "PricingDimension",
+    "Modality",
     "Provider",
     "TokenCost",
     "CapabilityRegistry",

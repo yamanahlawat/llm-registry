@@ -4,8 +4,18 @@ Utility functions for the LLM registry package.
 
 import json
 from pathlib import Path
+from typing import Any
 
-from llm_registry.models import ApiParams, Features, ModelCapabilities, Provider, TokenCost
+from llm_registry.models import (
+    ApiParams,
+    Features,
+    ModelCapabilities,
+    Modality,
+    ModelModalities,
+    PricingDimension,
+    Provider,
+    TokenCost,
+)
 
 
 def create_model_capability(
@@ -21,6 +31,9 @@ def create_model_capability(
     output_cost: float | None = None,
     context_window: int | None = None,
     training_cutoff: str | None = None,
+    input_modalities: list[str] | None = None,
+    output_modalities: list[str] | None = None,
+    pricing_dimensions: list[PricingDimension] | list[dict[str, Any]] | None = None,
 ) -> ModelCapabilities:
     """
     Helper function to create a ModelCapabilities object with less verbose syntax.
@@ -37,6 +50,9 @@ def create_model_capability(
         output_cost: Cost per 1M output tokens
         context_window: Context window size in tokens
         training_cutoff: Training data cutoff date
+        input_modalities: Optional list of input modality strings
+        output_modalities: Optional list of output modality strings
+        pricing_dimensions: Optional list of PricingDimension objects or dictionaries
     Returns:
         ModelCapabilities object
     """
@@ -72,12 +88,35 @@ def create_model_capability(
         system_prompt=supports_system_prompt,
     )
 
+    def _to_modality(value: str) -> Modality:
+        try:
+            return Modality(value)
+        except ValueError:
+            return Modality.OTHER
+
+    modalities = ModelModalities(
+        input=[_to_modality(value) for value in input_modalities] if input_modalities else [Modality.TEXT],
+        output=[_to_modality(value) for value in output_modalities] if output_modalities else [Modality.TEXT],
+    )
+
+    # Normalize pricing dimensions
+    normalized_pricing = None
+    if pricing_dimensions:
+        normalized_pricing = []
+        for pd in pricing_dimensions:
+            if isinstance(pd, dict):
+                normalized_pricing.append(PricingDimension.model_validate(pd))
+            else:
+                normalized_pricing.append(pd)
+
     return ModelCapabilities(
         model_id=model_id,
         providers=providers,
         model_family=model_family,
         api_params=api_params,
         features=features,
+        modalities=modalities,
+        pricing_dimensions=normalized_pricing,
         token_costs=token_costs,
     )
 

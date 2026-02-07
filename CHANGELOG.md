@@ -5,6 +5,96 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-02-07
+
+### Added
+
+- **Schema v2 (non-breaking)** for mixed-unit pricing and modality metadata:
+  - Added `modalities` (input/output) and `pricing_dimensions` fields to model capability schema.
+  - Kept `token_costs` unchanged for backward compatibility.
+- **OpenAI Models** (API IDs):
+  - `gpt-5-chat-latest`
+  - `gpt-5-pro`
+  - `gpt-5-codex`
+  - `gpt-5.1-codex-mini`
+  - `gpt-image-1`, `gpt-image-1-mini`
+  - `gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, `gpt-4o-mini-tts`
+- **Anthropic Models** (exact API naming with aliases + snapshots):
+  - `claude-opus-4-6`, `claude-opus-4-6-20260205`
+  - `claude-opus-4-1`, `claude-opus-4-1-20250805`
+  - `claude-opus-4-5-20251101`
+  - `claude-sonnet-4-5`, `claude-sonnet-4-5-20250929`
+  - `claude-haiku-4-5`, `claude-haiku-4-5-20251001`
+  - `claude-opus-4-20250514`, `claude-sonnet-4-20250514`
+  - `claude-3-7-sonnet-20250219`, `claude-3-5-haiku-20241022`
+- **Kimi Models** (Moonshot API IDs):
+  - `kimi-latest`
+  - `kimi-k2-0711-preview`, `kimi-k2-turbo-preview`, `kimi-k2-0905-preview`
+  - `kimi-k2-thinking`
+  - `kimi-k2-thinking-turbo`
+  - Left token pricing unset where stable USD pricing tables were not verifiable in official docs.
+- **Google Models** (Gemini API IDs):
+  - `gemini-2.5-flash-preview-09-2025`
+  - `gemini-2.5-flash-lite-preview-09-2025`
+  - `gemini-2.5-flash-native-audio-preview-12-2025`
+  - `gemini-2.5-flash-preview-tts`
+  - `gemini-2.5-pro-preview-tts`
+  - `gemini-3-pro-image-preview`
+- **DeepSeek Models**:
+  - `deepseek-chat`
+  - `deepseek-reasoner`
+- **xAI Models**:
+  - `grok-2-1212`, `grok-2-vision-1212`
+  - `grok-beta`, `grok-vision-beta`
+  - `grok-4-0709`
+- **Amazon Nova Models**:
+  - `nova-2-lite`, `nova-2-sonic`
+  - `nova-canvas`, `nova-premier`, `nova-reel`, `nova-sonic`
+- **Alibaba Qwen Models**:
+  - `qwen-flash`
+  - `qwen-plus`, `qwen-plus-latest`
+  - `qwen-turbo`, `qwen-turbo-latest`
+  - `qwen3-coder-plus`, `qwen3-coder-flash`
+  - `qwen3-max`, `qwen3-max-preview`
+  - `qwq-plus`, `qwq-plus-latest`
+- **Mistral Models**:
+  - `mistral-large-2512`
+  - `mistral-medium-2508`
+  - `mistral-small-2506`
+  - `mistral-ocr-2512`
+  - `voxtral-mini-2507`
+  - `ministral-3b-2512`, `ministral-8b-2512`, `ministral-14b-2512`
+- **CLI Display**:
+  - `llmr list` now shows input/output modalities and alternate pricing dimension count.
+  - `llmr get` now includes `Modalities` and `Additional Pricing` sections.
+
+### Changed
+
+- Backfilled existing image-oriented entries (`gemini-2.5-flash-image`, `grok-2-image-1212`) with modality and pricing dimensions.
+- Corrected pricing details for recently added OpenAI models (`gpt-5.1-codex-mini`, `gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, `gpt-image-1-mini`) using official model/pricing docs.
+- Added verified pricing for new DeepSeek, Google Gemini preview, xAI, and Mistral IDs where official token pricing is explicitly published.
+- Kept pricing unset for models where official docs currently present region/tier/mode-dependent pricing without a single canonical USD rate in our schema (notably some Amazon Nova, Alibaba Qwen, and Kimi entries).
+- Kept OpenAI `gpt-5.3-*` out of catalog for this pass because API-ready IDs are not documented in the official models pages.
+
+### Removed
+
+- **OpenAI**:
+  - `gpt-4.5-preview` (official shutdown date: July 14, 2025)
+  - `o1-mini` (official shutdown date: October 27, 2025)
+- **Anthropic retired/legacy names**:
+  - `claude-3-opus`
+  - `claude-3-5-sonnet-latest`
+  - Replaced dotted/legacy aliases with exact API IDs:
+    - `claude-opus-4.1`, `claude-sonnet-4.5`, `claude-haiku-4.5`
+    - `claude-4-opus`, `claude-4-sonnet`
+    - `claude-3-7-sonnet-latest`, `claude-3-5-haiku-latest`
+- **DeepSeek**:
+  - `deepseek-v3.2-speciale` (temporary endpoint expired on December 15, 2025)
+- **Mistral**:
+  - `mistral-large-2407` (legacy/deprecated in official model lifecycle docs)
+  - `mistral-small-2503` (retired on November 30, 2025)
+  - `pixtral-12b-2409` (deprecated on December 2, 2025 in official model docs)
+
 ## [0.4.9] - 2025-01-28
 
 ### Fixed

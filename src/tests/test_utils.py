@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 from unittest.mock import mock_open, patch
 
-from llm_registry.models import Provider
+from llm_registry.models import Modality, Provider
 from llm_registry.utils import (
     create_model_capability,
     get_user_data_dir,
@@ -195,3 +195,62 @@ def test_create_model_capability_with_provider_list():
 
     model = create_model_capability(model_id="test-model", provider=["openai", "unknown-provider"])
     assert model.providers == [Provider.OPENAI, Provider.OTHER]
+
+
+def test_create_model_capability_with_modalities_and_pricing_dimensions():
+    """Test creating a model capability with modality and pricing dimension data."""
+    model = create_model_capability(
+        model_id="image-model",
+        provider=Provider.OPENAI,
+        input_modalities=["text", "image"],
+        output_modalities=["image"],
+        pricing_dimensions=[
+            {
+                "name": "image_output_standard",
+                "modality": "image",
+                "direction": "output",
+                "unit": "per_image",
+                "price_usd": 0.04,
+            }
+        ],
+    )
+    assert model.modalities.input == [Modality.TEXT, Modality.IMAGE]
+    assert model.modalities.output == [Modality.IMAGE]
+    assert model.pricing_dimensions is not None
+    assert model.pricing_dimensions[0].name == "image_output_standard"
+    assert model.pricing_dimensions[0].unit == "per_image"
+
+
+def test_create_model_capability_unknown_modality_maps_to_other():
+    """Test unknown modalities are normalized to Modality.OTHER."""
+    model = create_model_capability(
+        model_id="unknown-modality-model",
+        provider=Provider.OPENAI,
+        input_modalities=["nonstandard_modality"],
+    )
+    assert model.modalities.input == [Modality.OTHER]
+
+
+def test_create_model_capability_with_explicit_pricing_dimension_objects():
+    """Test creating model capability with explicitly instantiated PricingDimension objects."""
+    from llm_registry.models import PricingDimension
+
+    pricing_obj = PricingDimension(
+        name="explicit_obj_test",
+        modality=Modality.IMAGE,
+        direction="output",
+        unit="per_image",
+        price_usd=0.05,
+    )
+
+    model = create_model_capability(
+        model_id="explicit-obj-model",
+        provider=Provider.OPENAI,
+        pricing_dimensions=[pricing_obj],
+    )
+
+    assert model.pricing_dimensions is not None
+    assert len(model.pricing_dimensions) == 1
+    assert model.pricing_dimensions[0].name == "explicit_obj_test"
+    # Ensure it wasn't somehow broken during processing
+    assert model.pricing_dimensions[0].price_usd == 0.05
