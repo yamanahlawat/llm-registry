@@ -34,6 +34,7 @@ def test_known_past_shutdown_and_retired_models_are_absent():
     assert "o1-mini" not in package_models
     assert "claude-3-opus" not in package_models
     assert "claude-3-5-sonnet-latest" not in package_models
+    assert "claude-opus-4-20250514" not in package_models
     assert "deepseek-v3.2-speciale" not in package_models
     assert "mistral-small-2503" not in package_models
     assert "mistral-large-2407" not in package_models
@@ -63,10 +64,18 @@ def test_recent_model_pricing_values():
     assert package_models["gpt-image-1-mini"]["token_costs"]["cache_input_cost"] == 0.2
 
     assert package_models["deepseek-chat"]["token_costs"]["input_cost"] == 0.28
-    assert package_models["deepseek-reasoner"]["token_costs"]["output_cost"] == 0.42
+    assert package_models["deepseek-reasoner"]["token_costs"]["output_cost"] == 2.19
 
     assert package_models["gemini-2.5-flash-preview-09-2025"]["token_costs"]["input_cost"] == 0.3
     assert package_models["gemini-2.5-flash-lite-preview-09-2025"]["token_costs"]["output_cost"] == 0.4
+    assert package_models["gemini-3-pro-image-preview"]["pricing_dimensions"][0]["price_usd"] == 4.0
 
     assert package_models["grok-4-0709"]["token_costs"]["output_cost"] == 15.0
     assert package_models["mistral-large-2512"]["token_costs"]["input_cost"] == 0.5
+
+    assert package_models["qwen-flash"]["token_costs"]["input_cost"] == 0.05
+    assert package_models["qwen-plus"]["token_costs"]["output_cost"] == 1.2
+    assert package_models["qwen-turbo"]["token_costs"]["cache_input_cost"] == 0.073
+    assert package_models["qwen3-coder-plus"]["token_costs"]["output_cost"] == 5.0
+    assert package_models["qwen3-max"]["token_costs"]["input_cost"] == 0.64
+    assert package_models["qwq-plus"]["token_costs"]["output_cost"] == 2.25
