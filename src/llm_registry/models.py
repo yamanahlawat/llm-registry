@@ -109,6 +109,7 @@ class Features(BaseModel):
     tools: bool = Field(default=False, description="Whether the model supports tools/function calling")
     json_mode: bool = Field(default=False, description="Whether the model supports JSON mode output")
     system_prompt: bool = Field(default=False, description="Whether the model supports system prompts")
+    reasoning: bool = Field(default=False, description="Whether the model supports deep reasoning/thinking output")
 
 
 class ModelCapabilities(BaseModel):
