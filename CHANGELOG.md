@@ -5,7 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.5.0] - 2026-02-07
+## [0.6.1] - 2026-04-06
+
+### Changed
+
+- **Comprehensive 2026 Specification Refresh**: Updated context windows and training cutoffs for 30+ active models across Alibaba (Qwen), X.ai (Grok), Mistral, Amazon (Nova), Cohere, AI21, Microsoft (Phi), and Kimi.
+- Standardized context windows to verified 2026 capabilities (e.g., 2M for Grok-4 Fast, 1M for Nova 2, 256K for Jamba 2 and Kimi K2.5).
+- Updated `test_catalog_integrity.py` to rigorously enforce the absence of all newly removed models.
+
+### Removed
+
+- Mass removal of 20+ deprecated models and early previews that reached end-of-life by April 2026.
+- **Google**: Removed Gemini 2.0 Flash/Flash-Lite, Gemini 3 previews, and Gemini 2.5 `09-2025` / audio / TTS previews.
+- **Cohere**: Removed original `command-r` and `command-r-plus` (replaced by active 08-2024 / Command A flagship variants).
+- **Kimi**: Removed early K2 previews (`0711`, `0905`, `turbo`).
+- **AI21**: Removed legacy `jamba-1.5-mini` and `jamba-1.5-large`.
+
+## [0.6.0] - 2026-04-05
+
+### Added
+
+- **Reasoning Capability Tracking**: Added `reasoning` field to model features to explicitly track "thinking" models (OpenAI o1/o3, DeepSeek R1, Claude 3.7+, etc.).
+- **2026 Flagship Models**:
+  - **OpenAI**: Added `gpt-5.4` ($1.75/$14.00, 400K context) with native reasoning support.
+  - **Anthropic**: Added `claude-sonnet-4-6` ($3.00/$15.00) and updated `claude-opus-4-6` to flagship 2026 specs ($5.00/$25.00, 1M context).
+  - **Google**: Added `gemini-3.1-pro` ($2.00/$12.00, 2M context) and `gemini-2.0-flash-thinking-preview`.
+- **Enterprise & Open Weights**:
+  - **Cohere**: Added `command-r` and `command-r-plus` (RAG-optimized flagship series).
+  - **AI21**: Added `jamba-2-mini` and `jamba-1.7-large` (SSM-Transformer hybrid architecture).
+  - **Mistral**: Added `mistral-small-4` (unified vision/reasoning/coding) and updated `magistral-medium` reasoning specs.
+  - **DeepSeek**: Added R1 Distill variants (`llama-70b`, `qwen-32b`).
+
+### Changed
+
+- **DeepSeek Pricing Refreshed**: Updated `deepseek-r1` and `deepseek-reasoner` to verified market rates ($0.55/$2.19 per 1M tokens).
+- **Data Integrity**: Updated all catalog models to include reasoning feature flags for schema consistency.
+- **Test Suite**: Refreshed catalog integrity tests to verify 2026 model pricing and reasoning capabilities.
+- Added verified pricing for Alibaba Qwen models where official USD rates are now published (`qwen-flash`, `qwen-plus*`, `qwen-turbo*`, `qwen3-coder-*`, `qwen3-max*`, `qwq-plus*`).
+- Kept pricing unset for models where official docs still do not expose clear model-level API USD rates in currently accessible pages (notably some Amazon Nova, Kimi, and xAI beta entries).
+
+### Removed
+
+- `claude-opus-4-20250514` (official retirement date: January 25, 2026)
+
+[0.5.0] - 2026-02-07
 
 ### Added
 
