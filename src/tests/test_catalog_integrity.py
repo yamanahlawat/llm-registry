@@ -39,6 +39,19 @@ def test_known_past_shutdown_and_retired_models_are_absent():
     assert "mistral-small-2503" not in package_models
     assert "mistral-large-2407" not in package_models
     assert "pixtral-12b-2409" not in package_models
+    assert "gemini-2.0-flash" not in package_models
+    assert "gemini-2.0-flash-lite" not in package_models
+    assert "gemini-3-pro-preview" not in package_models
+    assert "gemini-3-flash-preview" not in package_models
+    assert "gemini-3-pro-image-preview" not in package_models
+    assert "gemini-2.5-flash-preview-09-2025" not in package_models
+    assert "gemini-2.5-flash-lite-preview-09-2025" not in package_models
+    assert "command-r" not in package_models
+    assert "command-r-plus" not in package_models
+    assert "kimi-k2-0711-preview" not in package_models
+    assert "kimi-k2-0905-preview" not in package_models
+    assert "jamba-1.5-mini" not in package_models
+    assert "jamba-1.5-large" not in package_models
 
 
 def test_legacy_dotted_anthropic_ids_are_absent():
@@ -65,10 +78,6 @@ def test_recent_model_pricing_values():
 
     assert package_models["deepseek-chat"]["token_costs"]["input_cost"] == 0.28
     assert package_models["deepseek-reasoner"]["token_costs"]["output_cost"] == 2.19
-
-    assert package_models["gemini-2.5-flash-preview-09-2025"]["token_costs"]["input_cost"] == 0.3
-    assert package_models["gemini-2.5-flash-lite-preview-09-2025"]["token_costs"]["output_cost"] == 0.4
-    assert package_models["gemini-3-pro-image-preview"]["pricing_dimensions"][0]["price_usd"] == 4.0
 
     assert package_models["grok-4-0709"]["token_costs"]["output_cost"] == 15.0
     assert package_models["mistral-large-2512"]["token_costs"]["input_cost"] == 0.5

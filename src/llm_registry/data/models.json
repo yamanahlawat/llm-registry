@@ -49,7 +49,7 @@
         "cache_input_cost": 0.5,
         "output_cost": 8.0,
         "context_window": 200000,
-        "training_cutoff": "2024-10"
+        "training_cutoff": "2024-06"
       }
     },
     "o3-mini": {
@@ -75,7 +75,7 @@
         "cache_input_cost": 0.55,
         "output_cost": 4.4,
         "context_window": 200000,
-        "training_cutoff": "2024-10"
+        "training_cutoff": "2024-06"
       }
     },
     "o1": {
@@ -413,7 +413,7 @@
         "cache_input_cost": 0.14,
         "output_cost": 2.19,
         "context_window": 128000,
-        "training_cutoff": "2024-12"
+        "training_cutoff": "2024-07"
       }
     },
     "deepseek-r1-0528": {
@@ -464,7 +464,7 @@
         "input_cost": 0.0,
         "cache_input_cost": 0.0,
         "output_cost": 0,
-        "context_window": 128000,
+        "context_window": 16000,
         "training_cutoff": "2024-06"
       }
     },
@@ -492,7 +492,7 @@
         "cache_input_cost": 0.0,
         "output_cost": 0,
         "context_window": 32000,
-        "training_cutoff": "2025-03"
+        "training_cutoff": "2024-06"
       }
     },
     "phi-4-multimodal-instruct": {
@@ -744,7 +744,7 @@
       "token_costs": {
         "input_cost": 0.0,
         "output_cost": 0.0,
-        "context_window": 32768,
+        "context_window": 128000,
         "training_cutoff": "2024-06"
       }
     },
@@ -854,58 +854,6 @@
         "training_cutoff": "2025-01"
       }
     },
-    "gemini-2.0-flash": {
-      "providers": [
-        "google"
-      ],
-      "model_family": "gemini-2.0",
-      "api_params": {
-        "max_tokens": true,
-        "temperature": true,
-        "top_p": true,
-        "stream": true
-      },
-      "features": {
-        "vision": true,
-        "tools": true,
-        "json_mode": true,
-        "system_prompt": true,
-        "reasoning": false
-      },
-      "token_costs": {
-        "input_cost": 1.0,
-        "cache_input_cost": 0.075,
-        "output_cost": 3.0,
-        "cache_output_cost": 0.75,
-        "context_window": 1000000,
-        "training_cutoff": "2025-01"
-      }
-    },
-    "gemini-2.0-flash-lite": {
-      "providers": [
-        "google"
-      ],
-      "model_family": "gemini-2.0",
-      "api_params": {
-        "max_tokens": true,
-        "temperature": true,
-        "top_p": true,
-        "stream": true
-      },
-      "features": {
-        "vision": true,
-        "tools": true,
-        "json_mode": true,
-        "system_prompt": true,
-        "reasoning": false
-      },
-      "token_costs": {
-        "input_cost": 0.1,
-        "output_cost": 0.4,
-        "context_window": 128000,
-        "training_cutoff": "2024-08"
-      }
-    },
     "gemma-2-27b": {
       "providers": [
         "google"
@@ -953,7 +901,7 @@
         "input_cost": 0.0,
         "output_cost": 0.0,
         "context_window": 128000,
-        "training_cutoff": "2025-01"
+        "training_cutoff": "2023-12"
       }
     },
     "mistral-saba-latest": {
@@ -977,8 +925,8 @@
       "token_costs": {
         "input_cost": 0.1,
         "output_cost": 0.3,
-        "context_window": 32000,
-        "training_cutoff": "2025-02"
+        "context_window": 128000,
+        "training_cutoff": "2025-09"
       }
     },
     "ministral-3b-latest": {
@@ -1002,7 +950,7 @@
       "token_costs": {
         "input_cost": 0.05,
         "output_cost": 0.15,
-        "context_window": 128000,
+        "context_window": 256000,
         "training_cutoff": "2024-10"
       }
     },
@@ -1027,7 +975,7 @@
       "token_costs": {
         "input_cost": 0.08,
         "output_cost": 0.24,
-        "context_window": 128000,
+        "context_window": 256000,
         "training_cutoff": "2024-10"
       }
     },
@@ -1155,8 +1103,8 @@
       "token_costs": {
         "input_cost": 0.0,
         "output_cost": 0.0,
-        "context_window": 128000,
-        "training_cutoff": "2025-02"
+        "context_window": 256000,
+        "training_cutoff": "2024-06"
       }
     },
     "devstral": {
@@ -1330,7 +1278,7 @@
       "token_costs": {
         "input_cost": 3.0,
         "output_cost": 15.0,
-        "context_window": 132000,
+        "context_window": 128000,
         "training_cutoff": "2024-11"
       }
     },
@@ -1423,8 +1371,8 @@
       "token_costs": {
         "input_cost": 2.0,
         "output_cost": 10.0,
-        "context_window": 131072,
-        "training_cutoff": "2024-07"
+        "context_window": 128000,
+        "training_cutoff": "2023-09"
       }
     },
     "grok-1": {
@@ -1474,7 +1422,7 @@
         "input_cost": 0.08,
         "output_cost": 0.32,
         "context_window": 300000,
-        "training_cutoff": "2024-10"
+        "training_cutoff": "2024-06"
       }
     },
     "nova-lite": {
@@ -1499,7 +1447,7 @@
         "input_cost": 0.06,
         "output_cost": 0.24,
         "context_window": 300000,
-        "training_cutoff": "2024-10"
+        "training_cutoff": "2024-06"
       }
     },
     "nova-micro": {
@@ -1524,7 +1472,7 @@
         "input_cost": 0.035,
         "output_cost": 0.14,
         "context_window": 128000,
-        "training_cutoff": "2024-10"
+        "training_cutoff": "2024-06"
       }
     },
     "qwq": {
@@ -1852,60 +1800,6 @@
         "training_cutoff": "2025-09"
       }
     },
-    "gemini-3-pro-preview": {
-      "providers": [
-        "google"
-      ],
-      "model_family": "gemini-3",
-      "api_params": {
-        "max_tokens": true,
-        "temperature": false,
-        "top_p": false,
-        "stream": true
-      },
-      "features": {
-        "vision": true,
-        "tools": true,
-        "json_mode": true,
-        "system_prompt": true,
-        "reasoning": false
-      },
-      "token_costs": {
-        "input_cost": 2.5,
-        "cache_input_cost": 0.625,
-        "output_cost": 15.0,
-        "cache_output_cost": 3.75,
-        "context_window": 1000000,
-        "training_cutoff": "2025-11"
-      }
-    },
-    "gemini-3-flash-preview": {
-      "providers": [
-        "google"
-      ],
-      "model_family": "gemini-3",
-      "api_params": {
-        "max_tokens": true,
-        "temperature": true,
-        "top_p": true,
-        "stream": true
-      },
-      "features": {
-        "vision": true,
-        "tools": true,
-        "json_mode": true,
-        "system_prompt": true,
-        "reasoning": false
-      },
-      "token_costs": {
-        "input_cost": 0.5,
-        "cache_input_cost": 0.125,
-        "output_cost": 3.0,
-        "cache_output_cost": 0.75,
-        "context_window": 1000000,
-        "training_cutoff": "2025-11"
-      }
-    },
     "mistral-large-3": {
       "providers": [
         "mistral"
@@ -1927,8 +1821,8 @@
       "token_costs": {
         "input_cost": 0.5,
         "output_cost": 1.5,
-        "context_window": 262000,
-        "training_cutoff": "2025-10"
+        "context_window": 128000,
+        "training_cutoff": "2024-11"
       }
     },
     "deepseek-v3.2": {
@@ -2771,33 +2665,6 @@
         "reasoning": false
       }
     },
-    "kimi-k2-0711-preview": {
-      "providers": [
-        "kimi"
-      ],
-      "model_family": "kimi-k2",
-      "features": {
-        "reasoning": false
-      }
-    },
-    "kimi-k2-turbo-preview": {
-      "providers": [
-        "kimi"
-      ],
-      "model_family": "kimi-k2-turbo",
-      "features": {
-        "reasoning": false
-      }
-    },
-    "kimi-k2-0905-preview": {
-      "providers": [
-        "kimi"
-      ],
-      "model_family": "kimi-k2",
-      "features": {
-        "reasoning": false
-      }
-    },
     "kimi-k2-thinking": {
       "providers": [
         "kimi"
@@ -2828,309 +2695,6 @@
         "json_mode": false,
         "system_prompt": false,
         "reasoning": true
-      }
-    },
-    "gemini-2.5-flash-preview-09-2025": {
-      "providers": [
-        "google"
-      ],
-      "model_family": "gemini-2.5",
-      "token_costs": {
-        "input_cost": 0.3,
-        "cache_input_cost": 0.03,
-        "output_cost": 2.5,
-        "context_window": null,
-        "training_cutoff": null
-      },
-      "pricing_dimensions": [
-        {
-          "name": "text_image_video_input_tokens",
-          "modality": "text",
-          "direction": "input",
-          "unit": "per_1m_tokens",
-          "price_usd": 0.3
-        },
-        {
-          "name": "audio_input_tokens",
-          "modality": "audio",
-          "direction": "input",
-          "unit": "per_1m_tokens",
-          "price_usd": 1.0
-        },
-        {
-          "name": "text_output_tokens",
-          "modality": "text",
-          "direction": "output",
-          "unit": "per_1m_tokens",
-          "price_usd": 2.5
-        },
-        {
-          "name": "text_image_video_cache_input_tokens",
-          "modality": "text",
-          "direction": "cache_input",
-          "unit": "per_1m_tokens",
-          "price_usd": 0.03
-        },
-        {
-          "name": "audio_cache_input_tokens",
-          "modality": "audio",
-          "direction": "cache_input",
-          "unit": "per_1m_tokens",
-          "price_usd": 0.1
-        }
-      ],
-      "features": {
-        "reasoning": false
-      }
-    },
-    "gemini-2.5-flash-lite-preview-09-2025": {
-      "providers": [
-        "google"
-      ],
-      "model_family": "gemini-2.5",
-      "token_costs": {
-        "input_cost": 0.1,
-        "cache_input_cost": 0.01,
-        "output_cost": 0.4,
-        "context_window": null,
-        "training_cutoff": null
-      },
-      "pricing_dimensions": [
-        {
-          "name": "text_image_video_input_tokens",
-          "modality": "text",
-          "direction": "input",
-          "unit": "per_1m_tokens",
-          "price_usd": 0.1
-        },
-        {
-          "name": "audio_input_tokens",
-          "modality": "audio",
-          "direction": "input",
-          "unit": "per_1m_tokens",
-          "price_usd": 0.3
-        },
-        {
-          "name": "text_output_tokens",
-          "modality": "text",
-          "direction": "output",
-          "unit": "per_1m_tokens",
-          "price_usd": 0.4
-        },
-        {
-          "name": "text_image_video_cache_input_tokens",
-          "modality": "text",
-          "direction": "cache_input",
-          "unit": "per_1m_tokens",
-          "price_usd": 0.01
-        },
-        {
-          "name": "audio_cache_input_tokens",
-          "modality": "audio",
-          "direction": "cache_input",
-          "unit": "per_1m_tokens",
-          "price_usd": 0.03
-        }
-      ],
-      "features": {
-        "reasoning": false
-      }
-    },
-    "gemini-2.5-flash-native-audio-preview-12-2025": {
-      "providers": [
-        "google"
-      ],
-      "model_family": "gemini-2.5",
-      "modalities": {
-        "input": [
-          "text",
-          "audio"
-        ],
-        "output": [
-          "text",
-          "audio"
-        ]
-      },
-      "token_costs": {
-        "input_cost": 0.5,
-        "output_cost": 2.0,
-        "context_window": null,
-        "training_cutoff": null
-      },
-      "pricing_dimensions": [
-        {
-          "name": "text_input_tokens",
-          "modality": "text",
-          "direction": "input",
-          "unit": "per_1m_tokens",
-          "price_usd": 0.5
-        },
-        {
-          "name": "audio_video_input_tokens",
-          "modality": "audio",
-          "direction": "input",
-          "unit": "per_1m_tokens",
-          "price_usd": 3.0
-        },
-        {
-          "name": "text_output_tokens",
-          "modality": "text",
-          "direction": "output",
-          "unit": "per_1m_tokens",
-          "price_usd": 2.0
-        },
-        {
-          "name": "audio_output_tokens",
-          "modality": "audio",
-          "direction": "output",
-          "unit": "per_1m_tokens",
-          "price_usd": 12.0
-        }
-      ],
-      "features": {
-        "reasoning": false
-      }
-    },
-    "gemini-2.5-flash-preview-tts": {
-      "providers": [
-        "google"
-      ],
-      "model_family": "gemini-2.5",
-      "modalities": {
-        "input": [
-          "text"
-        ],
-        "output": [
-          "audio"
-        ]
-      },
-      "token_costs": {
-        "input_cost": 0.5,
-        "output_cost": 10.0,
-        "context_window": null,
-        "training_cutoff": null
-      },
-      "pricing_dimensions": [
-        {
-          "name": "text_input_tokens",
-          "modality": "text",
-          "direction": "input",
-          "unit": "per_1m_tokens",
-          "price_usd": 0.5
-        },
-        {
-          "name": "audio_output_tokens",
-          "modality": "audio",
-          "direction": "output",
-          "unit": "per_1m_tokens",
-          "price_usd": 10.0
-        }
-      ],
-      "features": {
-        "reasoning": false
-      }
-    },
-    "gemini-2.5-pro-preview-tts": {
-      "providers": [
-        "google"
-      ],
-      "model_family": "gemini-2.5",
-      "modalities": {
-        "input": [
-          "text"
-        ],
-        "output": [
-          "audio"
-        ]
-      },
-      "token_costs": {
-        "input_cost": 1.0,
-        "output_cost": 20.0,
-        "context_window": null,
-        "training_cutoff": null
-      },
-      "pricing_dimensions": [
-        {
-          "name": "text_input_tokens",
-          "modality": "text",
-          "direction": "input",
-          "unit": "per_1m_tokens",
-          "price_usd": 1.0
-        },
-        {
-          "name": "audio_output_tokens",
-          "modality": "audio",
-          "direction": "output",
-          "unit": "per_1m_tokens",
-          "price_usd": 20.0
-        }
-      ],
-      "features": {
-        "reasoning": false
-      }
-    },
-    "gemini-3-pro-image-preview": {
-      "providers": [
-        "google"
-      ],
-      "model_family": "gemini-3",
-      "modalities": {
-        "input": [
-          "text",
-          "image"
-        ],
-        "output": [
-          "image"
-        ]
-      },
-      "pricing_dimensions": [
-        {
-          "name": "text_input_tokens_upto_200k",
-          "modality": "text",
-          "direction": "input",
-          "unit": "per_1m_tokens",
-          "price_usd": 4.0,
-          "notes": "Gemini API pricing tier for 0 < input tokens <= 200k"
-        },
-        {
-          "name": "text_input_tokens_over_200k",
-          "modality": "text",
-          "direction": "input",
-          "unit": "per_1m_tokens",
-          "price_usd": 6.0,
-          "notes": "Gemini API pricing tier for input tokens > 200k"
-        },
-        {
-          "name": "image_input_tokens",
-          "modality": "image",
-          "direction": "input",
-          "unit": "per_1m_tokens",
-          "price_usd": 10.0
-        },
-        {
-          "name": "image_output_1024",
-          "modality": "image",
-          "direction": "output",
-          "unit": "per_image",
-          "price_usd": 0.03
-        },
-        {
-          "name": "image_output_1536",
-          "modality": "image",
-          "direction": "output",
-          "unit": "per_image",
-          "price_usd": 0.045
-        },
-        {
-          "name": "image_output_1024x1536",
-          "modality": "image",
-          "direction": "output",
-          "unit": "per_image",
-          "price_usd": 0.06
-        }
-      ],
-      "features": {
-        "reasoning": false
       }
     },
     "deepseek-chat": {
@@ -3349,8 +2913,8 @@
         "input_cost": 0.05,
         "cache_input_cost": 0.025,
         "output_cost": 0.4,
-        "context_window": null,
-        "training_cutoff": null
+        "context_window": 1000000,
+        "training_cutoff": "2023-12"
       },
       "features": {
         "reasoning": false
@@ -4184,56 +3748,6 @@
         "context_window": 128000
       }
     },
-    "command-r-plus": {
-      "providers": [
-        "cohere"
-      ],
-      "model_family": "command-r",
-      "api_params": {
-        "max_tokens": true,
-        "temperature": true,
-        "top_p": true,
-        "stream": true
-      },
-      "features": {
-        "vision": false,
-        "tools": true,
-        "json_mode": true,
-        "system_prompt": true,
-        "reasoning": false
-      },
-      "token_costs": {
-        "input_cost": 2.5,
-        "output_cost": 10.0,
-        "context_window": 128000,
-        "training_cutoff": "2024-04"
-      }
-    },
-    "command-r": {
-      "providers": [
-        "cohere"
-      ],
-      "model_family": "command-r",
-      "api_params": {
-        "max_tokens": true,
-        "temperature": true,
-        "top_p": true,
-        "stream": true
-      },
-      "features": {
-        "vision": false,
-        "tools": true,
-        "json_mode": true,
-        "system_prompt": true,
-        "reasoning": false
-      },
-      "token_costs": {
-        "input_cost": 0.15,
-        "output_cost": 0.6,
-        "context_window": 128000,
-        "training_cutoff": "2024-04"
-      }
-    },
     "jamba-2-mini": {
       "providers": [
         "ai21"
@@ -4256,7 +3770,7 @@
         "input_cost": 0.2,
         "output_cost": 0.4,
         "context_window": 256000,
-        "training_cutoff": "2026-01"
+        "training_cutoff": "2025-09"
       }
     },
     "jamba-1.7-large": {
@@ -4281,7 +3795,7 @@
         "input_cost": 2.0,
         "output_cost": 8.0,
         "context_window": 256000,
-        "training_cutoff": "2025-08"
+        "training_cutoff": "2024-08"
       }
     },
     "mistral-small-4": {
