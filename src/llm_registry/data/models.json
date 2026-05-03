@@ -1773,6 +1773,57 @@
         "training_cutoff": "2026-01"
       }
     },
+    "gpt-5.5": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-5.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 5.0,
+        "cache_input_cost": 0.5,
+        "output_cost": 30.0,
+        "context_window": 1050000,
+        "training_cutoff": "2025-12"
+      }
+    },
+    "gpt-5.5-pro": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-5.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 30.0,
+        "output_cost": 180.0,
+        "context_window": 1050000,
+        "training_cutoff": "2025-12"
+      }
+    },
     "claude-opus-4-5": {
       "providers": [
         "anthropic"
@@ -2649,6 +2700,60 @@
         "training_cutoff": "2026-02"
       }
     },
+    "claude-opus-4-7": {
+      "providers": [
+        "anthropic"
+      ],
+      "model_family": "claude-4.7",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 5.0,
+        "cache_input_cost": 0.5,
+        "output_cost": 25.0,
+        "cache_output_cost": 6.25,
+        "context_window": 1000000,
+        "training_cutoff": "2026-01"
+      }
+    },
+    "claude-sonnet-4-7": {
+      "providers": [
+        "anthropic"
+      ],
+      "model_family": "claude-4.7",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 3.0,
+        "cache_input_cost": 0.3,
+        "output_cost": 15.0,
+        "cache_output_cost": 3.75,
+        "context_window": 1000000,
+        "training_cutoff": "2026-01"
+      }
+    },
     "kimi-latest": {
       "providers": [
         "kimi"
@@ -2741,6 +2846,57 @@
         "output_cost": 2.19,
         "context_window": 128000,
         "training_cutoff": null
+      }
+    },
+    "deepseek-v4-pro": {
+      "providers": [
+        "deepseek"
+      ],
+      "model_family": "deepseek",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 1.74,
+        "output_cost": 3.48,
+        "context_window": 1000000,
+        "training_cutoff": "2026-04"
+      }
+    },
+    "deepseek-v4-flash": {
+      "providers": [
+        "deepseek"
+      ],
+      "model_family": "deepseek",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 0.14,
+        "cache_input_cost": 0.0028,
+        "output_cost": 0.28,
+        "context_window": 1000000,
+        "training_cutoff": "2026-04"
       }
     },
     "grok-2-1212": {
@@ -3020,6 +3176,106 @@
       ],
       "features": {
         "reasoning": false
+      }
+    },
+    "qwen-3.6-plus": {
+      "providers": [
+        "alibaba"
+      ],
+      "model_family": "qwen-3.6",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": false
+      },
+      "token_costs": {
+        "input_cost": 0.5,
+        "output_cost": 3.0,
+        "context_window": 1000000,
+        "training_cutoff": "2025-12"
+      }
+    },
+    "qwen-3.6-max-preview": {
+      "providers": [
+        "alibaba"
+      ],
+      "model_family": "qwen-3.6",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 0.5,
+        "output_cost": 3.0,
+        "context_window": 256000,
+        "training_cutoff": "2026-04"
+      }
+    },
+    "qwen-3.6-flash": {
+      "providers": [
+        "alibaba"
+      ],
+      "model_family": "qwen-3.6",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": false
+      },
+      "token_costs": {
+        "input_cost": 0.1,
+        "output_cost": 0.4,
+        "context_window": 1000000,
+        "training_cutoff": "2026-04"
+      }
+    },
+    "qwen-3-coder-next": {
+      "providers": [
+        "alibaba"
+      ],
+      "model_family": "qwen-3",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": false
+      },
+      "token_costs": {
+        "input_cost": 0.5,
+        "output_cost": 3.0,
+        "context_window": 1000000,
+        "training_cutoff": "2026-05"
       }
     },
     "qwen-plus-latest": {
