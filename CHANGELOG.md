@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.2] - 2026-05-03
+
+### Added
+
+- **May 2026 Frontier Models**:
+  - **OpenAI**: Added `gpt-5.5` ($5.00/$30.00) and `gpt-5.5-pro` ($30.00/$180.00) with 1.05M context window and expanded `reasoning_effort` support.
+  - **Anthropic**: Added `claude-opus-4-7` ($5.00/$25.00) and `claude-sonnet-4-7` ($3.00/$15.00) with standardized 1M context windows and optimized "Adaptive Thinking" modes.
+  - **DeepSeek**: Added `deepseek-v4-pro` ($1.74/$3.48) and `deepseek-v4-flash` ($0.14/$0.28) featuring a new MoE architecture and native 1M context support.
+  - **Alibaba**: Added `qwen-3.6-max-preview`, `qwen-3.6-plus`, `qwen-3.6-flash`, and `qwen-3-coder-next` with specialized agentic coding capabilities and "Preserve Thinking" reasoning traces.
+
+### Changed
+
+- **Standardized 1M Context Baseline**: Updated all 2026 flagship entries to reflect the new 1-million-token context window industry standard.
+- **Prompt Caching Optimization**: Added verified caching rates for GPT-5.5 and Claude 4.7 ($0.50/M tokens) to support long-context agentic workflows.
+
 ## [0.6.1] - 2026-04-06
 
 ### Changed
