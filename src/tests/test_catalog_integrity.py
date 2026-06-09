@@ -70,17 +70,40 @@ def test_recent_model_pricing_values():
 
     assert package_models["gpt-5.1-codex-mini"]["token_costs"]["input_cost"] == 0.25
     assert package_models["gpt-5.1-codex-mini"]["token_costs"]["output_cost"] == 2.0
+    assert package_models["gpt-5.4"]["token_costs"]["input_cost"] == 2.5
+    assert package_models["gpt-5.4"]["token_costs"]["cache_input_cost"] == 0.25
+    assert package_models["gpt-5.4"]["token_costs"]["output_cost"] == 15.0
+    assert package_models["gpt-5.4-mini"]["token_costs"]["input_cost"] == 0.75
+    assert package_models["gpt-5.4-mini"]["token_costs"]["output_cost"] == 4.5
+    assert package_models["gpt-5.4-pro"]["token_costs"]["input_cost"] == 30.0
+    assert package_models["gpt-5.4-pro"]["token_costs"]["output_cost"] == 180.0
 
     assert package_models["gpt-4o-transcribe"]["token_costs"]["output_cost"] == 10.0
     assert package_models["gpt-4o-mini-transcribe"]["token_costs"]["output_cost"] == 5.0
 
     assert package_models["gpt-image-1-mini"]["token_costs"]["cache_input_cost"] == 0.2
 
-    assert package_models["deepseek-chat"]["token_costs"]["input_cost"] == 0.28
-    assert package_models["deepseek-reasoner"]["token_costs"]["output_cost"] == 2.19
+    assert package_models["claude-opus-4-8"]["token_costs"]["input_cost"] == 5.0
+    assert package_models["claude-opus-4-8"]["token_costs"]["output_cost"] == 25.0
 
+    assert package_models["gemini-3.5-flash"]["token_costs"]["input_cost"] == 0.75
+    assert package_models["gemini-3.5-flash"]["token_costs"]["output_cost"] == 4.5
+    assert package_models["gemini-3.1-pro-preview"]["token_costs"]["cache_input_cost"] == 0.2
+    assert package_models["gemini-3.1-pro-preview"]["token_costs"]["context_window"] == 2000000
+
+    assert package_models["deepseek-chat"]["token_costs"]["input_cost"] == 0.28
+    assert package_models["deepseek-reasoner"]["token_costs"]["output_cost"] == 0.28
+    assert package_models["deepseek-v4-pro"]["token_costs"]["input_cost"] == 0.435
+    assert package_models["deepseek-v4-pro"]["token_costs"]["output_cost"] == 0.87
+
+    assert package_models["grok-4.3"]["token_costs"]["input_cost"] == 1.25
+    assert package_models["grok-4.3"]["token_costs"]["output_cost"] == 2.5
     assert package_models["grok-4-0709"]["token_costs"]["output_cost"] == 15.0
     assert package_models["mistral-large-2512"]["token_costs"]["input_cost"] == 0.5
+    assert package_models["mistral-medium-3-5"]["token_costs"]["output_cost"] == 7.5
+    assert package_models["devstral-2"]["token_costs"]["input_cost"] == 0.4
+    assert package_models["devstral-2"]["token_costs"]["output_cost"] == 2.0
+    assert package_models["ministral-14b-latest"]["token_costs"]["input_cost"] == 0.2
 
     assert package_models["qwen-flash"]["token_costs"]["input_cost"] == 0.05
     assert package_models["qwen-plus"]["token_costs"]["output_cost"] == 1.2
@@ -88,3 +111,8 @@ def test_recent_model_pricing_values():
     assert package_models["qwen3-coder-plus"]["token_costs"]["output_cost"] == 5.0
     assert package_models["qwen3-max"]["token_costs"]["input_cost"] == 0.64
     assert package_models["qwq-plus"]["token_costs"]["output_cost"] == 2.25
+
+    assert package_models["kimi-k2.6"]["token_costs"]["input_cost"] == 0.95
+    assert package_models["kimi-k2.6"]["token_costs"]["cache_input_cost"] == 0.16
+    assert package_models["kimi-k2.5"]["token_costs"]["output_cost"] == 3.0
+    assert package_models["kimi-k2-thinking-turbo"]["token_costs"]["output_cost"] == 8.0
