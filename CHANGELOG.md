@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.3] - 2026-06-09
+
+### Added
+
+- **June 2026 Model Catalog Refresh**:
+  - **Anthropic**: Added `claude-opus-4-8` with verified 1M context window and current `$5.00/$25.00` pricing.
+  - **OpenAI**: Added `gpt-5.4-mini` and `gpt-5.4-pro`; refreshed `gpt-5.4` cached input and output pricing.
+  - **Google Gemini**: Added `gemini-3.1-pro-preview`, `gemini-3.1-pro-preview-customtools`, and `gemini-3.5-flash`.
+  - **xAI**: Added `grok-4.3`, `grok-4.3-latest`, and `grok-build-0.1`.
+  - **Mistral**: Added `mistral-medium-3-5`, `devstral-2`, and `ministral-14b-latest`.
+  - **Kimi**: Added `kimi-k2.6` and `kimi-k2.5` with modality metadata and verified API pricing.
+
+### Changed
+
+- Refreshed token pricing for Gemini 3.1/3.5, DeepSeek V4, Mistral Medium/Devstral/Ministral, and Kimi K2 thinking models.
+- Added tiered `pricing_dimensions` for Gemini 3.1 Pro preview variants to represent pricing above and below 200K prompt tokens.
+- Expanded catalog integrity tests to lock down the June 2026 pricing refresh.
+
 ## [0.6.2] - 2026-05-03
 
 ### Added

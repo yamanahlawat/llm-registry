@@ -673,6 +673,31 @@
         "training_cutoff": "2025-02"
       }
     },
+    "mistral-medium-3-5": {
+      "providers": [
+        "mistral"
+      ],
+      "model_family": "mistral",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": false
+      },
+      "token_costs": {
+        "input_cost": 1.5,
+        "output_cost": 7.5,
+        "context_window": 256000,
+        "training_cutoff": "2026-04"
+      }
+    },
     "codestral-latest": {
       "providers": [
         "mistral"
@@ -795,9 +820,220 @@
       },
       "token_costs": {
         "input_cost": 2.0,
+        "cache_input_cost": 0.2,
         "output_cost": 12.0,
         "context_window": 2000000,
         "training_cutoff": "2026-02"
+      },
+      "pricing_dimensions": [
+        {
+          "name": "prompt_input_tokens_upto_200k",
+          "modality": "text",
+          "direction": "input",
+          "unit": "per_1m_tokens",
+          "price_usd": 2.0
+        },
+        {
+          "name": "prompt_cache_input_tokens_upto_200k",
+          "modality": "text",
+          "direction": "cache_input",
+          "unit": "per_1m_tokens",
+          "price_usd": 0.2
+        },
+        {
+          "name": "prompt_output_tokens_upto_200k",
+          "modality": "text",
+          "direction": "output",
+          "unit": "per_1m_tokens",
+          "price_usd": 12.0
+        },
+        {
+          "name": "prompt_input_tokens_over_200k",
+          "modality": "text",
+          "direction": "input",
+          "unit": "per_1m_tokens",
+          "price_usd": 4.0
+        },
+        {
+          "name": "prompt_cache_input_tokens_over_200k",
+          "modality": "text",
+          "direction": "cache_input",
+          "unit": "per_1m_tokens",
+          "price_usd": 0.4
+        },
+        {
+          "name": "prompt_output_tokens_over_200k",
+          "modality": "text",
+          "direction": "output",
+          "unit": "per_1m_tokens",
+          "price_usd": 18.0
+        }
+      ]
+    },
+    "gemini-3.1-pro-preview": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-3.1",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 2.0,
+        "cache_input_cost": 0.2,
+        "output_cost": 12.0,
+        "context_window": 2000000,
+        "training_cutoff": "2026-02"
+      },
+      "pricing_dimensions": [
+        {
+          "name": "prompt_input_tokens_upto_200k",
+          "modality": "text",
+          "direction": "input",
+          "unit": "per_1m_tokens",
+          "price_usd": 2.0
+        },
+        {
+          "name": "prompt_cache_input_tokens_upto_200k",
+          "modality": "text",
+          "direction": "cache_input",
+          "unit": "per_1m_tokens",
+          "price_usd": 0.2
+        },
+        {
+          "name": "prompt_output_tokens_upto_200k",
+          "modality": "text",
+          "direction": "output",
+          "unit": "per_1m_tokens",
+          "price_usd": 12.0
+        },
+        {
+          "name": "prompt_input_tokens_over_200k",
+          "modality": "text",
+          "direction": "input",
+          "unit": "per_1m_tokens",
+          "price_usd": 4.0
+        },
+        {
+          "name": "prompt_cache_input_tokens_over_200k",
+          "modality": "text",
+          "direction": "cache_input",
+          "unit": "per_1m_tokens",
+          "price_usd": 0.4
+        },
+        {
+          "name": "prompt_output_tokens_over_200k",
+          "modality": "text",
+          "direction": "output",
+          "unit": "per_1m_tokens",
+          "price_usd": 18.0
+        }
+      ]
+    },
+    "gemini-3.1-pro-preview-customtools": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-3.1",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 2.0,
+        "cache_input_cost": 0.2,
+        "output_cost": 12.0,
+        "context_window": 2000000,
+        "training_cutoff": "2026-02"
+      },
+      "pricing_dimensions": [
+        {
+          "name": "prompt_input_tokens_upto_200k",
+          "modality": "text",
+          "direction": "input",
+          "unit": "per_1m_tokens",
+          "price_usd": 2.0
+        },
+        {
+          "name": "prompt_cache_input_tokens_upto_200k",
+          "modality": "text",
+          "direction": "cache_input",
+          "unit": "per_1m_tokens",
+          "price_usd": 0.2
+        },
+        {
+          "name": "prompt_output_tokens_upto_200k",
+          "modality": "text",
+          "direction": "output",
+          "unit": "per_1m_tokens",
+          "price_usd": 12.0
+        },
+        {
+          "name": "prompt_input_tokens_over_200k",
+          "modality": "text",
+          "direction": "input",
+          "unit": "per_1m_tokens",
+          "price_usd": 4.0
+        },
+        {
+          "name": "prompt_cache_input_tokens_over_200k",
+          "modality": "text",
+          "direction": "cache_input",
+          "unit": "per_1m_tokens",
+          "price_usd": 0.4
+        },
+        {
+          "name": "prompt_output_tokens_over_200k",
+          "modality": "text",
+          "direction": "output",
+          "unit": "per_1m_tokens",
+          "price_usd": 18.0
+        }
+      ]
+    },
+    "gemini-3.5-flash": {
+      "providers": [
+        "google"
+      ],
+      "model_family": "gemini-3.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 0.75,
+        "cache_input_cost": 0.075,
+        "output_cost": 4.5,
+        "context_window": 1048576,
+        "training_cutoff": "2026-05"
       }
     },
     "gemini-2.5-pro": {
@@ -948,10 +1184,10 @@
         "reasoning": false
       },
       "token_costs": {
-        "input_cost": 0.05,
-        "output_cost": 0.15,
+        "input_cost": 0.1,
+        "output_cost": 0.1,
         "context_window": 256000,
-        "training_cutoff": "2024-10"
+        "training_cutoff": "2025-12"
       }
     },
     "ministral-8b-latest": {
@@ -973,10 +1209,35 @@
         "reasoning": false
       },
       "token_costs": {
-        "input_cost": 0.08,
-        "output_cost": 0.24,
+        "input_cost": 0.15,
+        "output_cost": 0.15,
         "context_window": 256000,
-        "training_cutoff": "2024-10"
+        "training_cutoff": "2025-12"
+      }
+    },
+    "ministral-14b-latest": {
+      "providers": [
+        "mistral"
+      ],
+      "model_family": "ministral-14b",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": false
+      },
+      "token_costs": {
+        "input_cost": 0.2,
+        "output_cost": 0.2,
+        "context_window": 256000,
+        "training_cutoff": "2025-12"
       }
     },
     "mistral-moderation-latest": {
@@ -1130,6 +1391,31 @@
         "output_cost": 0.0,
         "context_window": 128000,
         "training_cutoff": null
+      }
+    },
+    "devstral-2": {
+      "providers": [
+        "mistral"
+      ],
+      "model_family": "devstral",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": false
+      },
+      "token_costs": {
+        "input_cost": 0.4,
+        "output_cost": 2.0,
+        "context_window": 256000,
+        "training_cutoff": "2025-12"
       }
     },
     "qwen2.5vl": {
@@ -1767,8 +2053,60 @@
         "reasoning": true
       },
       "token_costs": {
-        "input_cost": 1.75,
-        "output_cost": 14.0,
+        "input_cost": 2.5,
+        "cache_input_cost": 0.25,
+        "output_cost": 15.0,
+        "context_window": 400000,
+        "training_cutoff": "2026-01"
+      }
+    },
+    "gpt-5.4-mini": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-5.4",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 0.75,
+        "cache_input_cost": 0.075,
+        "output_cost": 4.5,
+        "context_window": 400000,
+        "training_cutoff": "2026-01"
+      }
+    },
+    "gpt-5.4-pro": {
+      "providers": [
+        "openai"
+      ],
+      "model_family": "gpt-5.4",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 30.0,
+        "output_cost": 180.0,
         "context_window": 400000,
         "training_cutoff": "2026-01"
       }
@@ -1950,6 +2288,84 @@
         "output_cost": 0.5,
         "context_window": 2000000,
         "training_cutoff": "2025-09"
+      }
+    },
+    "grok-4.3": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok-4.3",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 1.25,
+        "cache_input_cost": 0.2,
+        "output_cost": 2.5,
+        "context_window": 1000000,
+        "training_cutoff": "2026-05"
+      }
+    },
+    "grok-4.3-latest": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok-4.3",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 1.25,
+        "cache_input_cost": 0.2,
+        "output_cost": 2.5,
+        "context_window": 1000000,
+        "training_cutoff": "2026-05"
+      }
+    },
+    "grok-build-0.1": {
+      "providers": [
+        "xai"
+      ],
+      "model_family": "grok-build",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": false,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": false
+      },
+      "token_costs": {
+        "input_cost": 0.75,
+        "cache_input_cost": 0.075,
+        "output_cost": 2.0,
+        "context_window": 256000,
+        "training_cutoff": "2026-05"
       }
     },
     "gpt-5-chat-latest": {
@@ -2754,6 +3170,105 @@
         "training_cutoff": "2026-01"
       }
     },
+    "claude-opus-4-8": {
+      "providers": [
+        "anthropic"
+      ],
+      "model_family": "claude-4.8",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": true,
+        "top_p": true,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "token_costs": {
+        "input_cost": 5.0,
+        "cache_input_cost": 0.5,
+        "output_cost": 25.0,
+        "cache_output_cost": 6.25,
+        "context_window": 1000000,
+        "training_cutoff": "2026-05"
+      }
+    },
+    "kimi-k2.6": {
+      "providers": [
+        "kimi"
+      ],
+      "model_family": "kimi-k2.6",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "modalities": {
+        "input": [
+          "text",
+          "image",
+          "video"
+        ],
+        "output": [
+          "text"
+        ]
+      },
+      "token_costs": {
+        "input_cost": 0.95,
+        "cache_input_cost": 0.16,
+        "output_cost": 4.0,
+        "context_window": 262144,
+        "training_cutoff": null
+      }
+    },
+    "kimi-k2.5": {
+      "providers": [
+        "kimi"
+      ],
+      "model_family": "kimi-k2.5",
+      "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
+        "stream": true
+      },
+      "features": {
+        "vision": true,
+        "tools": true,
+        "json_mode": true,
+        "system_prompt": true,
+        "reasoning": true
+      },
+      "modalities": {
+        "input": [
+          "text",
+          "image",
+          "video"
+        ],
+        "output": [
+          "text"
+        ]
+      },
+      "token_costs": {
+        "input_cost": 0.6,
+        "cache_input_cost": 0.1,
+        "output_cost": 3.0,
+        "context_window": 262144,
+        "training_cutoff": null
+      }
+    },
     "kimi-latest": {
       "providers": [
         "kimi"
@@ -2776,14 +3291,32 @@
       ],
       "model_family": "kimi-k2",
       "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
         "stream": true
       },
       "features": {
         "vision": false,
         "tools": true,
-        "json_mode": false,
-        "system_prompt": false,
+        "json_mode": true,
+        "system_prompt": true,
         "reasoning": true
+      },
+      "modalities": {
+        "input": [
+          "text"
+        ],
+        "output": [
+          "text"
+        ]
+      },
+      "token_costs": {
+        "input_cost": 0.6,
+        "cache_input_cost": 0.15,
+        "output_cost": 2.5,
+        "context_window": 262144,
+        "training_cutoff": null
       }
     },
     "kimi-k2-thinking-turbo": {
@@ -2792,14 +3325,32 @@
       ],
       "model_family": "kimi-k2",
       "api_params": {
+        "max_tokens": true,
+        "temperature": false,
+        "top_p": false,
         "stream": true
       },
       "features": {
         "vision": false,
         "tools": true,
-        "json_mode": false,
-        "system_prompt": false,
+        "json_mode": true,
+        "system_prompt": true,
         "reasoning": true
+      },
+      "modalities": {
+        "input": [
+          "text"
+        ],
+        "output": [
+          "text"
+        ]
+      },
+      "token_costs": {
+        "input_cost": 1.15,
+        "cache_input_cost": 0.15,
+        "output_cost": 8.0,
+        "context_window": 262144,
+        "training_cutoff": null
       }
     },
     "deepseek-chat": {
@@ -2841,11 +3392,11 @@
         "reasoning": true
       },
       "token_costs": {
-        "input_cost": 0.55,
-        "cache_input_cost": 0.14,
-        "output_cost": 2.19,
-        "context_window": 128000,
-        "training_cutoff": null
+        "input_cost": 0.14,
+        "cache_input_cost": 0.0028,
+        "output_cost": 0.28,
+        "context_window": 1000000,
+        "training_cutoff": "2026-06"
       }
     },
     "deepseek-v4-pro": {
@@ -2867,10 +3418,11 @@
         "reasoning": true
       },
       "token_costs": {
-        "input_cost": 1.74,
-        "output_cost": 3.48,
+        "input_cost": 0.435,
+        "cache_input_cost": 0.003625,
+        "output_cost": 0.87,
         "context_window": 1000000,
-        "training_cutoff": "2026-04"
+        "training_cutoff": "2026-06"
       }
     },
     "deepseek-v4-flash": {
@@ -3907,7 +4459,7 @@
         "input_cost": 0.1,
         "output_cost": 0.1,
         "context_window": 256000,
-        "training_cutoff": null
+        "training_cutoff": "2025-12"
       },
       "features": {
         "reasoning": false
@@ -3922,7 +4474,7 @@
         "input_cost": 0.15,
         "output_cost": 0.15,
         "context_window": 256000,
-        "training_cutoff": null
+        "training_cutoff": "2025-12"
       },
       "features": {
         "reasoning": false
@@ -3937,7 +4489,7 @@
         "input_cost": 0.2,
         "output_cost": 0.2,
         "context_window": 256000,
-        "training_cutoff": null
+        "training_cutoff": "2025-12"
       },
       "features": {
         "reasoning": false
